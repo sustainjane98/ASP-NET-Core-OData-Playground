@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React from "react";
+import React, { PropsWithChildren } from "react";
 
 export enum ButtonColorVariant {
   DEFAULT,
@@ -10,6 +10,7 @@ export enum ButtonColorVariant {
   RED,
   YELLOW,
   PURPLE,
+  TRANSPARENT,
 }
 
 export interface ButtonProps
@@ -18,7 +19,7 @@ export interface ButtonProps
     HTMLButtonElement
   > {
   title?: string;
-  children?: string;
+  children?: PropsWithChildren["children"];
   variant?: ButtonColorVariant;
 }
 
@@ -31,6 +32,7 @@ export const Button: React.FC<ButtonProps> = ({
   children,
   title,
   variant,
+  className,
   ...buttonProps
 }) => {
   return (
@@ -56,7 +58,10 @@ export const Button: React.FC<ButtonProps> = ({
             variant === ButtonColorVariant.YELLOW,
           "focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-purple-300":
             variant === ButtonColorVariant.PURPLE,
-        }
+          "focus:ring-none bg-transparent outline-none border-none":
+            variant === ButtonColorVariant.TRANSPARENT,
+        },
+        className
       )}
     >
       {children ?? title}

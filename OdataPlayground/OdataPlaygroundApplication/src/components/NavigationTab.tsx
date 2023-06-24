@@ -2,6 +2,7 @@ import React from "react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { NavItem } from "../types/navItem.type";
 import { useNavItems } from "../hooks/useNavItems.hook";
+import { Button, ButtonColorVariant } from "./button";
 
 /**
  * An NavigationTab React Component.
@@ -16,22 +17,23 @@ export const NavigationTab: React.FC<NavItem & { disableCancel?: boolean }> = ({
   const { removeNavItem } = useNavItems();
 
   return (
-    <button
+    <Button
       type="button"
       className="text-white bg-cyan-700 font-medium text-sm px-5 py-2.5"
     >
       <div className="flex gap-x-4 items-center">
         <span className="font-normal text-base">{title}</span>
         {!disableCancel && (
-          <button
+          <Button
+            variant={ButtonColorVariant.TRANSPARENT}
             onClick={() => removeNavItem(id)}
             className="hover:text-gray-200"
           >
             <XMarkIcon width={20} />
-          </button>
+          </Button>
         )}
       </div>
-    </button>
+    </Button>
   );
 };
 
