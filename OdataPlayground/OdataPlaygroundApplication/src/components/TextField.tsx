@@ -12,7 +12,7 @@ export interface Props
   buttonProps?: React.DetailedHTMLProps<
     React.InputHTMLAttributes<HTMLButtonElement>,
     HTMLButtonElement
-  >;
+  >[];
   name: string;
 }
 
@@ -42,15 +42,16 @@ export const TextField = React.forwardRef<HTMLInputElement, Props>(
             ref={mergeRefs([registerRef, ref])}
           ></input>
 
-          {buttonProps && (
-            <button
-              {...buttonProps}
-              type="button"
-              className=" text-white bg-cyan-700 hover:bg-cyan-800 focus:ring-4 focus:ring-cyan-300 font-medium rounded-lg text-sm px-5 py-2.5"
-            >
-              {buttonProps.children ?? buttonProps.title}
-            </button>
-          )}
+          {buttonProps &&
+            buttonProps.map((b) => (
+              <button
+                {...buttonProps}
+                type="button"
+                className=" text-white bg-cyan-700 hover:bg-cyan-800 focus:ring-4 focus:ring-cyan-300 font-medium rounded-lg text-sm px-5 py-2.5"
+              >
+                {b.children ?? b.title}
+              </button>
+            ))}
         </div>
       </div>
     );

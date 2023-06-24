@@ -2,10 +2,15 @@ import React from "react";
 import { useFormContext } from "react-hook-form";
 import { OdataRequestForm } from "./OdataFormWrapper";
 
-export interface Props {
+export interface Props
+  extends React.DetailedHTMLProps<
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    HTMLButtonElement
+  > {
   urlPart: string;
   displayValue: string;
   onClick?: () => void;
+  resetToBaseUrl?: boolean;
 }
 
 /**
@@ -13,13 +18,25 @@ export interface Props {
  * @author Jane Will
  * @version 0.1
  */
-export const Pill: React.FC<Props> = ({ displayValue, urlPart, onClick }) => {
+export const Pill: React.FC<Props> = ({
+  displayValue,
+  urlPart,
+  onClick,
+  resetToBaseUrl,
+  ...props
+}) => {
   const { setValue, getValues } = useFormContext<OdataRequestForm>();
 
   return (
     <button
+      {...props}
       onClick={() => {
-        const urlValue = getValues("url");
+        let urlValue: string;
+        if (resetToBaseUrl) {
+          urlValue = getValues("baseUrl");
+        } else {
+          urlValue = getValues("url");
+        }
         setValue("url", `${urlValue}${urlPart}`);
 
         onClick?.();
@@ -30,3 +47,5 @@ export const Pill: React.FC<Props> = ({ displayValue, urlPart, onClick }) => {
     </button>
   );
 };
+
+Pill.defaultProps = { resetToBaseUrl: false };

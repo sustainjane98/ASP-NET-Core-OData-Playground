@@ -3,13 +3,20 @@ import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import "./styles.css";
 import IndexPage from "./pages";
+import { QueryClient, QueryClientProvider } from "react-query";
+import "flowbite";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
+const queryClient = new QueryClient();
+
 root.render(
   <React.StrictMode>
-    <IndexPage />
+    <QueryClientProvider client={queryClient}>
+      <IndexPage />
+    </QueryClientProvider>
   </React.StrictMode>
 );
 

@@ -57,4 +57,6 @@ public static class HttpContextExtensions
         context.Response.ContentType = mimeType;
         await context.Response.WriteAsync(result);
     }
+    
+    
 }

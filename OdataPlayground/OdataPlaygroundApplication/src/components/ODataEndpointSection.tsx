@@ -1,9 +1,10 @@
 import React from "react";
 import { LinkIcon } from "@heroicons/react/24/solid";
 import { Pill, Props as PillProps } from "./pill";
+import { ToolTip } from "./tooltip";
 export interface Props {
   title: string;
-  subPaths: PillProps[];
+  subPaths: (PillProps & { toolTip: { id: string; title: string } })[];
 }
 
 /**
@@ -22,10 +23,15 @@ export const OdataEndpointSection: React.FC<Props> = ({ title, subPaths }) => {
           <LinkIcon width={20} />
         </button>
       </div>
-      <div className="flex gap-2 mt-2">
-        {subPaths.map((a) => (
-          <Pill {...a} />
-        ))}
+      <div className="flex gap-2 mt-2 flex-wrap">
+        {subPaths.map(({ toolTip, ...other }) => [
+          <Pill
+            {...other}
+            resetToBaseUrl
+            data-tooltip-target={toolTip?.id ?? "tooltip"}
+          />,
+          <ToolTip id={toolTip?.id ?? "tooltip"}>{toolTip?.title}</ToolTip>,
+        ])}
       </div>
     </div>
   );

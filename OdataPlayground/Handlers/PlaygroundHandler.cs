@@ -7,7 +7,7 @@ namespace OdataPlayground.Handlers;
 public static class PlaygroundProvider  
 {
 
-    public static void UseOdataPlaygroundUi(this IApplicationBuilder wb, PlaygroundConfigurationOptions options)
+    public static void UseOdataPlaygroundUi(this IApplicationBuilder wb, OdataPlaygroundConfigurationOptions options)
     {
         wb.UseMiddleware<PlaygroundMiddleware>(options);
     }

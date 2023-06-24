@@ -49,7 +49,10 @@ export const OdataFormWrapper: React.FC<PropsWithChildren> = ({ children }) => {
           id="odata-url-field"
           name="url"
           placeholder="Bite Url eingeben..."
-          buttonProps={{ children: "Send", onClick: () => {} }}
+          buttonProps={[
+            { children: "Send", onClick: () => {} },
+            { children: "Send", onClick: () => {} },
+          ]}
         />
         <div className="flex gap-2 flex-wrap">
           <Pill

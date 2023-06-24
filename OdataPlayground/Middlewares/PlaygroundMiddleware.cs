@@ -6,10 +6,10 @@ namespace OdataPlayground.Middlewares;
 
 public class PlaygroundMiddleware
 {
-    private readonly PlaygroundConfigurationOptions _options;
+    private readonly OdataPlaygroundConfigurationOptions _options;
     private RequestDelegate Next { get; }
 
-    public PlaygroundMiddleware(RequestDelegate next, PlaygroundConfigurationOptions options)
+    public PlaygroundMiddleware(RequestDelegate next, OdataPlaygroundConfigurationOptions options)
     {
         _options = options;
         Next = next;
