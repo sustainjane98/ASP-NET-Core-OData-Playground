@@ -7,5 +7,6 @@ export const useOdataScheme = () =>
     const urlParams = new URLSearchParams(window.location.search);
     const odataPath = urlParams.get("odataPath");
 
-    return (await axios.get<OdataScheme>(odataPath ?? "/")).data;
+    return (await axios.get<OdataScheme | string | null>(odataPath ?? "/"))
+      .data;
   });

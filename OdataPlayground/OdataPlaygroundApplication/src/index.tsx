@@ -5,6 +5,7 @@ import "./styles.css";
 import IndexPage from "./pages";
 import { QueryClient, QueryClientProvider } from "react-query";
 import "flowbite";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -16,6 +17,7 @@ root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <IndexPage />
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </React.StrictMode>
 );

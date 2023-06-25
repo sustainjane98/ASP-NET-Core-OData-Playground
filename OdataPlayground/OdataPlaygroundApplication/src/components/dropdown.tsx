@@ -7,13 +7,13 @@ import classNames from "classnames";
 export interface Props extends PropsWithChildren, ButtonProps {
   name: string;
   values: { key: string; value: string }[];
-  defaultValue: string;
+  placeholderValue?: string;
 }
 
 export const Dropdown: React.FC<Props> = ({
   children,
   values,
-  defaultValue,
+  placeholderValue,
   ...buttonProps
 }) => {
   const { setValue } = useFormContext();
@@ -22,10 +22,13 @@ export const Dropdown: React.FC<Props> = ({
 
   const [open, setOpen] = useState<boolean>(false);
 
-  let processId: number | null;
-
   return (
-    <div className="relative inline-block">
+    <div
+      className="relative inline-block"
+      onBlur={() => {
+        window.setTimeout(() => setOpen(false), 200);
+      }}
+    >
       <Button
         {...buttonProps}
         variant={ButtonColorVariant.LIGHT}
@@ -33,44 +36,40 @@ export const Dropdown: React.FC<Props> = ({
         onClick={() => {
           setOpen((open) => !open);
         }}
-        onBlur={() => {
-          if (processId) {
-            window.clearTimeout(processId);
-            processId = null;
-          }
-
-          processId = window.setTimeout(() => setOpen(false), 100);
-        }}
       >
-        {selectedValue ?? defaultValue}
+        {values.find(({ key }) => key === selectedValue)?.value ??
+          placeholderValue}
       </Button>
-      <div
-        className={classNames(
-          "absolute top-full max-w-full z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44",
-          { hidden: !open }
-        )}
-      >
-        <ul
-          className={"py-2 text-sm text-gray-700 dark:text-gray-200"}
-          aria-labelledby="dropdown-button"
+
+      {open && (
+        <div
+          className={classNames(
+            "absolute top-full max-w-full bg-white divide-y divide-gray-100 rounded-lg shadow w-44"
+          )}
         >
-          {values.map(({ key, value }, i) => (
-            <li key={`dropdown-element-${i}`}>
-              <Button
-                variant={ButtonColorVariant.TRANSPARENT}
-                onClick={() => {
-                  setValue(buttonProps.name, key);
-                }}
-                disableFocus
-                disablePadding
-                className="block px-4 py-2 hover:bg-gray-100"
-              >
-                {value}
-              </Button>
-            </li>
-          ))}
-        </ul>
-      </div>
+          <ul
+            className={"py-2 text-sm text-gray-700 dark:text-gray-200"}
+            aria-labelledby="dropdown-button"
+          >
+            {values.map(({ key, value }, i) => (
+              <li key={`dropdown-element-${i}`}>
+                <Button
+                  variant={ButtonColorVariant.TRANSPARENT}
+                  onClick={() => {
+                    setValue(buttonProps.name, key, { shouldDirty: true });
+                    setOpen(false);
+                  }}
+                  disableFocus
+                  disablePadding
+                  className="block px-4 py-2 hover:bg-gray-100 w-full 10"
+                >
+                  {value}
+                </Button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };

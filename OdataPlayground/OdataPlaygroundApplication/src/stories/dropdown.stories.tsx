@@ -19,7 +19,9 @@ export const Default: Story = () => (
 export default {
   decorators: [
     (Component) => {
-      const methods = useForm();
+      const methods = useForm({
+        defaultValues: { example: "example1" },
+      });
       return (
         <FormProvider {...methods}>
           <Component />

@@ -89,7 +89,7 @@ export const Button: React.FC<ButtonProps> = ({
       )}
     >
       <span>{children ?? title}</span>
-      <div className="flex gapx-1">{icons}</div>
+      {icons && <div className="flex gapx-1">{icons}</div>}
     </button>
   );
 };
