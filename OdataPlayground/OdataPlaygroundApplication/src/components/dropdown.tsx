@@ -30,7 +30,7 @@ export const Dropdown: React.FC<Props> = ({
         {...buttonProps}
         variant={ButtonColorVariant.LIGHT}
         icons={[<ChevronDownIcon key={"chevron-down"} width={15} />]}
-        onClick={(e) => {
+        onClick={() => {
           setOpen((open) => !open);
         }}
         onBlur={() => {
