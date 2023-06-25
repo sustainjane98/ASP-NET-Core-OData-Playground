@@ -14,11 +14,11 @@ export interface Props
 }
 
 /**
- * An TextField React Component.
+ * An Textfield React Component.
  * @author Jane Will
  * @version 0.1
  */
-export const TextField = React.forwardRef<HTMLInputElement, Props>(
+export const Textfield = React.forwardRef<HTMLInputElement, Props>(
   ({ label, buttonProps, ...inputProps }, ref) => {
     const { register } = useFormContext();
     const { ref: registerRef, ...other } = register(inputProps.name);
@@ -37,21 +37,18 @@ export const TextField = React.forwardRef<HTMLInputElement, Props>(
             {...inputProps}
             ref={mergeRefs([registerRef, ref])}
           ></input>
-
-          {buttonProps &&
-            buttonProps.map((b) => (
-              <Button
-                {...buttonProps}
-                type="button"
-                className=" text-white bg-cyan-700 hover:bg-cyan-800 focus:ring-4 focus:ring-cyan-300 font-medium rounded-lg text-sm px-5 py-2.5"
-              >
-                {b.children ?? b.title}
-              </Button>
-            ))}
+          <div className="flex gap-x-2">
+            {buttonProps &&
+              buttonProps.map((b, index) => (
+                <Button key={`button-${index}`} {...b} type="button">
+                  {b.children ?? b.title}
+                </Button>
+              ))}
+          </div>
         </div>
       </div>
     );
   }
 );
 
-TextField.displayName = "TextField";
+Textfield.displayName = "Textfield";

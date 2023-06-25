@@ -1,8 +1,8 @@
 import React from "react";
-import { NavigationTabHeader } from "../components/NavigationTabHeader";
-import { MainSection } from "../components/MainSection";
-import { OdataFormWrapper } from "../components/OdataFormWrapper";
-import { OdataEndpointSection } from "../components/ODataEndpointSection";
+import { NavigationTabHeader } from "../components/navigation-tab-header";
+import { MainSection } from "../components/main-section";
+import { OdataFormWrapper } from "../components/odata-form-wrapper";
+import { OdataEndpointSection } from "../components/odata-endpoint-section";
 import { useOdataScheme } from "../hooks/useOdataScheme.hook";
 
 const IndexPage: React.FC = () => {
@@ -15,7 +15,7 @@ const IndexPage: React.FC = () => {
         <MainSection>
           <OdataFormWrapper>
             <div className="h-10" />
-            {data?.value.map(({ name, url }) => (
+            {data?.value?.map(({ name, url }) => (
               <OdataEndpointSection
                 title={name}
                 subPaths={[

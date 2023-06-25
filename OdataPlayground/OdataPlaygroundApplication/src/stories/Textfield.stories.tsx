@@ -1,14 +1,14 @@
 /* eslint-disable storybook/default-exports */
 import type { Story } from "@ladle/react";
-import { TextField } from "../components/TextField";
+import { Textfield } from "../components/textfield";
 import { FormProvider, useForm } from "react-hook-form";
 
 export const Default: Story = () => (
-  <TextField
+  <Textfield
     placeholder="Lorem ipsum..."
     label="Test"
     name="example"
-  ></TextField>
+  ></Textfield>
 );
 
 Default.decorators = [

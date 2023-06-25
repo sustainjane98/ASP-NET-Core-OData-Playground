@@ -7,11 +7,11 @@ export interface Props
   > {}
 
 /**
- * An ToolTip React Component.
+ * An Tooltip React Component.
  * @author Jane Will
  * @version 0.1
  */
-export const ToolTip: React.FC<Props> = ({ children, ...props }) => {
+export const Tooltip: React.FC<Props> = ({ children, ...props }) => {
   return (
     <div
       id="tooltip"

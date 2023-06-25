@@ -1,7 +1,8 @@
-import React, { PropsWithChildren, useEffect } from "react";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { TextField } from "./TextField";
-import { Pill } from "./pill";
+import React, {PropsWithChildren, useEffect} from "react";
+import {FormProvider, SubmitHandler, useForm} from "react-hook-form";
+import {Textfield} from "./textfield";
+import {Pill} from "./pill";
+import {ButtonColorVariant} from "./button";
 
 export interface OdataRequestForm {
   baseUrl: string;
@@ -44,13 +45,13 @@ export const OdataFormWrapper: React.FC<PropsWithChildren> = ({ children }) => {
       onSubmit={methods.handleSubmit(onSubmit)}
     >
       <FormProvider {...methods}>
-        <TextField
+        <Textfield
           ref={inputRef}
           id="odata-url-field"
           name="url"
           placeholder="Bite Url eingeben..."
           buttonProps={[
-            { children: "Send", onClick: () => {} },
+            { children: "Cancel", onClick: () => {}, variant: ButtonColorVariant.LIGHT },
             { children: "Send", onClick: () => {} },
           ]}
         />

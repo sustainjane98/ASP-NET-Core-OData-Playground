@@ -1,7 +1,7 @@
 import React from "react";
 import { LinkIcon } from "@heroicons/react/24/solid";
 import { Pill, Props as PillProps } from "./pill";
-import { ToolTip } from "./tooltip";
+import { Tooltip } from "./tooltip";
 import { Button, ButtonColorVariant } from "./button";
 export interface Props {
   title: string;
@@ -34,7 +34,7 @@ export const OdataEndpointSection: React.FC<Props> = ({ title, subPaths }) => {
             resetToBaseUrl
             data-tooltip-target={toolTip?.id ?? "tooltip"}
           />,
-          <ToolTip id={toolTip?.id ?? "tooltip"}>{toolTip?.title}</ToolTip>,
+          <Tooltip id={toolTip?.id ?? "tooltip"}>{toolTip?.title}</Tooltip>,
         ])}
       </div>
     </div>

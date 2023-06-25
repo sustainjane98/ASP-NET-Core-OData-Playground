@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import { OdataRequestForm } from "./OdataFormWrapper";
+import { OdataRequestForm } from "./odata-form-wrapper";
 
 export interface Props
   extends React.DetailedHTMLProps<

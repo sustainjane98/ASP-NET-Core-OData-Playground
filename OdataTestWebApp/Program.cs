@@ -21,6 +21,19 @@ app.UseRouting();
 
 app.MapControllers();
 
-app.UseOdataPlaygroundUi(new OdataPlaygroundConfigurationOptions() {UiPath = "/odata", ServerBaseUrl = config.HttpUrl});
+if (builder.Environment.IsDevelopment())
+{
+    app.UseOdataPlaygroundUiDev(new OdataPlaygroundConfigurationOptionsDev()
+    {
+        UiPath = "/odata",
+        ServerBaseUrl = config.HttpUrl,
+        RedirectUrl = "http://localhost:3000"
+    });
+}
+else
+{
+    app.UseOdataPlaygroundUi(new OdataPlaygroundConfigurationOptions() {UiPath = "/odata", ServerBaseUrl = config.HttpUrl});
+}
+
 
 app.Run();

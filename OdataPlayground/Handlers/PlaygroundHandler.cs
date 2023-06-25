@@ -12,4 +12,9 @@ public static class PlaygroundProvider
         wb.UseMiddleware<PlaygroundMiddleware>(options);
     }
     
+    public static void UseOdataPlaygroundUiDev(this IApplicationBuilder wb, OdataPlaygroundConfigurationOptionsDev options)
+    {
+        wb.UseMiddleware<DevRedirectMiddleware>(options);
+    }
+    
 }
