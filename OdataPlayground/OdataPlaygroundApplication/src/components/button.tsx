@@ -21,6 +21,8 @@ export interface ButtonProps
   title?: string;
   children?: PropsWithChildren["children"];
   variant?: ButtonColorVariant;
+  disablePadding?: boolean;
+  disableFocus?: boolean;
 }
 
 /**
@@ -33,6 +35,8 @@ export const Button: React.FC<ButtonProps> = ({
   title,
   variant,
   className,
+  disablePadding,
+  disableFocus,
   ...buttonProps
 }) => {
   return (
@@ -40,24 +44,42 @@ export const Button: React.FC<ButtonProps> = ({
       {...buttonProps}
       type="button"
       className={classNames(
-        "focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5",
+        "font-medium rounded-lg text-sm",
         {
-          "text-white bg-cyan-700 hover:bg-cyan-800 focus:ring-cyan-300":
+          "px-5 py-2.5": !disablePadding,
+          "focus:ring-4 ": !disableFocus,
+          "text-white bg-cyan-700 hover:bg-cyan-800":
             variant === ButtonColorVariant.DEFAULT,
-          "text-gray-900 bg-white border border-gray-200 hover:bg-gray-100 hover:text-cyan-700 focus:z-10 focus:ring-gray-200":
+          "focus:ring-cyan-500":
+            variant === ButtonColorVariant.DEFAULT && !disableFocus,
+          "text-gray-900 bg-white border border-gray-200 hover:bg-gray-100 hover:text-cyan-700":
             variant === ButtonColorVariant.ALTERNATIVE,
-          "text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-gray-300":
+          "focus:z-10 focus:ring-gray-200":
+            variant === ButtonColorVariant.ALTERNATIVE && !disableFocus,
+          "text-white bg-gray-800 hover:bg-gray-900 focus:outline-none":
             variant === ButtonColorVariant.DARK,
-          "text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-gray-200":
+          "focus:ring-gray-300":
+            variant === ButtonColorVariant.DARK && !disableFocus,
+          "text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100":
             variant === ButtonColorVariant.LIGHT,
-          "focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-green-300":
+          "focus:ring-gray-200":
+            variant === ButtonColorVariant.LIGHT && !disableFocus,
+          "focus:outline-none text-white bg-green-700 hover:bg-green-800":
             variant === ButtonColorVariant.GREEN,
-          "focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-red-300":
+          "focus:ring-green-300":
+            variant === ButtonColorVariant.GREEN && !disableFocus,
+          "focus:outline-none text-white bg-red-700 hover:bg-red-800":
             variant === ButtonColorVariant.RED,
-          "focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-yellow-300":
+          "focus:ring-red-300":
+            variant === ButtonColorVariant.RED && !disableFocus,
+          "focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500":
             variant === ButtonColorVariant.YELLOW,
-          "focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-purple-300":
+          "focus:ring-yellow-300":
+            variant === ButtonColorVariant.YELLOW && !disableFocus,
+          "focus:outline-none text-white bg-purple-700 hover:bg-purple-800":
             variant === ButtonColorVariant.PURPLE,
+          "focus:ring-purple-300":
+            variant === ButtonColorVariant.PURPLE && !disableFocus,
           "focus:ring-none bg-transparent outline-none border-none":
             variant === ButtonColorVariant.TRANSPARENT,
         },
@@ -69,4 +91,8 @@ export const Button: React.FC<ButtonProps> = ({
   );
 };
 
-Button.defaultProps = { variant: ButtonColorVariant.DEFAULT };
+Button.defaultProps = {
+  variant: ButtonColorVariant.DEFAULT,
+  disablePadding: false,
+  disableFocus: false,
+};

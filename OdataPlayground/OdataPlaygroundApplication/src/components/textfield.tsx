@@ -9,7 +9,7 @@ export interface Props
     HTMLInputElement
   > {
   label?: string;
-  buttonProps?: ButtonProps[];
+  buttonProps?: (ButtonProps & { direction?: "right" | "left" })[];
   name: string;
 }
 
@@ -23,6 +23,9 @@ export const Textfield = React.forwardRef<HTMLInputElement, Props>(
     const { register } = useFormContext();
     const { ref: registerRef, ...other } = register(inputProps.name);
 
+    const leftButtons = buttonProps?.filter((e) => e.direction === "left");
+    const rightButtons = buttonProps?.filter((e) => e.direction !== "left");
+
     return (
       <div>
         {label && (
@@ -31,6 +34,14 @@ export const Textfield = React.forwardRef<HTMLInputElement, Props>(
           </label>
         )}
         <div className="relative p-2.5 flex items-center bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyan-700 focus:border-cyan-700 w-full">
+          <div className="flex gap-x-2">
+            {leftButtons &&
+              leftButtons.map((b, index) => (
+                <Button key={`button-${index}`} {...b} type="button">
+                  {b.children ?? b.title}
+                </Button>
+              ))}
+          </div>
           <input
             className="py-2.5 border-none focus:outline-none focus:ring-0 bg-gray-100 w-full h-full block"
             {...other}
@@ -38,8 +49,8 @@ export const Textfield = React.forwardRef<HTMLInputElement, Props>(
             ref={mergeRefs([registerRef, ref])}
           ></input>
           <div className="flex gap-x-2">
-            {buttonProps &&
-              buttonProps.map((b, index) => (
+            {rightButtons &&
+              rightButtons.map((b, index) => (
                 <Button key={`button-${index}`} {...b} type="button">
                   {b.children ?? b.title}
                 </Button>

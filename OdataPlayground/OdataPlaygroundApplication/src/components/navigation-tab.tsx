@@ -19,7 +19,8 @@ export const NavigationTab: React.FC<NavItem & { disableCancel?: boolean }> = ({
   return (
     <Button
       type="button"
-      className="text-white bg-cyan-700 font-medium text-sm px-5 py-2.5 focus:ring-0 rounded-none"
+      disablePadding
+      className="text-white bg-cyan-700 font-medium text-sm focus:ring-0 rounded-none px-2 py-3"
     >
       <div className="flex gap-x-4 items-center">
         <span className="font-normal text-base">{title}</span>
@@ -27,6 +28,8 @@ export const NavigationTab: React.FC<NavItem & { disableCancel?: boolean }> = ({
           <Button
             variant={ButtonColorVariant.TRANSPARENT}
             onClick={() => removeNavItem(id)}
+            disablePadding
+            disableFocus
             className="hover:text-gray-200"
           >
             <XMarkIcon width={20} />

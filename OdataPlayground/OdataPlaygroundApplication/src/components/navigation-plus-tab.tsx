@@ -1,6 +1,7 @@
 import React from "react";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { useNavItems } from "../hooks/useNavItems.hook";
+import { Button } from "./button";
 
 /**
  * An NavigationPlusTab React Component.
@@ -11,12 +12,13 @@ export const NavigationPlusTab: React.FC = () => {
   const { addNavItem } = useNavItems();
 
   return (
-    <button
+    <Button
+      className="rounded-none"
       onClick={addNavItem}
+      disableFocus
       type="button"
-      className="text-white bg-cyan-700 font-medium text-sm px-5 py-2.5 hover:text-gray-200"
     >
       <PlusIcon width={20} />
-    </button>
+    </Button>
   );
 };
