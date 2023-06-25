@@ -23,6 +23,7 @@ export interface ButtonProps
   variant?: ButtonColorVariant;
   disablePadding?: boolean;
   disableFocus?: boolean;
+  icons?: React.ReactElement[];
 }
 
 /**
@@ -37,6 +38,7 @@ export const Button: React.FC<ButtonProps> = ({
   className,
   disablePadding,
   disableFocus,
+  icons,
   ...buttonProps
 }) => {
   return (
@@ -44,7 +46,7 @@ export const Button: React.FC<ButtonProps> = ({
       {...buttonProps}
       type="button"
       className={classNames(
-        "font-medium rounded-lg text-sm",
+        "flex gap-x-2 items-center font-medium rounded-lg text-sm",
         {
           "px-5 py-2.5": !disablePadding,
           "focus:ring-4 ": !disableFocus,
@@ -86,7 +88,8 @@ export const Button: React.FC<ButtonProps> = ({
         className
       )}
     >
-      {children ?? title}
+      <span>{children ?? title}</span>
+      <div className="flex gapx-1">{icons}</div>
     </button>
   );
 };
