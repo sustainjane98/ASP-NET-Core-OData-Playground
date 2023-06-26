@@ -4,6 +4,8 @@ using OdataPlayground.Models;
 using OdataTestWebApp.Configurations;
 using OdataTestWebApp.Models;
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
 
 var config = new HostConfiguration(builder.Configuration);
@@ -13,11 +15,22 @@ builder.Services.AddControllers().AddOData(
         "",
         EdmModel.GetModel()));
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000");
+        });
+});
+
 var app = builder.Build();
 
 app.UseHttpsRedirection();
 
 app.UseRouting();
+
+app.UseCors();
 
 app.MapControllers();
 
