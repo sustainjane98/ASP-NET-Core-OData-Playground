@@ -55,5 +55,7 @@ public class DevRedirectMiddleware
             await context.Response.WriteAsync(response);
         }
 
+        await _next.Invoke(context);
+
     }
 }
