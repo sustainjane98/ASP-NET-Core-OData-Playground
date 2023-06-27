@@ -53,7 +53,10 @@ public class DevRedirectMiddleware
             var mimeType = MimeTypes.GetMimeType(requestPath);
             context.Response.ContentType = mimeType;
             await context.Response.WriteAsync(response);
+            return;
         }
+
+        await _next.Invoke(context);
 
     }
 }
