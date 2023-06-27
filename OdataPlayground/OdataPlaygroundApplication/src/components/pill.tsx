@@ -1,12 +1,9 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
+import { Button, ButtonProps } from "./button";
 import { OdataRequestForm } from "./odata-form-wrapper";
 
-export interface Props
-  extends React.DetailedHTMLProps<
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
-    HTMLButtonElement
-  > {
+export interface Props extends ButtonProps {
   urlPart: string;
   displayValue: string;
   onClick?: () => void;
@@ -28,7 +25,7 @@ export const Pill: React.FC<Props> = ({
   const { setValue, getValues } = useFormContext<OdataRequestForm>();
 
   return (
-    <button
+    <Button
       {...props}
       onClick={() => {
         let urlValue: string;
@@ -41,10 +38,10 @@ export const Pill: React.FC<Props> = ({
 
         onClick?.();
       }}
-      className="text-white bg-cyan-700 hover:bg-cyan-800 focus:ring-4 focus:ring-cyan-300 font-medium rounded-full text-sm px-5 py-2.5"
+      className="rounded-full"
     >
       <span>{displayValue}</span>
-    </button>
+    </Button>
   );
 };
 

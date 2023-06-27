@@ -9,6 +9,7 @@ import { Textfield } from "./textfield";
 import { Pill } from "./pill";
 import { ButtonColorVariant } from "./button";
 import { DevTool } from "@hookform/devtools";
+import { PostOtherSection } from "./post-other-section";
 
 export interface OdataRequestForm {
   baseUrl: string;
@@ -42,10 +43,17 @@ export const OdataFormWrapper: React.FC<PropsWithChildren> = ({ children }) => {
   const httpMethod = useWatch({ control: methods.control, name: "httpMethod" });
 
   useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const odataPath = urlParams.get("odataPath");
+
     // eslint-disable-next-line no-restricted-globals
-    methods.setValue("baseUrl", `${location.origin}`, { shouldDirty: true });
+    methods.setValue("baseUrl", odataPath ?? location.origin, {
+      shouldDirty: true,
+    });
     // eslint-disable-next-line no-restricted-globals
-    methods.setValue("url", `${location.origin}`, { shouldDirty: true });
+    methods.setValue("url", odataPath ?? location.origin, {
+      shouldDirty: true,
+    });
   }, [methods]);
 
   const onPillClicked = () => {
@@ -87,7 +95,8 @@ export const OdataFormWrapper: React.FC<PropsWithChildren> = ({ children }) => {
             },
           ]}
         />
-        {httpMethod === "get" && (
+        <PostOtherSection />
+        {httpMethod === "get" && [
           <div className="flex gap-2 flex-wrap">
             <Pill
               onClick={onPillClicked}
@@ -120,8 +129,130 @@ export const OdataFormWrapper: React.FC<PropsWithChildren> = ({ children }) => {
               displayValue="Search"
               urlPart="?search="
             />
-          </div>
-        )}
+          </div>,
+          <div className="flex gap-2 flex-wrap">
+            <Pill
+              variant={ButtonColorVariant.LIGHT}
+              onClick={onPillClicked}
+              displayValue="Equals"
+              urlPart="eq"
+            />
+            <Pill
+              variant={ButtonColorVariant.LIGHT}
+              onClick={onPillClicked}
+              displayValue="Less than"
+              urlPart="lt"
+            />
+            <Pill
+              variant={ButtonColorVariant.LIGHT}
+              onClick={onPillClicked}
+              displayValue="Greater than"
+              urlPart="gt"
+            />
+            <Pill
+              variant={ButtonColorVariant.LIGHT}
+              onClick={onPillClicked}
+              displayValue="And"
+              urlPart="and"
+            />
+            <Pill
+              variant={ButtonColorVariant.LIGHT}
+              onClick={onPillClicked}
+              displayValue="Or"
+              urlPart="or"
+            />
+            <Pill
+              variant={ButtonColorVariant.LIGHT}
+              onClick={onPillClicked}
+              displayValue="Greater than or equal to"
+              urlPart="ge"
+            />
+            <Pill
+              variant={ButtonColorVariant.LIGHT}
+              onClick={onPillClicked}
+              displayValue="Not equal"
+              urlPart="ne"
+            />
+            <Pill
+              variant={ButtonColorVariant.LIGHT}
+              onClick={onPillClicked}
+              displayValue="Ends with"
+              urlPart="endswith(VAT_Bus_Posting_Group,'RT')"
+            />
+            <Pill
+              variant={ButtonColorVariant.LIGHT}
+              onClick={onPillClicked}
+              displayValue="Starts with"
+              urlPart="startswith(Name, 'S')"
+            />
+            <Pill
+              variant={ButtonColorVariant.LIGHT}
+              onClick={onPillClicked}
+              displayValue="Substring of"
+              urlPart="substringof(Name, ‘urn’)"
+            />
+            <Pill
+              variant={ButtonColorVariant.LIGHT}
+              onClick={onPillClicked}
+              displayValue="Index of"
+              urlPart="indexof(Location_Code, ‘BLUE’) eq 0"
+            />
+            <Pill
+              variant={ButtonColorVariant.LIGHT}
+              onClick={onPillClicked}
+              displayValue="Replace"
+              urlPart="replace(City, 'Miami', 'Tampa') eq 'CODERED'"
+            />
+            <Pill
+              variant={ButtonColorVariant.LIGHT}
+              onClick={onPillClicked}
+              displayValue="Substring"
+              urlPart="substring(Location_Code, 5) eq 'RED'"
+            />
+            <Pill
+              variant={ButtonColorVariant.LIGHT}
+              onClick={onPillClicked}
+              displayValue="To lower"
+              urlPart="tolower(Location_Code) eq 'code red'"
+            />
+            <Pill
+              variant={ButtonColorVariant.LIGHT}
+              onClick={onPillClicked}
+              displayValue="To upper"
+              urlPart="toupper(FText) eq '2ND ROW'"
+            />
+            <Pill
+              variant={ButtonColorVariant.LIGHT}
+              onClick={onPillClicked}
+              displayValue="Trim"
+              urlPart="trim(FCode) eq 'CODE RED'"
+            />{" "}
+            <Pill
+              variant={ButtonColorVariant.LIGHT}
+              onClick={onPillClicked}
+              displayValue="Concat"
+              urlPart="concat(concat(FText, ', '), FCode) eq '2nd row, CODE RED'"
+            />
+            <Pill
+              variant={ButtonColorVariant.LIGHT}
+              onClick={onPillClicked}
+              displayValue="Round"
+              urlPart="round(FDecimal) eq 1"
+            />
+            <Pill
+              variant={ButtonColorVariant.LIGHT}
+              onClick={onPillClicked}
+              displayValue="Floor"
+              urlPart="floor(FDecimal) eq 0"
+            />
+            <Pill
+              variant={ButtonColorVariant.LIGHT}
+              onClick={onPillClicked}
+              displayValue="Ceiling"
+              urlPart="ceiling(FDecimal) eq 1"
+            />
+          </div>,
+        ]}
         {children}
       </FormProvider>
       <DevTool control={methods.control} placement="bottom-right" />
