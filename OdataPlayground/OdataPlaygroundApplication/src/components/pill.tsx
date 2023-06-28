@@ -2,9 +2,11 @@ import React from "react";
 import { useFormContext } from "react-hook-form";
 import { Button, ButtonProps } from "./button";
 import { OdataRequestForm } from "./odata-form-wrapper";
+import { HttpMethod } from "../enums/httpMethod.enum";
 
 export interface Props extends ButtonProps {
   urlPart: string;
+  httpMethod?: HttpMethod;
   displayValue: string;
   onClick?: () => void;
   resetToBaseUrl?: boolean;
@@ -20,6 +22,7 @@ export const Pill: React.FC<Props> = ({
   urlPart,
   onClick,
   resetToBaseUrl,
+  httpMethod,
   ...props
 }) => {
   const { setValue, getValues } = useFormContext<OdataRequestForm>();
@@ -29,6 +32,11 @@ export const Pill: React.FC<Props> = ({
       {...props}
       onClick={() => {
         let urlValue: string;
+
+        if (httpMethod) {
+          setValue("httpMethod", httpMethod);
+        }
+
         if (resetToBaseUrl) {
           urlValue = getValues("baseUrl");
         } else {
@@ -45,4 +53,4 @@ export const Pill: React.FC<Props> = ({
   );
 };
 
-Pill.defaultProps = { resetToBaseUrl: false };
+Pill.defaultProps = { resetToBaseUrl: false, httpMethod: HttpMethod.GET };

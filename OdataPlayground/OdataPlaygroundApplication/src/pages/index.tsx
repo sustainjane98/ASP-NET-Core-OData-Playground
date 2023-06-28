@@ -7,6 +7,7 @@ import { useOdataScheme } from "../hooks/useOdataScheme.hook";
 import { OdataEndpointSectionPlaceholderContainer } from "../components/odata-endpoint-section-placeholder-container";
 import { ReactComponent as NoDataIllustration } from "../assets/undraw_no_data_re_kwbl.svg";
 import { OdataScheme } from "../types/odata-scheme.type";
+import { HttpMethod } from "../enums/httpMethod.enum";
 
 const IndexPage: React.FC = () => {
   const { data, isLoading } = useOdataScheme();
@@ -55,6 +56,7 @@ const IndexPage: React.FC = () => {
                     },
                     {
                       displayValue: "Create",
+                      httpMethod: HttpMethod.POST,
                       urlPart: `/${url}`,
                       toolTip: {
                         id: `tooltip-post-${name}`,
@@ -63,6 +65,7 @@ const IndexPage: React.FC = () => {
                     },
                     {
                       displayValue: "Update",
+                      httpMethod: HttpMethod.PUT,
                       urlPart: `/${url}`,
                       toolTip: {
                         id: `tooltip-put-${name}`,
@@ -71,6 +74,7 @@ const IndexPage: React.FC = () => {
                     },
                     {
                       displayValue: "UpdatePartial",
+                      httpMethod: HttpMethod.PATCH,
                       urlPart: `/${url}`,
                       toolTip: {
                         id: `tooltip-patch-${name}`,
@@ -79,6 +83,7 @@ const IndexPage: React.FC = () => {
                     },
                     {
                       displayValue: "DeleteById",
+                      httpMethod: HttpMethod.DELETE,
                       urlPart: `/${url}($id)`,
                       toolTip: {
                         id: `tooltip-delete-${name}`,
