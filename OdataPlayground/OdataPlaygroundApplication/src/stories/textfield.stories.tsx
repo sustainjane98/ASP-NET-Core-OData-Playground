@@ -11,6 +11,18 @@ export const Default: Story = () => (
   ></Textfield>
 );
 
+export const WithAutoComplete: Story = () => (
+  <Textfield
+    placeholder="Lorem ipsum..."
+    label="Test"
+    name="example"
+    autoComplete={[
+      { key: /\?filter$/, value: "eq" },
+      { key: /\?.*$/, value: "filter=" },
+    ]}
+  ></Textfield>
+);
+
 export default {
   decorators: [
     (Component) => {

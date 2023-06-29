@@ -42,11 +42,13 @@ export const OdataFormWrapper: React.FC<PropsWithChildren> = ({ children }) => {
 
   const httpMethod = useWatch({ control: methods.control, name: "httpMethod" });
 
-  const { data, isSuccess, mutate } = useRequestOdata();
+  const { data, isError, isSuccess, mutate } = useRequestOdata();
 
   useEffect(() => {
     if (data && isSuccess) {
-      methods.setValue("responseArea", data);
+      methods.setValue("responseArea", JSON.stringify(data));
+    } else {
+      methods.setValue("responseArea", "Something went wrong");
     }
   }, [data, isSuccess]);
 
@@ -155,43 +157,43 @@ export const OdataFormWrapper: React.FC<PropsWithChildren> = ({ children }) => {
                   variant={ButtonColorVariant.LIGHT}
                   onClick={onPillClicked}
                   displayValue="Equals"
-                  urlPart="eq"
+                  urlPart="Name eq 'Customer 2'"
                 />
                 <Pill
                   variant={ButtonColorVariant.LIGHT}
                   onClick={onPillClicked}
                   displayValue="Less than"
-                  urlPart="lt"
+                  urlPart="Age lt 2"
                 />
                 <Pill
                   variant={ButtonColorVariant.LIGHT}
                   onClick={onPillClicked}
                   displayValue="Greater than"
-                  urlPart="gt"
+                  urlPart="Age gt 2"
                 />
                 <Pill
                   variant={ButtonColorVariant.LIGHT}
                   onClick={onPillClicked}
                   displayValue="And"
-                  urlPart="and"
+                  urlPart=" and "
                 />
                 <Pill
                   variant={ButtonColorVariant.LIGHT}
                   onClick={onPillClicked}
                   displayValue="Or"
-                  urlPart="or"
+                  urlPart=" or "
                 />
                 <Pill
                   variant={ButtonColorVariant.LIGHT}
                   onClick={onPillClicked}
                   displayValue="Greater than or equal to"
-                  urlPart="ge"
+                  urlPart="Age ge 2"
                 />
                 <Pill
                   variant={ButtonColorVariant.LIGHT}
                   onClick={onPillClicked}
                   displayValue="Not equal"
-                  urlPart="ne"
+                  urlPart="Name ne 'Customer 2'"
                 />
                 <Pill
                   variant={ButtonColorVariant.LIGHT}

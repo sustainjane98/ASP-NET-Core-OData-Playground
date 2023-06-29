@@ -1,5 +1,4 @@
 import React from "react";
-import { NavigationTabHeader } from "../components/navigation-tab-header";
 import { MainSection } from "../components/main-section";
 import { OdataFormWrapper } from "../components/odata-form-wrapper";
 import { OdataEndpointSection } from "../components/odata-endpoint-section";
@@ -14,7 +13,6 @@ const IndexPage: React.FC = () => {
 
   return (
     <>
-      <NavigationTabHeader />
       <main className="flex-1 flex p-6 gap-x-4">
         <MainSection>
           <OdataFormWrapper>

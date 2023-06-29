@@ -1,6 +1,6 @@
 import { OdataSchemeEntry } from "./odata-scheme-entry.type";
 
-export interface OdataScheme {
+export interface OdataScheme<T = OdataSchemeEntry> {
   "@odata.context": string;
-  value: OdataSchemeEntry[];
+  value: T[];
 }

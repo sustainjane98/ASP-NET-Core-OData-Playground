@@ -6,7 +6,7 @@ using OdataTestWebApp.Models;
 namespace OdataTestWebApp.Controllers;
 
 
-    public class CustomersController : ODataController
+    public class CustomerController : ODataController
     {
         private static readonly Random Random = new Random();
         private static readonly List<Customer> Customers = new List<Customer>(
