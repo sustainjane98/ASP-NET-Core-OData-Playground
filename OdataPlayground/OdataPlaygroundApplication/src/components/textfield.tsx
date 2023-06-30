@@ -26,7 +26,7 @@ export interface TextfieldProps
  */
 export const Textfield = React.forwardRef<HTMLInputElement, TextfieldProps>(
   ({ label, buttonProps, dropdownProps, autoComplete, ...inputProps }, ref) => {
-    const { register, setValue, getValues } = useFormContext();
+    const { register, setValue } = useFormContext();
     const { ref: registerRef, ...other } = register(inputProps.name);
 
     const inputRef = React.createRef<HTMLInputElement>();
@@ -97,7 +97,7 @@ export const Textfield = React.forwardRef<HTMLInputElement, TextfieldProps>(
           </div>
         </div>
         {autoCompleteToDisplay && inputSelected && (
-          <ul className="absolute top-[calc(100%_-_2px)] w-full border-b border-l border-r border-gray-200 bg-gray-50 text-gray-900 text-sm rounded-b-lg">
+          <ul className="absolute top-[calc(100%_-_2px)] max-h-72 overflow-scroll w-full border-b border-l border-r border-gray-200 bg-gray-50 text-gray-900 text-sm rounded-b-lg">
             {autoCompleteToDisplay?.map(({ key, value }, i) => (
               <li
                 key={`autocomplete-${key}-${i}`}

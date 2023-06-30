@@ -2,6 +2,8 @@
 import type { Story, StoryDefault } from "@ladle/react";
 import { Textfield, TextfieldProps } from "../components/textfield";
 import { FormProvider, useForm } from "react-hook-form";
+import { FilterVariants } from "../data/filter-variants";
+import { FilterQueryOperators } from "../data/filter-query-operators";
 
 export const Default: Story = () => (
   <Textfield
@@ -16,10 +18,7 @@ export const WithAutoComplete: Story = () => (
     placeholder="Lorem ipsum..."
     label="Test"
     name="example"
-    autoComplete={[
-      { selector: /\?filter=$/, key: "eq" },
-      { selector: /\?$/, key: "filter=" },
-    ]}
+    autoComplete={[...FilterVariants, ...FilterQueryOperators]}
   ></Textfield>
 );
 
