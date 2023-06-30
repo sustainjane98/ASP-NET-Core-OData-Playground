@@ -1,6 +1,6 @@
 /* eslint-disable storybook/default-exports */
 import type { Story, StoryDefault } from "@ladle/react";
-import { Props, Textfield } from "../components/textfield";
+import { Textfield, TextfieldProps } from "../components/textfield";
 import { FormProvider, useForm } from "react-hook-form";
 
 export const Default: Story = () => (
@@ -17,8 +17,8 @@ export const WithAutoComplete: Story = () => (
     label="Test"
     name="example"
     autoComplete={[
-      { key: /\?filter$/, value: "eq" },
-      { key: /\?.*$/, value: "filter=" },
+      { selector: /\?filter=$/, key: "eq" },
+      { selector: /\?$/, key: "filter=" },
     ]}
   ></Textfield>
 );
@@ -34,4 +34,4 @@ export default {
       );
     },
   ],
-} satisfies StoryDefault<Props>;
+} satisfies StoryDefault<TextfieldProps>;
