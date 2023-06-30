@@ -12,6 +12,8 @@ import { DevTool } from "@hookform/devtools";
 import { HeadSection } from "./head-section";
 import { HttpMethod } from "../enums/httpMethod.enum";
 import { useRequestOdata } from "../hooks/useRequestOdata.hook";
+import { FilterVariants } from "../data/filter-variants";
+import { FilterQueryOperators } from "../data/filter-query-operators";
 
 export interface OdataRequestForm {
   baseUrl: string;
@@ -81,6 +83,7 @@ export const OdataFormWrapper: React.FC<PropsWithChildren> = ({ children }) => {
           id="odata-url-field"
           name="url"
           placeholder="Bite Url eingeben..."
+          autoComplete={[...FilterVariants, ...FilterQueryOperators]}
           buttonProps={[
             {
               children: "Cancel",

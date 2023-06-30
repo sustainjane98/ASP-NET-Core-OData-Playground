@@ -44,7 +44,7 @@ export const Textfield = React.forwardRef<HTMLInputElement, TextfieldProps>(
 
     useEffect(() => {
       setAutoCompleteToDisplay(
-        autoComplete?.filter(({ selector }) => {
+        autoComplete?.filter?.(({ selector }) => {
           return selector.test(currentValue);
         }) ?? []
       );
