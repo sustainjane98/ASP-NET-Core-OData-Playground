@@ -5,7 +5,6 @@ using OdataTestWebApp.Models;
 
 namespace OdataTestWebApp.Controllers;
 
-
     public class CustomerController : ODataController
     {
         private static readonly Random Random = new Random();
@@ -39,5 +38,11 @@ namespace OdataTestWebApp.Controllers;
             }
 
             return Ok(item);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] Customer c)
+        {
+            return Created(c);
         }
     }

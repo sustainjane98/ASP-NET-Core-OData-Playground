@@ -1,3 +1,5 @@
+import { TextfieldFilters } from "../types/textfield-filter.type";
+
 const FilterQueryOperatorsBasic: Record<string, string> = {
   EQUALS: "Name eq 'Customer 2'",
   NOT_EQUALS: "Name ne 'Customer 2'",
@@ -19,20 +21,17 @@ const FilterQueryOperatorsBasic: Record<string, string> = {
   CEILING: "ceiling(FDecimal) eq 1",
 };
 
-const selector = /.+=$/;
+const selector = /\?filter=$/;
 
 export const FilterQueryOperators = (() => {
   const keys = Object.keys(FilterQueryOperatorsBasic);
-  let FilterVariantInst: {
-    selector: RegExp;
-    key: string;
-    value?: string;
-  }[] = [];
+  let FilterVariantInst: TextfieldFilters = [];
 
   for (const key of keys) {
     FilterVariantInst.push({
       selector,
       key: `${FilterQueryOperatorsBasic[key]}`,
+      value: key.toLowerCase(),
     });
   }
 

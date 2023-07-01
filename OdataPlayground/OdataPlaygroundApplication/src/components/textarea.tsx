@@ -1,6 +1,7 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
 import { useFormContext } from "react-hook-form";
+import classNames from "classnames";
 
 export interface Props
   extends React.DetailedHTMLProps<
@@ -33,7 +34,10 @@ export const Textarea: React.FC<Props> = ({ label, ...areaProps }) => {
         {...registerProps}
         onChange={areaProps.readOnly ? undefined : onChange}
         className={twMerge(
-          "block p-2.5 w-full text-sm text-gray-900 bg-gray-100 rounded-lg border border-gray-300 focus:ring-cyan-700 focus:border-cyan-700",
+          classNames(
+            "block p-2.5 w-full text-sm text-gray-900 bg-gray-100 rounded-lg border border-gray-300 focus:ring-cyan-700 focus:border-cyan-700",
+            { "cursor-not-allowed": areaProps.disabled }
+          ),
           areaProps.className
         )}
       ></textarea>

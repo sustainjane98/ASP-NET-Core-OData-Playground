@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useEffect } from "react";
+import React, { PropsWithChildren } from "react";
 import {
   FormProvider,
   SubmitHandler,
@@ -6,7 +6,6 @@ import {
   useWatch,
 } from "react-hook-form";
 import { Textfield } from "./textfield";
-import { Pill } from "./pill";
 import { ButtonColorVariant } from "./button";
 import { DevTool } from "@hookform/devtools";
 import { HeadSection } from "./head-section";
@@ -14,6 +13,10 @@ import { HttpMethod } from "../enums/httpMethod.enum";
 import { useRequestOdata } from "../hooks/useRequestOdata.hook";
 import { FilterVariants } from "../data/filter-variants";
 import { FilterQueryOperators } from "../data/filter-query-operators";
+import { useBaseUrl } from "../hooks/use-base-url.hook";
+import { useReponseArea } from "../hooks/use-reponse-area.hook";
+import { useOdataScheme } from "../hooks/useOdataScheme.hook";
+import { OdataConvertMapper } from "../services/mappers/odata-convert.mapper";
 
 export interface OdataRequestForm {
   baseUrl: string;
@@ -29,6 +32,7 @@ export interface OdataRequestForm {
  * @version 0.1
  */
 export const OdataFormWrapper: React.FC<PropsWithChildren> = ({ children }) => {
+  const { data } = useOdataScheme();
   const methods = useForm<OdataRequestForm>({
     defaultValues: {
       httpMethod: HttpMethod.GET,
@@ -39,38 +43,16 @@ export const OdataFormWrapper: React.FC<PropsWithChildren> = ({ children }) => {
     },
   });
   const onSubmit: SubmitHandler<OdataRequestForm> = (data) => console.log(data);
-
   const inputRef = React.createRef<HTMLInputElement>();
-
   const httpMethod = useWatch({ control: methods.control, name: "httpMethod" });
+  const {
+    data: odataRequestResponseData,
+    isSuccess,
+    mutate,
+  } = useRequestOdata();
 
-  const { data, isError, isSuccess, mutate } = useRequestOdata();
-
-  useEffect(() => {
-    if (data && isSuccess) {
-      methods.setValue("responseArea", JSON.stringify(data));
-    } else {
-      methods.setValue("responseArea", "Something went wrong");
-    }
-  }, [data, isSuccess]);
-
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const odataPath = urlParams.get("odataPath");
-
-    // eslint-disable-next-line no-restricted-globals
-    methods.setValue("baseUrl", odataPath ?? location.origin, {
-      shouldDirty: true,
-    });
-    // eslint-disable-next-line no-restricted-globals
-    methods.setValue("url", odataPath ?? location.origin, {
-      shouldDirty: true,
-    });
-  }, [methods]);
-
-  const onPillClicked = () => {
-    inputRef.current?.focus();
-  };
+  useReponseArea(methods, odataRequestResponseData, isSuccess);
+  useBaseUrl(methods);
 
   return (
     <form
@@ -83,7 +65,16 @@ export const OdataFormWrapper: React.FC<PropsWithChildren> = ({ children }) => {
           id="odata-url-field"
           name="url"
           placeholder="Bite Url eingeben..."
-          autoComplete={[...FilterVariants, ...FilterQueryOperators]}
+          autoComplete={[
+            ...FilterVariants,
+            ...FilterQueryOperators,
+            {
+              selector: /https*:\/\/[A-Za-z]*:*\d{1,4}\/.+\/$/,
+              key: "$count",
+              value: "count",
+            },
+            ...OdataConvertMapper.mapOdataSchemeToFilters(data),
+          ]}
           buttonProps={[
             {
               children: "Cancel",
@@ -97,7 +88,11 @@ export const OdataFormWrapper: React.FC<PropsWithChildren> = ({ children }) => {
               children: "Send",
               onClick: () => {
                 const url = methods.getValues("url");
-                mutate({ httpMethod: httpMethod, url });
+                const requestArea =
+                  httpMethod !== HttpMethod.GET
+                    ? methods.getValues("requestArea")
+                    : undefined;
+                mutate({ httpMethod: httpMethod, url, data: requestArea });
               },
             },
           ]}
@@ -114,173 +109,7 @@ export const OdataFormWrapper: React.FC<PropsWithChildren> = ({ children }) => {
             },
           ]}
         />
-
-        <HeadSection
-          children={
-            httpMethod === HttpMethod.GET && [
-              <div className="flex gap-2 flex-wrap">
-                <Pill
-                  onClick={onPillClicked}
-                  displayValue="Filter"
-                  urlPart="?filter="
-                />
-                <Pill
-                  onClick={onPillClicked}
-                  displayValue="Select"
-                  urlPart="?select="
-                />
-                <Pill
-                  onClick={onPillClicked}
-                  displayValue="Expand"
-                  urlPart="?expand="
-                />
-                <Pill
-                  onClick={onPillClicked}
-                  displayValue="Order By"
-                  urlPart="?orderby="
-                />
-                <Pill
-                  onClick={onPillClicked}
-                  displayValue="Top"
-                  urlPart="?top="
-                />
-                <Pill
-                  onClick={onPillClicked}
-                  displayValue="Skip"
-                  urlPart="?skip="
-                />
-                <Pill
-                  onClick={onPillClicked}
-                  displayValue="Search"
-                  urlPart="?search="
-                />
-              </div>,
-              <div className="flex gap-2 flex-wrap">
-                <Pill
-                  variant={ButtonColorVariant.LIGHT}
-                  onClick={onPillClicked}
-                  displayValue="Equals"
-                  urlPart="Name eq 'Customer 2'"
-                />
-                <Pill
-                  variant={ButtonColorVariant.LIGHT}
-                  onClick={onPillClicked}
-                  displayValue="Less than"
-                  urlPart="Age lt 2"
-                />
-                <Pill
-                  variant={ButtonColorVariant.LIGHT}
-                  onClick={onPillClicked}
-                  displayValue="Greater than"
-                  urlPart="Age gt 2"
-                />
-                <Pill
-                  variant={ButtonColorVariant.LIGHT}
-                  onClick={onPillClicked}
-                  displayValue="And"
-                  urlPart=" and "
-                />
-                <Pill
-                  variant={ButtonColorVariant.LIGHT}
-                  onClick={onPillClicked}
-                  displayValue="Or"
-                  urlPart=" or "
-                />
-                <Pill
-                  variant={ButtonColorVariant.LIGHT}
-                  onClick={onPillClicked}
-                  displayValue="Greater than or equal to"
-                  urlPart="Age ge 2"
-                />
-                <Pill
-                  variant={ButtonColorVariant.LIGHT}
-                  onClick={onPillClicked}
-                  displayValue="Not equal"
-                  urlPart="Name ne 'Customer 2'"
-                />
-                <Pill
-                  variant={ButtonColorVariant.LIGHT}
-                  onClick={onPillClicked}
-                  displayValue="Ends with"
-                  urlPart="endswith(VAT_Bus_Posting_Group,'RT')"
-                />
-                <Pill
-                  variant={ButtonColorVariant.LIGHT}
-                  onClick={onPillClicked}
-                  displayValue="Starts with"
-                  urlPart="startswith(Name, 'S')"
-                />
-                <Pill
-                  variant={ButtonColorVariant.LIGHT}
-                  onClick={onPillClicked}
-                  displayValue="Substring of"
-                  urlPart="substringof(Name, ‘urn’)"
-                />
-                <Pill
-                  variant={ButtonColorVariant.LIGHT}
-                  onClick={onPillClicked}
-                  displayValue="Index of"
-                  urlPart="indexof(Location_Code, ‘BLUE’) eq 0"
-                />
-                <Pill
-                  variant={ButtonColorVariant.LIGHT}
-                  onClick={onPillClicked}
-                  displayValue="Replace"
-                  urlPart="replace(City, 'Miami', 'Tampa') eq 'CODERED'"
-                />
-                <Pill
-                  variant={ButtonColorVariant.LIGHT}
-                  onClick={onPillClicked}
-                  displayValue="Substring"
-                  urlPart="substring(Location_Code, 5) eq 'RED'"
-                />
-                <Pill
-                  variant={ButtonColorVariant.LIGHT}
-                  onClick={onPillClicked}
-                  displayValue="To lower"
-                  urlPart="tolower(Location_Code) eq 'code red'"
-                />
-                <Pill
-                  variant={ButtonColorVariant.LIGHT}
-                  onClick={onPillClicked}
-                  displayValue="To upper"
-                  urlPart="toupper(FText) eq '2ND ROW'"
-                />
-                <Pill
-                  variant={ButtonColorVariant.LIGHT}
-                  onClick={onPillClicked}
-                  displayValue="Trim"
-                  urlPart="trim(FCode) eq 'CODE RED'"
-                />{" "}
-                <Pill
-                  variant={ButtonColorVariant.LIGHT}
-                  onClick={onPillClicked}
-                  displayValue="Concat"
-                  urlPart="concat(concat(FText, ', '), FCode) eq '2nd row, CODE RED'"
-                />
-                <Pill
-                  variant={ButtonColorVariant.LIGHT}
-                  onClick={onPillClicked}
-                  displayValue="Round"
-                  urlPart="round(FDecimal) eq 1"
-                />
-                <Pill
-                  variant={ButtonColorVariant.LIGHT}
-                  onClick={onPillClicked}
-                  displayValue="Floor"
-                  urlPart="floor(FDecimal) eq 0"
-                />
-                <Pill
-                  variant={ButtonColorVariant.LIGHT}
-                  onClick={onPillClicked}
-                  displayValue="Ceiling"
-                  urlPart="ceiling(FDecimal) eq 1"
-                />
-              </div>,
-            ]
-          }
-        />
-
+        <HeadSection />
         {children}
       </FormProvider>
       <DevTool control={methods.control} placement="bottom-right" />

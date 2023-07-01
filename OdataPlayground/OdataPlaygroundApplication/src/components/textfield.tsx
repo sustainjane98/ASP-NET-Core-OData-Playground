@@ -38,7 +38,6 @@ export const Textfield = React.forwardRef<HTMLInputElement, TextfieldProps>(
 
     const [inputSelected, setInputSelected] = useState<boolean>(false);
 
-    //TODO: Fix autocomplete logic when entry is selected
     const [autoCompleteToDisplay, setAutoCompleteToDisplay] =
       useState<typeof autoComplete>(autoComplete);
 
@@ -96,35 +95,37 @@ export const Textfield = React.forwardRef<HTMLInputElement, TextfieldProps>(
               ))}
           </div>
         </div>
-        {autoCompleteToDisplay && inputSelected && (
-          <ul className="absolute top-[calc(100%_-_2px)] max-h-72 overflow-scroll w-full border-b border-l border-r border-gray-200 bg-gray-50 text-gray-900 text-sm rounded-b-lg">
-            {autoCompleteToDisplay?.map(({ key, value }, i) => (
-              <li
-                key={`autocomplete-${key}-${i}`}
-                className={"p-2.5 hover:text-cyan-800"}
-              >
-                <Button
-                  variant={ButtonColorVariant.TRANSPARENT}
-                  className={"w-full px-0 focus:ring-0"}
-                  onClick={() => {
-                    window.clearTimeout(id);
-                    id = undefined;
-
-                    setInputSelected(true);
-                    setValue(inputProps.name, currentValue + key, {
-                      shouldDirty: true,
-                      shouldTouch: true,
-                      shouldValidate: true,
-                    });
-                    inputRef.current?.focus();
-                  }}
+        {autoCompleteToDisplay &&
+          autoCompleteToDisplay.length > 0 &&
+          inputSelected && (
+            <ul className="absolute top-[calc(100%_-_2px)] p-2.5 flex flex-col gap-y-2.5 max-h-72 overflow-scroll w-full border-b border-l border-r border-gray-200 bg-gray-50 text-gray-900 text-sm rounded-b-lg">
+              {autoCompleteToDisplay?.map(({ key, value }, i) => (
+                <li
+                  key={`autocomplete-${key}-${i}`}
+                  className={"hover:text-cyan-800"}
                 >
-                  {value ?? key}
-                </Button>
-              </li>
-            ))}
-          </ul>
-        )}
+                  <Button
+                    variant={ButtonColorVariant.TRANSPARENT}
+                    className={"w-full p-0 focus:ring-0"}
+                    onClick={() => {
+                      window.clearTimeout(id);
+                      id = undefined;
+
+                      setInputSelected(true);
+                      setValue(inputProps.name, currentValue + key, {
+                        shouldDirty: true,
+                        shouldTouch: true,
+                        shouldValidate: true,
+                      });
+                      inputRef.current?.focus();
+                    }}
+                  >
+                    {value ?? key}
+                  </Button>
+                </li>
+              ))}
+            </ul>
+          )}
       </div>
     );
   }
