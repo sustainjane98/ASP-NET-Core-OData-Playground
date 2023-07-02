@@ -1,8 +1,8 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { Button, ButtonProps } from "./button";
-import { OdataRequestForm } from "./odata-form-wrapper";
-import { HttpMethod } from "../enums/httpMethod.enum";
+import { OdataRequestForm } from "../index/odata-playground";
+import { HttpMethod } from "../../enums/http-method.enum";
 import { twMerge } from "tailwind-merge";
 
 export interface Props extends ButtonProps {

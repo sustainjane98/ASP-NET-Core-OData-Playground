@@ -1,6 +1,6 @@
 /* eslint-disable storybook/default-exports */
 import type { Story, StoryDefault } from "@ladle/react";
-import { Textfield, TextfieldProps } from "../components/textfield";
+import { Textfield, TextfieldProps } from "../components/common/textfield";
 import { FormProvider, useForm } from "react-hook-form";
 import { FilterVariants } from "../data/filter-variants";
 import { FilterQueryOperators } from "../data/filter-query-operators";

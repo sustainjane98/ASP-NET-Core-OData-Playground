@@ -1,8 +1,8 @@
 import React from "react";
 import { LinkIcon } from "@heroicons/react/24/solid";
-import { Pill, Props as PillProps } from "./pill";
-import { Tooltip } from "./tooltip";
-import { Button, ButtonColorVariant } from "./button";
+import { Pill, Props as PillProps } from "../common/pill";
+import { Tooltip } from "../common/tooltip";
+import { Button, ButtonColorVariant } from "../common/button";
 
 export interface Props {
   title: string;
@@ -30,13 +30,14 @@ export const OdataEndpointSection: React.FC<Props> = ({ title, subPaths }) => {
         </Button>
       </div>
       {/*TODO: Fix grid so that all elements have same height and width */}
-      <div className="grid gap-2 mt-2 flex-wrap">
+      <div className="flex gap-2 mt-2 flex-wrap">
         {subPaths.map(({ toolTip, ...other }) => [
           <Pill
+            key={other.displayValue + other.urlPart}
             {...other}
-            className="max-w-[150px] break-all"
+            className="max-w-[200px] break-all"
             resetToBaseUrl
-            data-tooltip-target={toolTip?.id ?? "tooltip"}
+            data-tooltip-target={toolTip ? toolTip?.id ?? "tooltip" : undefined}
           />,
           toolTip ? (
             <Tooltip id={toolTip?.id ?? "tooltip"}>{toolTip?.title}</Tooltip>

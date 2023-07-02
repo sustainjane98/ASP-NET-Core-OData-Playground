@@ -1,5 +1,5 @@
 import { useMutation } from "react-query";
-import { HttpMethod } from "../enums/httpMethod.enum";
+import { HttpMethod } from "../enums/http-method.enum";
 import axios from "axios";
 import { OdataScheme } from "../types/odata-scheme.type";
 

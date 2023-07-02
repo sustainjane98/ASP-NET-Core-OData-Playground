@@ -1,6 +1,6 @@
 /* eslint-disable storybook/default-exports */
 import type { Story } from "@ladle/react";
-import { Button, ButtonColorVariant } from "../components/button";
+import { Button, ButtonColorVariant } from "../components/common/button";
 
 export const Default: Story = () => (
   <Button variant={ButtonColorVariant.DEFAULT}>Default</Button>

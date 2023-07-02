@@ -1,9 +1,9 @@
-import React, { PropsWithChildren } from "react";
-import { Textarea } from "./textarea";
+import React from "react";
+import { Textarea } from "../common/textarea";
 import { useWatch } from "react-hook-form";
-import { HttpMethod } from "../enums/httpMethod.enum";
+import { HttpMethod } from "../../enums/http-method.enum";
 
-export const HeadSection: React.FC<PropsWithChildren> = ({ children }) => {
+export const RequestAndResponseArea: React.FC = () => {
   const httpMethod = useWatch({ name: "httpMethod" }) as HttpMethod;
 
   return (

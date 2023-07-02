@@ -6,7 +6,7 @@ import { Dropdown, Props as DropdownProps } from "./dropdown";
 import {
   TextfieldFilter,
   TextfieldFilters,
-} from "../types/textfield-filter.type";
+} from "../../types/textfield-filter.type";
 
 export interface TextfieldProps
   extends Omit<

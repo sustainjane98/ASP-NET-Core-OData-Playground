@@ -5,7 +5,7 @@ import {
   TextfieldFilter,
   TextfieldFilters,
 } from "../../types/textfield-filter.type";
-import { HttpMethod } from "../../enums/httpMethod.enum";
+import { HttpMethod } from "../../enums/http-method.enum";
 
 const selector = /https*:\/\/[A-Za-z]*:*\d{1,4}\/$/;
 

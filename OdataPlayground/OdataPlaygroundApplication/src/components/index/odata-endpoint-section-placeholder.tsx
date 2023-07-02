@@ -15,7 +15,9 @@ export const OdataEndpointSectionPlaceholder: React.FC<Props> = () => {
           let res: React.ReactElement[] = [];
 
           for (let i = 0; i < numberOfPills; i++) {
-            res.push(<div className="w-24 h-10 bg-gray-200 rounded-full" />);
+            res.push(
+              <div key={i} className="w-24 h-10 bg-gray-200 rounded-full" />
+            );
           }
           return res;
         })()}

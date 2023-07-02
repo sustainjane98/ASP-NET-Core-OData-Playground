@@ -1,22 +1,28 @@
-import React, { PropsWithChildren } from "react";
+import React from "react";
 import {
   FormProvider,
   SubmitHandler,
   useForm,
   useWatch,
 } from "react-hook-form";
-import { Textfield } from "./textfield";
-import { ButtonColorVariant } from "./button";
+import { Textfield } from "../common/textfield";
+import { ButtonColorVariant } from "../common/button";
 import { DevTool } from "@hookform/devtools";
-import { HeadSection } from "./head-section";
-import { HttpMethod } from "../enums/httpMethod.enum";
-import { useRequestOdata } from "../hooks/useRequestOdata.hook";
-import { FilterVariants } from "../data/filter-variants";
-import { FilterQueryOperators } from "../data/filter-query-operators";
-import { useBaseUrl } from "../hooks/use-base-url.hook";
-import { useReponseArea } from "../hooks/use-reponse-area.hook";
-import { useOdataScheme } from "../hooks/useOdataScheme.hook";
-import { OdataConvertMapper } from "../services/mappers/odata-convert.mapper";
+import { RequestAndResponseArea } from "./request-and-response-area";
+import { HttpMethod } from "../../enums/http-method.enum";
+import { useRequestOdata } from "../../hooks/use-request-odata.hook";
+import { FilterVariants } from "../../data/filter-variants";
+import { FilterQueryOperators } from "../../data/filter-query-operators";
+import { useBaseUrl } from "../../hooks/use-base-url.hook";
+import { useReponseArea } from "../../hooks/use-reponse-area.hook";
+import { useOdataScheme } from "../../hooks/use-odata-scheme.hook";
+import { OdataConvertMapper } from "../../services/mappers/odata-convert.mapper";
+import { useOdataMetadataScheme } from "../../hooks/use-odata-metadata-scheme.hook";
+import { useRequestArea } from "../../hooks/use-request-area";
+import { OdataEndpointSectionPlaceholderContainer } from "./odata-endpoint-section-placeholder-container";
+import { NoData } from "../common/no-data";
+import { OdataEndpointSections } from "./odata-endpoint-sections";
+import { useTranslation } from "react-i18next";
 
 export interface OdataRequestForm {
   baseUrl: string;
@@ -31,8 +37,9 @@ export interface OdataRequestForm {
  * @author Jane Will
  * @version 0.1
  */
-export const OdataFormWrapper: React.FC<PropsWithChildren> = ({ children }) => {
-  const { data } = useOdataScheme();
+export const OdataPlayground: React.FC = () => {
+  const { data, isLoading } = useOdataScheme();
+  const { data: metadata } = useOdataMetadataScheme();
   const methods = useForm<OdataRequestForm>({
     defaultValues: {
       httpMethod: HttpMethod.GET,
@@ -53,6 +60,9 @@ export const OdataFormWrapper: React.FC<PropsWithChildren> = ({ children }) => {
 
   useReponseArea(methods, odataRequestResponseData, isSuccess);
   useBaseUrl(methods);
+  useRequestArea(methods, metadata);
+
+  const { t } = useTranslation(["index"]);
 
   return (
     <form
@@ -64,7 +74,7 @@ export const OdataFormWrapper: React.FC<PropsWithChildren> = ({ children }) => {
           ref={inputRef}
           id="odata-url-field"
           name="url"
-          placeholder="Bite Url eingeben..."
+          placeholder={t("please_insert_text")}
           autoComplete={[
             ...FilterVariants,
             ...FilterQueryOperators,
@@ -113,8 +123,16 @@ export const OdataFormWrapper: React.FC<PropsWithChildren> = ({ children }) => {
             },
           ]}
         />
-        <HeadSection />
-        {children}
+        <RequestAndResponseArea />
+        <div className="h-10" />
+        {data === undefined ||
+          data === null ||
+          ((data?.length ?? 0) === 0 && <NoData />)}
+        {isLoading ? (
+          <OdataEndpointSectionPlaceholderContainer />
+        ) : (
+          <OdataEndpointSections />
+        )}
       </FormProvider>
       <DevTool control={methods.control} placement="bottom-right" />
     </form>

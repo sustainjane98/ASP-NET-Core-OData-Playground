@@ -1,5 +1,5 @@
 import { Story } from "@ladle/react";
-import { Dropdown, Props } from "../components/dropdown";
+import { Dropdown, Props } from "../components/common/dropdown";
 import { FormProvider, useForm } from "react-hook-form";
 import { StoryDefault } from "@ladle/react/typings-for-build/app/exports";
 

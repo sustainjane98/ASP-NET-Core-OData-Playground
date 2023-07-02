@@ -1,0 +1,7 @@
+###Query odata $metadata
+GET http://localhost:8080/$metadata
+Accept: application/xml
+
+###Query odata $metadata as json
+GET http://localhost:8080/$metadata
+Accept: application/json

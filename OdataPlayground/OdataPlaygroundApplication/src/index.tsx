@@ -2,23 +2,21 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import "./styles.css";
-import IndexPage from "./pages";
-import { QueryClient, QueryClientProvider } from "react-query";
 import "flowbite";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { Wrappers } from "./components/global/wrappers";
+import { Router } from "./components/router";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-const queryClient = new QueryClient();
-
 root.render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <IndexPage />
+    <Wrappers>
+      <Router />
       <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    </Wrappers>
   </React.StrictMode>
 );
 
