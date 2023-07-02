@@ -29,7 +29,7 @@ export const OdataEndpointSection: React.FC<Props> = ({ title, subPaths }) => {
           <LinkIcon width={20} />
         </Button>
       </div>
-      //TODO: Fix grid so that all elements have same height and width
+      {/*TODO: Fix grid so that all elements have same height and width */}
       <div className="grid gap-2 mt-2 flex-wrap">
         {subPaths.map(({ toolTip, ...other }) => [
           <Pill

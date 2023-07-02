@@ -1,12 +1,12 @@
-import { useEffect } from "react";
 import { FieldValues, UseFormReturn } from "react-hook-form";
+import { useUpdateEffect } from "usehooks-ts";
 
 export const useReponseArea = <M, T extends FieldValues = FieldValues>(
   methods: UseFormReturn<T>,
   data: M,
   isSuccess: boolean
 ) =>
-  useEffect(() => {
+  useUpdateEffect(() => {
     if (data && isSuccess) {
       methods.setValue("responseArea" as any, JSON.stringify(data) as any);
     } else {

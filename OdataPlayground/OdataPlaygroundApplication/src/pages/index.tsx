@@ -11,7 +11,10 @@ import { HttpMethod } from "../enums/httpMethod.enum";
 const IndexPage: React.FC = () => {
   const { data, isLoading } = useOdataScheme();
 
-  //TODO: Put this in a separate hook
+  // eslint-disable-next-line no-lone-blocks
+  {
+    /*TODO: Put this in a separate hook */
+  }
   useEffect(() => {
     const alertUser = (e: BeforeUnloadEvent) => {
       e.preventDefault();
@@ -49,17 +52,11 @@ const IndexPage: React.FC = () => {
                 )?.map(({ name, values }) => (
                   <OdataEndpointSection
                     title={name}
-                    subPaths={values?.map(
-                      (
-                        { DisplayName: name, Pattern: url, HttpMethods },
-                        i
-                      ) => ({
-                        displayValue: `${HttpMethods?.[0]} ${url}`,
-                        urlPart: `/${url}`,
-                        httpMethod:
-                          HttpMethods?.[0].toLowerCase() as HttpMethod,
-                      })
-                    )}
+                    subPaths={values?.map(({ Pattern: url, HttpMethods }) => ({
+                      displayValue: `${HttpMethods?.[0]} ${url}`,
+                      urlPart: `/${url}`,
+                      httpMethod: HttpMethods?.[0].toLowerCase() as HttpMethod,
+                    }))}
                   />
                 ))}
               </div>
