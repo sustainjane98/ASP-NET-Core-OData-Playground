@@ -25,7 +25,7 @@ export interface TextfieldProps
 }
 
 /**
- * An Textfield React Component.
+ * A Textfield React Component.
  * @author Jane Will
  * @version 0.1
  */
