@@ -7,10 +7,12 @@ import { OdataEndpointSectionPlaceholderContainer } from "../components/odata-en
 import { ReactComponent as NoDataIllustration } from "../assets/undraw_no_data_re_kwbl.svg";
 import { OdataConvertMapper } from "../services/mappers/odata-convert.mapper";
 import { HttpMethod } from "../enums/httpMethod.enum";
+import { useOdataMetadataScheme } from "../hooks/use-odata-metadata-scheme.hook";
 
 const IndexPage: React.FC = () => {
   const { data, isLoading } = useOdataScheme();
-
+  //TODO: Use this metadata to construct json for post and put requests in odata
+  const { data: metadata } = useOdataMetadataScheme();
   // eslint-disable-next-line no-lone-blocks
   {
     /*TODO: Put this in a separate hook */
