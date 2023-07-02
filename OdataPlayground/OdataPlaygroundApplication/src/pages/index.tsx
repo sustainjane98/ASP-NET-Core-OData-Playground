@@ -11,6 +11,7 @@ import { HttpMethod } from "../enums/httpMethod.enum";
 const IndexPage: React.FC = () => {
   const { data, isLoading } = useOdataScheme();
 
+  //TODO: Put this in a separate hook
   useEffect(() => {
     const alertUser = (e: BeforeUnloadEvent) => {
       e.preventDefault();
