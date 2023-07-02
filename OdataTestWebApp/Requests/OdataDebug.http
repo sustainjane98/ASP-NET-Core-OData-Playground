@@ -1,0 +1,7 @@
+### Odata Debug view as json
+GET http://localhost:8080/$odata
+Accept: application/json
+
+### Odata Debug view as html page
+GET http://localhost:8080/$odata
+Accept: application/html

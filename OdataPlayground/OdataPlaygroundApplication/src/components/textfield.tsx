@@ -3,6 +3,10 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { mergeRefs } from "react-merge-refs";
 import { Button, ButtonColorVariant, ButtonProps } from "./button";
 import { Dropdown, Props as DropdownProps } from "./dropdown";
+import {
+  TextfieldFilter,
+  TextfieldFilters,
+} from "../types/textfield-filter.type";
 
 export interface TextfieldProps
   extends Omit<
@@ -13,7 +17,8 @@ export interface TextfieldProps
     "autoComplete"
   > {
   label?: string;
-  autoComplete?: { selector: RegExp; key: string; value?: string }[];
+  autoComplete?: TextfieldFilters;
+  additionalAutocompleteFilters?: (value: TextfieldFilter) => boolean;
   buttonProps?: (ButtonProps & { direction?: "right" | "left" })[];
   dropdownProps?: DropdownProps[];
   name: string;
@@ -25,7 +30,17 @@ export interface TextfieldProps
  * @version 0.1
  */
 export const Textfield = React.forwardRef<HTMLInputElement, TextfieldProps>(
-  ({ label, buttonProps, dropdownProps, autoComplete, ...inputProps }, ref) => {
+  (
+    {
+      label,
+      buttonProps,
+      dropdownProps,
+      additionalAutocompleteFilters,
+      autoComplete,
+      ...inputProps
+    },
+    ref
+  ) => {
     const { register, setValue } = useFormContext();
     const { ref: registerRef, ...other } = register(inputProps.name);
 
@@ -43,11 +58,19 @@ export const Textfield = React.forwardRef<HTMLInputElement, TextfieldProps>(
 
     useEffect(() => {
       setAutoCompleteToDisplay(
-        autoComplete?.filter?.(({ selector }) => {
-          return selector.test(currentValue);
+        autoComplete?.filter?.(({ selector, httpMethod, ...other }) => {
+          return (
+            selector.test(currentValue) &&
+            (additionalAutocompleteFilters?.({
+              selector,
+              httpMethod,
+              ...other,
+            }) ??
+              true)
+          );
         }) ?? []
       );
-    }, [autoComplete, currentValue]);
+    }, [additionalAutocompleteFilters, autoComplete, currentValue]);
 
     let id: number | undefined;
 
@@ -89,7 +112,15 @@ export const Textfield = React.forwardRef<HTMLInputElement, TextfieldProps>(
           <div className="flex gap-x-2">
             {rightButtons &&
               rightButtons.map((b, index) => (
-                <Button key={`button-${index}`} {...b} type="button">
+                <Button
+                  key={`button-${index}`}
+                  {...b}
+                  onClick={(ev) => {
+                    ev.stopPropagation();
+                    b?.onClick?.(ev);
+                  }}
+                  type="button"
+                >
                   {b.children ?? b.title}
                 </Button>
               ))}

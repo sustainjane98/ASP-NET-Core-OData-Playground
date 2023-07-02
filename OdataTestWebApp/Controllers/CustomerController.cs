@@ -41,7 +41,7 @@ namespace OdataTestWebApp.Controllers;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Customer c)
+        public async Task<IActionResult> Post([FromBody] Customer c)
         {
             return Created(c);
         }

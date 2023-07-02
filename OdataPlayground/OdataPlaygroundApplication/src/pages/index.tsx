@@ -1,15 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MainSection } from "../components/main-section";
 import { OdataFormWrapper } from "../components/odata-form-wrapper";
 import { OdataEndpointSection } from "../components/odata-endpoint-section";
 import { useOdataScheme } from "../hooks/useOdataScheme.hook";
 import { OdataEndpointSectionPlaceholderContainer } from "../components/odata-endpoint-section-placeholder-container";
 import { ReactComponent as NoDataIllustration } from "../assets/undraw_no_data_re_kwbl.svg";
-import { OdataScheme } from "../types/odata-scheme.type";
+import { OdataConvertMapper } from "../services/mappers/odata-convert.mapper";
 import { HttpMethod } from "../enums/httpMethod.enum";
 
 const IndexPage: React.FC = () => {
   const { data, isLoading } = useOdataScheme();
+
+  useEffect(() => {
+    const alertUser = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = "";
+    };
+
+    window.addEventListener("beforeunload", alertUser);
+    return () => window.removeEventListener("beforeunload", alertUser);
+  });
 
   return (
     <>
@@ -19,7 +29,7 @@ const IndexPage: React.FC = () => {
             <div className="h-10" />
             {data === undefined ||
               data === null ||
-              (((data as OdataScheme)?.value?.length ?? 0) === 0 && (
+              ((data?.length ?? 0) === 0 && (
                 <div className="flex-1 flex justify-center items-center w-full min- h-full">
                   <div className="flex flex-col items-center">
                     <NoDataIllustration width={200} height={200} />
@@ -32,65 +42,26 @@ const IndexPage: React.FC = () => {
             {isLoading ? (
               <OdataEndpointSectionPlaceholderContainer />
             ) : (
-              (data as OdataScheme)?.value?.map(({ name, url }) => (
-                <OdataEndpointSection
-                  title={name}
-                  subPaths={[
-                    {
-                      displayValue: "GetAll",
-                      urlPart: `/${url}`,
-                      toolTip: {
-                        id: `tooltip-get-all-${name}`,
-                        title: `GET '/${url}'`,
-                      },
-                    },
-                    {
-                      displayValue: "GetById",
-                      urlPart: `/${url}($id)`,
-                      toolTip: {
-                        id: `tooltip-get-by-id-${name}`,
-                        title: `GET '/${url}($id)'`,
-                      },
-                    },
-                    {
-                      displayValue: "Create",
-                      httpMethod: HttpMethod.POST,
-                      urlPart: `/${url}`,
-                      toolTip: {
-                        id: `tooltip-post-${name}`,
-                        title: `POST '/${url}($id)'`,
-                      },
-                    },
-                    {
-                      displayValue: "Update",
-                      httpMethod: HttpMethod.PUT,
-                      urlPart: `/${url}`,
-                      toolTip: {
-                        id: `tooltip-put-${name}`,
-                        title: `PUT '/${url}($id)'`,
-                      },
-                    },
-                    {
-                      displayValue: "UpdatePartial",
-                      httpMethod: HttpMethod.PATCH,
-                      urlPart: `/${url}`,
-                      toolTip: {
-                        id: `tooltip-patch-${name}`,
-                        title: `PATCH '/${url}($id)'`,
-                      },
-                    },
-                    {
-                      displayValue: "DeleteById",
-                      httpMethod: HttpMethod.DELETE,
-                      urlPart: `/${url}($id)`,
-                      toolTip: {
-                        id: `tooltip-delete-${name}`,
-                        title: `DELETE '/${url}($id)'`,
-                      },
-                    },
-                  ]}
-                />
-              ))
+              <div className="flex gap-4 flex-wrap">
+                {OdataConvertMapper.mapOdataDebugSchemeToOdataDebugGroups(
+                  data
+                )?.map(({ name, values }) => (
+                  <OdataEndpointSection
+                    title={name}
+                    subPaths={values?.map(
+                      (
+                        { DisplayName: name, Pattern: url, HttpMethods },
+                        i
+                      ) => ({
+                        displayValue: `${HttpMethods?.[0]} ${url}`,
+                        urlPart: `/${url}`,
+                        httpMethod:
+                          HttpMethods?.[0].toLowerCase() as HttpMethod,
+                      })
+                    )}
+                  />
+                ))}
+              </div>
             )}
           </OdataFormWrapper>
         </MainSection>

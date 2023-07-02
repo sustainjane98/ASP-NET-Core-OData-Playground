@@ -68,13 +68,13 @@ export const OdataFormWrapper: React.FC<PropsWithChildren> = ({ children }) => {
           autoComplete={[
             ...FilterVariants,
             ...FilterQueryOperators,
-            {
-              selector: /https*:\/\/[A-Za-z]*:*\d{1,4}\/.+\/$/,
-              key: "$count",
-              value: "count",
-            },
-            ...OdataConvertMapper.mapOdataSchemeToFilters(data),
+            ...OdataConvertMapper.mapOdataDebugSchemeToTextfieldFilter(data),
           ]}
+          additionalAutocompleteFilters={({ httpMethod }) => {
+            const httpMethodVal = methods.getValues("httpMethod");
+
+            return (httpMethod ?? "GET") === httpMethodVal.toUpperCase();
+          }}
           buttonProps={[
             {
               children: "Cancel",
@@ -99,6 +99,10 @@ export const OdataFormWrapper: React.FC<PropsWithChildren> = ({ children }) => {
           dropdownProps={[
             {
               name: "httpMethod",
+              onChange: () => {
+                const baseUrl = methods.getValues("baseUrl");
+                methods.setValue("url", baseUrl);
+              },
               values: [
                 { key: HttpMethod.GET, value: "GET" },
                 { key: HttpMethod.POST, value: "POST" },

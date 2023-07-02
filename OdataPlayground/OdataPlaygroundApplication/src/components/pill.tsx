@@ -3,6 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { Button, ButtonProps } from "./button";
 import { OdataRequestForm } from "./odata-form-wrapper";
 import { HttpMethod } from "../enums/httpMethod.enum";
+import { twMerge } from "tailwind-merge";
 
 export interface Props extends ButtonProps {
   urlPart: string;
@@ -46,7 +47,7 @@ export const Pill: React.FC<Props> = ({
 
         onClick?.();
       }}
-      className="rounded-full"
+      className={twMerge("rounded-full", props.className)}
     >
       <span>{displayValue}</span>
     </Button>

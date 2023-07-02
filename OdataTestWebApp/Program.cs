@@ -34,6 +34,9 @@ app.MapControllers();
 
 if (builder.Environment.IsDevelopment())
 {
+    
+    app.UseODataRouteDebug();
+    
     app.UseOdataPlaygroundUiDev(new OdataPlaygroundConfigurationOptionsDev()
     {
         UiPath = "/odata",

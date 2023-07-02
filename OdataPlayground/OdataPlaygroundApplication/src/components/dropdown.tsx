@@ -7,12 +7,14 @@ import classNames from "classnames";
 export interface Props extends PropsWithChildren, ButtonProps {
   name: string;
   values: { key: string; value: string }[];
+  onChange?: () => void;
   placeholderValue?: string;
 }
 
 export const Dropdown: React.FC<Props> = ({
   children,
   values,
+  onChange,
   placeholderValue,
   ...buttonProps
 }) => {
@@ -56,6 +58,7 @@ export const Dropdown: React.FC<Props> = ({
                 <Button
                   variant={ButtonColorVariant.TRANSPARENT}
                   onClick={() => {
+                    onChange?.();
                     setValue(buttonProps.name, key, { shouldDirty: true });
                     setOpen(false);
                   }}

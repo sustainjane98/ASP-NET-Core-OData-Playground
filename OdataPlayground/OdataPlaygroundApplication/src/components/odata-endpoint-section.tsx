@@ -3,9 +3,10 @@ import { LinkIcon } from "@heroicons/react/24/solid";
 import { Pill, Props as PillProps } from "./pill";
 import { Tooltip } from "./tooltip";
 import { Button, ButtonColorVariant } from "./button";
+
 export interface Props {
   title: string;
-  subPaths: (PillProps & { toolTip: { id: string; title: string } })[];
+  subPaths: (PillProps & { toolTip?: { id: string; title: string } })[];
 }
 
 /**
@@ -21,20 +22,24 @@ export const OdataEndpointSection: React.FC<Props> = ({ title, subPaths }) => {
           {title}
         </span>
         <Button
-          className="m-0 outline-none"
+          className="m-0 outline-none cursor-default"
           variant={ButtonColorVariant.TRANSPARENT}
+          disableFocus
         >
           <LinkIcon width={20} />
         </Button>
       </div>
-      <div className="flex gap-2 mt-2 flex-wrap">
+      <div className="grid gap-2 mt-2 flex-wrap">
         {subPaths.map(({ toolTip, ...other }) => [
           <Pill
             {...other}
+            className="max-w-[150px] break-all"
             resetToBaseUrl
             data-tooltip-target={toolTip?.id ?? "tooltip"}
           />,
-          <Tooltip id={toolTip?.id ?? "tooltip"}>{toolTip?.title}</Tooltip>,
+          toolTip ? (
+            <Tooltip id={toolTip?.id ?? "tooltip"}>{toolTip?.title}</Tooltip>
+          ) : undefined,
         ])}
       </div>
     </div>
