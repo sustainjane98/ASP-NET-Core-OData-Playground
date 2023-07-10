@@ -11,6 +11,9 @@ export const useRequestOdata = () =>
           method: val.httpMethod as string,
           url: val.url,
           data: val.data,
+          headers: {
+            "Content-Type": "application/json",
+          },
         })
       ).data;
     }
