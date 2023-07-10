@@ -16,13 +16,13 @@ import { FilterQueryOperators } from "../../data/filter-query-operators";
 import { useBaseUrl } from "../../hooks/use-base-url.hook";
 import { useReponseArea } from "../../hooks/use-reponse-area.hook";
 import { useOdataScheme } from "../../hooks/use-odata-scheme.hook";
-import { OdataConvertMapper } from "../../services/mappers/odata-convert.mapper";
 import { useOdataMetadataScheme } from "../../hooks/use-odata-metadata-scheme.hook";
 import { useRequestArea } from "../../hooks/use-request-area";
 import { OdataEndpointSectionPlaceholderContainer } from "./odata-endpoint-section-placeholder-container";
 import { NoData } from "../common/no-data";
 import { OdataEndpointSections } from "./odata-endpoint-sections";
 import { useTranslation } from "react-i18next";
+import { mapOdataDebugSchemeToTextfieldFilter } from "../../utils/mapper";
 
 export interface OdataRequestForm {
   baseUrl: string;
@@ -78,7 +78,7 @@ export const OdataPlayground: React.FC = () => {
           autoComplete={[
             ...FilterVariants,
             ...FilterQueryOperators,
-            ...OdataConvertMapper.mapOdataDebugSchemeToTextfieldFilter(data),
+            ...mapOdataDebugSchemeToTextfieldFilter(data),
           ]}
           additionalAutocompleteFilters={({ httpMethod }) => {
             const httpMethodVal = methods.getValues("httpMethod");
