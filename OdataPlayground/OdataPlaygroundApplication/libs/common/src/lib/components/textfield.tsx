@@ -22,7 +22,6 @@ export interface TextfieldProps
   dropdowns?: React.ReactElement[];
   name: string;
   handleChange?: (name: string, key: string) => void;
-  handleSubmit?: (name: string, key: string) => void;
 }
 
 /**
@@ -39,7 +38,6 @@ export const Textfield = React.forwardRef<HTMLInputElement, TextfieldProps>(
       dropdowns,
       additionalAutocompleteFilters,
       autoComplete,
-      handleSubmit,
       ...inputProps
     },
     ref
@@ -143,7 +141,7 @@ export const Textfield = React.forwardRef<HTMLInputElement, TextfieldProps>(
                       id = undefined;
 
                       setInputSelected(true);
-                      handleSubmit?.(inputProps.name, currentValue + key);
+                      handleChange?.(inputProps.name, currentValue + key);
                       inputRef.current?.focus();
                     }}
                   >
