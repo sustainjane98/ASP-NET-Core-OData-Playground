@@ -1,9 +1,13 @@
 {
-  "name": "@temp-workspace/source",
+  "name": "odata-playground",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "odata-playground:start-dev": "nx run odata-playground:serve:development"
+    "clear-cache": "nx reset",
+    "odata-playground:build-dev": "nx run odata-playground:build:development",
+    "odata-playground:build-prod": "nx run odata-playground:build:production",
+    "odata-playground:start-dev": "nx run odata-playground:serve:development",
+    "odata-playground-ladle:start": "nx run odata-playground-ladle:serve"
   },
   "private": true,
   "dependencies": {
@@ -36,12 +40,12 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/preset-react": "^7.14.5",
     "@hookform/devtools": "^4.3.1",
-    "@ladle/react": "^2.15.0",
     "@nx/cypress": "16.5.3",
     "@nx/eslint-plugin": "16.5.3",
     "@nx/js": "16.5.3",
     "@nx/linter": "16.5.3",
     "@nx/react": "^16.5.3",
+    "@nx/storybook": "^16.5.3",
     "@nx/vite": "16.5.3",
     "@nx/workspace": "16.5.3",
     "@swc/cli": "~0.1.62",
@@ -76,6 +80,7 @@
     "tailwindcss": "^3.3.2",
     "typescript": "~5.1.3",
     "vite": "~4.3.9",
+    "vite-plugin-static-copy": "^0.17.0",
     "vite-plugin-svgr": "^3.2.0",
     "vite-tsconfig-paths": "~4.2.0",
     "vitest": "~0.32.0"
