@@ -24,7 +24,7 @@ export default defineConfig({
       targets: [
         {
           src:
-            path.resolve(__dirname, '../../libs/i18n/src/lib/locales') +
+            path.resolve(__dirname, '../../libs/i18n/src/stories/locales') +
             '/[!.]*',
           dest: './locales',
         },
