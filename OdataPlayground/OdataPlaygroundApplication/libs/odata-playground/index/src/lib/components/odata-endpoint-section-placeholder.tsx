@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useMemo } from 'react';
 
-export interface Props {}
+export interface Props {
+  numberOfPills: number;
+}
 
-export const OdataEndpointSectionPlaceholder: React.FC<Props> = () => {
-  const numberOfPills = Math.floor(Math.random() * 10);
-
+export const OdataEndpointSectionPlaceholder: React.FC<Props> = ({
+  numberOfPills,
+}) => {
   return (
     <div className="max-w-sm p-4 border border-gray-200 rounded shadow animate-pulse inline-block">
       <div className="flex">
