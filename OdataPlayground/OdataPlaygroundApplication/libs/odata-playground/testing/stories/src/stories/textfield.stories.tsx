@@ -45,7 +45,7 @@ export const WithDropdown: Story = {
       dropdownProps={[
         {
           name: 'httpMethod',
-          onChange: () => {},
+          handleChange: () => {},
           values: [
             { key: HttpMethod.GET, value: 'GET' },
             { key: HttpMethod.POST, value: 'POST' },

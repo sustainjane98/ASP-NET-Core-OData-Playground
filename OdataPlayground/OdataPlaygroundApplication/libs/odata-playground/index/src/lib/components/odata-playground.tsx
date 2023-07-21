@@ -104,7 +104,7 @@ export const OdataPlayground: React.FC<Props> = ({ textfieldAutocomplete }) => {
           dropdownProps={[
             {
               name: 'httpMethod',
-              onChange: () => {
+              handleChange: () => {
                 const baseUrl = methods.getValues('baseUrl');
                 methods.setValue('url', baseUrl);
               },

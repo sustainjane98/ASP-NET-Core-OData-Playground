@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Dropdown as DropdownCommon,
   DropDownProps as DropDownPropsCommon,
@@ -8,7 +8,7 @@ import { useFormContext, useWatch } from 'react-hook-form';
 export type DropDownProps = Omit<DropDownPropsCommon, 'selectedValue'>;
 
 export const Dropdown: React.FC<Omit<DropDownProps, 'selectedValue'>> = ({
-  onChange,
+  handleChange,
   ...props
 }) => {
   const { setValue } = useFormContext();
@@ -19,8 +19,8 @@ export const Dropdown: React.FC<Omit<DropDownProps, 'selectedValue'>> = ({
     <DropdownCommon
       {...props}
       selectedValue={selectedValue}
-      onChange={(name, key) => {
-        onChange?.(name, key);
+      handleChange={(name, key) => {
+        handleChange?.(name, key);
         setValue(name, key, { shouldDirty: true });
       }}
     />

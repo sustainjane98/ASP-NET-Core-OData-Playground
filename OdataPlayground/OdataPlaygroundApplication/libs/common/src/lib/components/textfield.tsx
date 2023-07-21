@@ -13,7 +13,7 @@ export interface TextfieldProps
       React.InputHTMLAttributes<HTMLInputElement>,
       HTMLInputElement
     >,
-    'autoComplete' | 'onChange'
+    'autoComplete'
   > {
   label?: string;
   autoComplete?: TextfieldFilters;
@@ -21,7 +21,8 @@ export interface TextfieldProps
   buttonProps?: (ButtonProps & { direction?: 'right' | 'left' })[];
   dropdowns?: React.ReactElement[];
   name: string;
-  onChange: (name: string, key: string) => void;
+  handleChange?: (name: string, key: string) => void;
+  handleSubmit?: (name: string, key: string) => void;
 }
 
 /**
@@ -33,11 +34,12 @@ export const Textfield = React.forwardRef<HTMLInputElement, TextfieldProps>(
   (
     {
       label,
-      onChange,
+      handleChange,
       buttonProps,
       dropdowns,
       additionalAutocompleteFilters,
       autoComplete,
+      handleSubmit,
       ...inputProps
     },
     ref
@@ -102,6 +104,9 @@ export const Textfield = React.forwardRef<HTMLInputElement, TextfieldProps>(
           <input
             className="py-2.5 border-none focus:outline-none focus:ring-0 bg-gray-100 w-full h-full block"
             {...inputProps}
+            onChange={({ target: { value } }) => {
+              handleChange?.(inputProps.name, value);
+            }}
             ref={mergeRefs([ref, inputRef])}
           ></input>
           <div className="flex gap-x-2">
@@ -138,7 +143,7 @@ export const Textfield = React.forwardRef<HTMLInputElement, TextfieldProps>(
                       id = undefined;
 
                       setInputSelected(true);
-                      onChange(inputProps.name, currentValue + key);
+                      handleSubmit?.(inputProps.name, currentValue + key);
                       inputRef.current?.focus();
                     }}
                   >

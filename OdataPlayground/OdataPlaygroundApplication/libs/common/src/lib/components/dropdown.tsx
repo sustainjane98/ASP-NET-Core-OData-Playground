@@ -3,12 +3,10 @@ import { Button, ButtonColorVariant, ButtonProps } from './button';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
 import classNames from 'classnames';
 
-export interface Props
-  extends PropsWithChildren,
-    Omit<ButtonProps, 'onChange'> {
+export interface Props extends PropsWithChildren, ButtonProps {
   name: string;
   values: { key: string; value: string }[];
-  onChange?: (name: string, key: string) => void;
+  handleChange?: (name: string, key: string) => void;
   placeholderValue?: string;
   selectedValue: string;
 }
@@ -16,7 +14,7 @@ export interface Props
 export const Dropdown: React.FC<Props> = ({
   children,
   values,
-  onChange,
+  handleChange,
   placeholderValue,
   selectedValue,
   ...buttonProps
@@ -57,7 +55,7 @@ export const Dropdown: React.FC<Props> = ({
                 <Button
                   variant={ButtonColorVariant.TRANSPARENT}
                   onClick={() => {
-                    onChange?.(buttonProps.name, key);
+                    handleChange?.(buttonProps.name, key);
                     setOpen(false);
                   }}
                   disableFocus
