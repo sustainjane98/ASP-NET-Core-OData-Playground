@@ -3,12 +3,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import viteTsConfigPaths from 'vite-tsconfig-paths';
 import svgr from 'vite-plugin-svgr';
-import copy from 'rollup-plugin-copy';
-import path from 'path';
-
-const localesSrc = path.normalize(
-  path.resolve(__dirname, '../../libs/odata-playground/i18n/src/lib/locales')
-);
+import { copyFilesI18n } from '@odata-playground/odata/i18n';
 
 export default defineConfig(({ mode }) => ({
   cacheDir: '../../node_modules/.vite/odata-playground',
@@ -28,30 +23,7 @@ export default defineConfig(({ mode }) => ({
     viteTsConfigPaths({
       root: '../../',
     }),
-    copy({
-      targets:
-        mode === 'development'
-          ? [
-              {
-                src: localesSrc,
-                dest: path.resolve(
-                  __dirname,
-                  '../../apps/odata-playground/public'
-                ),
-              },
-            ]
-          : [
-              {
-                src: localesSrc,
-                dest: path.resolve(
-                  __dirname,
-                  '../../dist/apps/odata-playground/'
-                ),
-              },
-            ],
-      hook: 'buildStart',
-      copyOnce: true,
-    }) as never,
+    copyFilesI18n(mode),
   ],
 
   // Uncomment this if you are using workers.
