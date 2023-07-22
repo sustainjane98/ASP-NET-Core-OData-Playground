@@ -6,12 +6,18 @@ import svgr from 'vite-plugin-svgr';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import path from 'path';
 
-export default defineConfig({
+const localesSrc = path.normalize(
+  path.resolve(__dirname, '../../libs/odata-playground/i18n/src/lib/locales') +
+    '/[!.]*'
+);
+
+export default defineConfig(({ mode }) => ({
   cacheDir: '../../node_modules/.vite/odata-playground',
 
   server: {
     port: 3000,
     host: 'localhost',
+    open: 'http://localhost:3000?odataPath=http://localhost:8080',
   },
 
   plugins: [
@@ -22,12 +28,15 @@ export default defineConfig({
     }),
     viteStaticCopy({
       targets: [
-        {
-          src:
-            path.resolve(__dirname, '../../libs/i18n/src/stories/locales') +
-            '/[!.]*',
-          dest: './locales',
-        },
+        mode === 'development'
+          ? {
+              src: localesSrc,
+              dest: path.resolve(__dirname, '/public/locales'),
+            }
+          : {
+              src: localesSrc,
+              dest: './locales',
+            },
       ],
     }),
   ],
@@ -40,4 +49,4 @@ export default defineConfig({
   //    }),
   //  ],
   // },
-});
+}));
