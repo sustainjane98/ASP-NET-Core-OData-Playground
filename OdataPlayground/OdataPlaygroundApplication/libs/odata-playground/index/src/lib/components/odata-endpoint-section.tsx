@@ -6,11 +6,17 @@ import {
   Tooltip,
   Button,
   ButtonColorVariant,
+  HttpMethod,
 } from '@odata-playground/common';
+import { useFormContext } from 'react-hook-form';
 
 export interface Props {
   title: string;
-  subPaths: (PillProps & { toolTip?: { id: string; title: string } })[];
+  subPaths: (PillProps & {
+    toolTip?: { id: string; title: string };
+    httpMethod: HttpMethod;
+    urlPart: string;
+  })[];
 }
 
 /**
@@ -19,6 +25,8 @@ export interface Props {
  * @version 0.1
  */
 export const OdataEndpointSection: React.FC<Props> = ({ title, subPaths }) => {
+  const { setValue, getValues } = useFormContext();
+
   return (
     <div className="max-w-sm p-6 bg-gray-50 border border-gray-200 rounded-lg shadow block">
       <div className="flex">
@@ -35,12 +43,22 @@ export const OdataEndpointSection: React.FC<Props> = ({ title, subPaths }) => {
       </div>
       {/*TODO: Fix grid so that all elements have same height and width */}
       <div className="flex gap-2 mt-2 flex-wrap">
-        {subPaths.map(({ toolTip, ...other }) => [
+        {subPaths.map(({ toolTip, httpMethod, urlPart, ...other }) => [
           <Pill
-            key={other.displayValue + other.urlPart}
+            key={other.displayValue}
             {...other}
             className="max-w-[200px] break-all"
-            resetToBaseUrl
+            onClick={() => {
+              let urlValue: string;
+
+              if (httpMethod) {
+                setValue('httpMethod', httpMethod);
+              }
+
+              urlValue = getValues('baseUrl');
+
+              setValue('url', `${urlValue}${urlPart}`);
+            }}
             data-tooltip-target={toolTip ? toolTip?.id ?? 'tooltip' : undefined}
           />,
           toolTip ? (
