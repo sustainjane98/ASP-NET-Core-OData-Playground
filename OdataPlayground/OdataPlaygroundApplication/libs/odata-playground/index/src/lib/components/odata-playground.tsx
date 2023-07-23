@@ -20,7 +20,10 @@ import {
 import { useBaseUrl, HttpMethod } from '@odata-playground/common';
 import { OdataEndpointSectionPlaceholderContainer } from './odata-endpoint-section-placeholder-container';
 import { OdataEndpointSections } from './odata-endpoint-sections';
-import { useTranslation } from 'react-i18next';
+import {
+  TranslationKeysIndexEnum,
+  useTranslation,
+} from '@odata-playground/odata/i18n/config';
 import { mapOdataDebugSchemeToTextfieldFilter } from '@odata-playground/odata/common';
 import { Textfield } from '@odata-playground/odata/common';
 
@@ -70,7 +73,7 @@ export const OdataPlayground: React.FC<Props> = ({ textfieldAutocomplete }) => {
           ref={inputRef}
           id="odata-url-field"
           name="url"
-          placeholder={t('please_insert_text')}
+          placeholder={t(TranslationKeysIndexEnum.PLEASE_INSERT_TEXT)}
           autoComplete={[
             ...textfieldAutocomplete,
             ...mapOdataDebugSchemeToTextfieldFilter(data),
@@ -82,7 +85,7 @@ export const OdataPlayground: React.FC<Props> = ({ textfieldAutocomplete }) => {
           }}
           buttonProps={[
             {
-              children: 'Cancel',
+              children: t(TranslationKeysIndexEnum.CANCEL),
               onClick: () => {
                 const baseUrl = methods.getValues('baseUrl');
                 methods.setValue('url', baseUrl);
@@ -90,7 +93,7 @@ export const OdataPlayground: React.FC<Props> = ({ textfieldAutocomplete }) => {
               variant: ButtonColorVariant.LIGHT,
             },
             {
-              children: 'Send',
+              children: t(TranslationKeysIndexEnum.SEND),
               onClick: () => {
                 const url = methods.getValues('url');
                 const requestArea =
