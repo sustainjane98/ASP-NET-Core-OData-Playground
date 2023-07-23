@@ -9,7 +9,7 @@
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/config/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["libs/config/**/*.ts"]
       }
     }
   }

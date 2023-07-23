@@ -1,0 +1,25 @@
+{
+  "name": "@odata-playground/i18n/vite",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "libs/odata-playground/i18n/vite/dist",
+        "main": "libs/odata-playground/i18n/vite/src/index.ts",
+        "tsConfig": "libs/odata-playground/i18n/vite/tsconfig.lib.json"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/odata-playground/i18n/vite/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}

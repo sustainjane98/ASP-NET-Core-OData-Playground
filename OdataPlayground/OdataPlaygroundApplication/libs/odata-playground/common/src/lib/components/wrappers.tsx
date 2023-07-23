@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import i18n from '@odata-playground/odata/i18n';
+import { i18n } from '@odata-playground/odata/i18n/config';
 import { I18nextProvider } from 'react-i18next';
 
 const queryClient = new QueryClient();

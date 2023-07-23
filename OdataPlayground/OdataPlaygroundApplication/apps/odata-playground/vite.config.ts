@@ -3,7 +3,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import viteTsConfigPaths from 'vite-tsconfig-paths';
 import svgr from 'vite-plugin-svgr';
-import { copyFilesI18n } from '@odata-playground/odata/i18n';
+import { copyFilesI18n } from '@odata-playground/odata/i18n/vite';
 
 export default defineConfig(({ mode }) => ({
   cacheDir: '../../node_modules/.vite/odata-playground',
@@ -20,18 +20,9 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     svgr(),
     react(),
+    copyFilesI18n(mode),
     viteTsConfigPaths({
       root: '../../',
     }),
-    copyFilesI18n(mode),
   ],
-
-  // Uncomment this if you are using workers.
-  // worker: {
-  //  plugins: [
-  //    viteTsConfigPaths({
-  //      root: '../../',
-  //    }),
-  //  ],
-  // },
 }));

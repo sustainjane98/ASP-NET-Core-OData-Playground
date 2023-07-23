@@ -22,16 +22,17 @@
       "@odata-playground/odata/config": [
         "libs/odata-playground/config/src/index.ts"
       ],
-      "@odata-playground/odata/i18n": [
-        "libs/odata-playground/i18n/src/index.ts"
-      ],
+      "@odata-playground/odata/i18n/vite": ["libs/odata-playground/i18n/vite/dist/src"],
       "@odata-playground/odata/index": [
         "libs/odata-playground/index/src/index.ts"
+      ],
+      "@odata-playground/odata/stories": [
+        "libs/odata-playground/testing/stories/src/index.ts"
       ],
       "@odata-playground/odata/testing/decorators": [
         "libs/odata-playground/testing/src/index.ts"
       ],
-      "stories": ["libs/stories/src/index.ts"]
+      "@odata-playground/odata/i18n/config": ["libs/odata-playground/i18n/config/src/index.ts"],
     }
   },
   "exclude": ["node_modules", "tmp"]
