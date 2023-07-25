@@ -11,7 +11,9 @@ import { devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration for more information
  */
 
-const baseURL = process.env.E2E_BASE_URL || 'http://localhost:4200/';
+const baseURL =
+  process.env.E2E_BASE_URL ||
+  'http://localhost:3000/?odataPath=http://localhost:8080/';
 
 export const config: PlaywrightTestConfig = {
   testDir: './src/e2e',

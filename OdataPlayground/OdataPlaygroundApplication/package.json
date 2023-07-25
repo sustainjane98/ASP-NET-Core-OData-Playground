@@ -9,7 +9,10 @@
     "odata-playground:start-dev": "nx run odata-playground:serve:development",
     "odata-playground-storybook:start": "nx run odata-playground:storybook",
     "odata-playground-i18n:build": "nx run @odata-playground/i18n/vite:build",
-    "postinstall": "npm run odata-playground-i18n:build"
+    "postinstall": "npm run odata-playground-i18n:build",
+    "odata-playground-e2e:start": "nx run odata-playground-e2e:e2e",
+    "odata-playground-e2e:start-headed": "nx run odata-playground-e2e:e2e-headed",
+    "odata-playground-e2e:show-report": "nx run odata-playground-e2e:show-report"
   },
   "private": true,
   "dependencies": {
