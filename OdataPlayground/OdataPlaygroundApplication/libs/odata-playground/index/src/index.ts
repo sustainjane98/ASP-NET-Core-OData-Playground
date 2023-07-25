@@ -7,3 +7,5 @@ export { OdataEndpointSections } from './lib/components/odata-endpoint-sections'
 export { OdataPlayground } from './lib/components/odata-playground';
 export { Pill } from './lib/components/react-form/pill';
 export type { Props as PillProps } from './lib/components/react-form/pill';
+export { IndexRequestAndReponseFormData } from './lib/enums/index-request-and-reponse-form-data.enum';
+export type { OdataRequestForm } from './lib/types/odata-request-form.type';

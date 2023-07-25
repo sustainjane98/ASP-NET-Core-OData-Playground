@@ -18,3 +18,4 @@ export { useBaseUrl } from './lib/hooks/use-base-url.hook';
 export { usePreventClosingBrowserWindow } from './lib/hooks/use-prevent-closing-browser-window.hook';
 export { Textfield } from './lib/components/textfield';
 export type { TextfieldProps } from './lib/components/textfield';
+export type { CommonElementProps } from './lib/types/common-elements-props.type';

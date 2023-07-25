@@ -3,10 +3,9 @@ import { Button, ButtonColorVariant, ButtonProps } from './button';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
 import classNames from 'classnames';
 
-export interface Props extends PropsWithChildren, ButtonProps {
-  name: string;
+export interface Props extends PropsWithChildren, Omit<ButtonProps, 'name'> {
   values: { key: string; value: string }[];
-  handleChange?: (name: string, key: string) => void;
+  handleChange?: (key: string, value: string) => void;
   placeholderValue?: string;
   selectedValue: string;
 }
@@ -17,12 +16,16 @@ export const Dropdown: React.FC<Props> = ({
   handleChange,
   placeholderValue,
   selectedValue,
+  id,
+  dataTestId,
   ...buttonProps
 }) => {
   const [open, setOpen] = useState<boolean>(false);
 
   return (
     <div
+      id={id}
+      data-test-id={dataTestId}
       className="relative inline-block"
       onBlur={() => {
         window.setTimeout(() => setOpen(false), 200);
@@ -30,6 +33,9 @@ export const Dropdown: React.FC<Props> = ({
     >
       <Button
         {...buttonProps}
+        id={`${id}-button`}
+        name={`${id}-button`}
+        dataTestId={`${dataTestId}-button`}
         variant={ButtonColorVariant.LIGHT}
         icons={[<ChevronDownIcon key={'chevron-down'} width={15} />]}
         onClick={() => {
@@ -53,9 +59,12 @@ export const Dropdown: React.FC<Props> = ({
             {values.map(({ key, value }, i) => (
               <li key={`dropdown-element-${i}`}>
                 <Button
+                  id={`${id}-${key}`}
+                  name={`${id}-${key}`}
+                  dataTestId={`${dataTestId}-${key}`}
                   variant={ButtonColorVariant.TRANSPARENT}
                   onClick={() => {
-                    handleChange?.(buttonProps.name, key);
+                    handleChange?.(key, value);
                     setOpen(false);
                   }}
                   disableFocus

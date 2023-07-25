@@ -15,7 +15,6 @@ import {
   useOdataScheme,
   useReponseArea,
   useRequestOdata,
-  OdataRequestForm,
 } from '@odata-playground/odata/common';
 import { useBaseUrl, HttpMethod } from '@odata-playground/common';
 import { OdataEndpointSectionPlaceholderContainer } from './odata-endpoint-section-placeholder-container';
@@ -26,6 +25,9 @@ import {
 } from '@odata-playground/odata/i18n/config';
 import { mapOdataDebugSchemeToTextfieldFilter } from '@odata-playground/odata/common';
 import { Textfield } from '@odata-playground/odata/common';
+import { DataTestids } from '@odata-playground/odata-e2e/data-testids';
+import { IndexRequestAndReponseFormData } from '../enums/index-request-and-reponse-form-data.enum';
+import { OdataRequestForm } from '../types/odata-request-form.type';
 
 export interface Props {
   textfieldAutocomplete: any;
@@ -39,13 +41,14 @@ export interface Props {
 export const OdataPlayground: React.FC<Props> = ({ textfieldAutocomplete }) => {
   const { data, isLoading } = useOdataScheme();
   const { data: metadata } = useOdataMetadataScheme();
+
   const methods = useForm<OdataRequestForm>({
     defaultValues: {
-      httpMethod: HttpMethod.GET,
-      baseUrl: '',
-      url: '',
-      requestArea: '',
-      responseArea: '',
+      [IndexRequestAndReponseFormData.HTTP_METHOD]: HttpMethod.GET,
+      [IndexRequestAndReponseFormData.BASE_URL]: '',
+      [IndexRequestAndReponseFormData.URL]: '',
+      [IndexRequestAndReponseFormData.REQUEST_AREA]: '',
+      [IndexRequestAndReponseFormData.RESPONSE_AREA]: '',
     },
   });
   const onSubmit: SubmitHandler<OdataRequestForm> = (data) => console.log(data);
@@ -72,7 +75,7 @@ export const OdataPlayground: React.FC<Props> = ({ textfieldAutocomplete }) => {
         <Textfield
           ref={inputRef}
           id="odata-url-field"
-          name="url"
+          name={IndexRequestAndReponseFormData.URL}
           placeholder={t(TranslationKeysIndexEnum.PLEASE_INSERT_TEXT)}
           autoComplete={[
             ...textfieldAutocomplete,
@@ -85,6 +88,9 @@ export const OdataPlayground: React.FC<Props> = ({ textfieldAutocomplete }) => {
           }}
           buttonProps={[
             {
+              dataTestId: DataTestids.Index.CANCEL_BUTTON,
+              name: 'url-cancel-button',
+              id: 'url-cancel-button',
               children: t(TranslationKeysIndexEnum.CANCEL),
               onClick: () => {
                 const baseUrl = methods.getValues('baseUrl');
@@ -93,6 +99,9 @@ export const OdataPlayground: React.FC<Props> = ({ textfieldAutocomplete }) => {
               variant: ButtonColorVariant.LIGHT,
             },
             {
+              dataTestId: DataTestids.Index.SEND_BUTTON,
+              name: 'url-send-button',
+              id: 'url-send-button',
               children: t(TranslationKeysIndexEnum.SEND),
               onClick: () => {
                 const url = methods.getValues('url');
@@ -106,7 +115,9 @@ export const OdataPlayground: React.FC<Props> = ({ textfieldAutocomplete }) => {
           ]}
           dropdownProps={[
             {
-              name: 'httpMethod',
+              id: 'httpMethod-dropdown',
+              dataTestId: DataTestids.Index.DROPDOWN_HTTP_METHOD,
+              name: IndexRequestAndReponseFormData.HTTP_METHOD,
               handleChange: () => {
                 const baseUrl = methods.getValues('baseUrl');
                 methods.setValue('url', baseUrl);

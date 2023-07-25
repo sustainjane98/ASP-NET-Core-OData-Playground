@@ -6,7 +6,6 @@ export { useRequestArea } from './lib/hooks/react-form/use-request-area';
 export { useOdataMetadataScheme } from './lib/hooks/react-query/queries/use-odata-metadata-scheme.hook';
 export { useOdataScheme } from './lib/hooks/react-query/queries/use-odata-scheme.hook';
 export { useRequestOdata } from './lib/hooks/react-query/mutations/use-request-odata.hook';
-export type { OdataRequestForm } from './lib/types/odata-request-form.type';
 export type { NavItem } from './lib/types/navItem.type';
 export type { OdataDebugGroups } from './lib/types/odata-debug-groups';
 export type { OdataDebugScheme } from './lib/types/odata-debug-scheme';

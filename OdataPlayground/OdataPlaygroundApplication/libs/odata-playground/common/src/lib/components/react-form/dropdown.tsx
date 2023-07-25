@@ -4,8 +4,10 @@ import {
   DropDownProps as DropDownPropsCommon,
 } from '@odata-playground/common';
 import { useFormContext, useWatch } from 'react-hook-form';
+import { CommonElementPropsWithName } from '../../../../../../common/src/lib/types/common-elements-props.type';
 
-export type DropDownProps = Omit<DropDownPropsCommon, 'selectedValue'>;
+export type DropDownProps = Omit<DropDownPropsCommon, 'selectedValue'> &
+  CommonElementPropsWithName;
 
 export const Dropdown: React.FC<Omit<DropDownProps, 'selectedValue'>> = ({
   handleChange,
@@ -19,9 +21,9 @@ export const Dropdown: React.FC<Omit<DropDownProps, 'selectedValue'>> = ({
     <DropdownCommon
       {...props}
       selectedValue={selectedValue}
-      handleChange={(name, key) => {
-        handleChange?.(name, key);
-        setValue(name, key, { shouldDirty: true });
+      handleChange={(key) => {
+        handleChange?.(props.name, key);
+        setValue(props.name, key, { shouldDirty: true });
       }}
     />
   );

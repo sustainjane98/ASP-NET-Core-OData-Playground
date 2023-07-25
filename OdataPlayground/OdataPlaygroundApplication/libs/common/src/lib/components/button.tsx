@@ -1,6 +1,7 @@
-import classNames from "classnames";
-import React, { PropsWithChildren } from "react";
-import { twMerge } from "tailwind-merge";
+import classNames from 'classnames';
+import React, { PropsWithChildren } from 'react';
+import { twMerge } from 'tailwind-merge';
+import { CommonElementProps } from '../types/common-elements-props.type';
 
 export enum ButtonColorVariant {
   DEFAULT,
@@ -14,18 +15,19 @@ export enum ButtonColorVariant {
   TRANSPARENT,
 }
 
-export interface ButtonProps
-  extends React.DetailedHTMLProps<
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
-    HTMLButtonElement
-  > {
+export type ButtonProps = {
   title?: string;
-  children?: PropsWithChildren["children"];
+  children?: PropsWithChildren['children'];
   variant?: ButtonColorVariant;
   disablePadding?: boolean;
   disableFocus?: boolean;
   icons?: React.ReactElement[];
-}
+  dataTestId: string;
+} & React.DetailedHTMLProps<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  HTMLButtonElement
+> &
+  CommonElementProps;
 
 /**
  * An Button React Component.
@@ -40,51 +42,57 @@ export const Button: React.FC<ButtonProps> = ({
   disablePadding,
   disableFocus,
   icons,
+  dataTestId,
+  name,
+  id,
   ...buttonProps
 }) => {
   return (
     <button
       {...buttonProps}
+      data-test-id={dataTestId}
+      name={name}
+      id={id}
       type="button"
       className={twMerge(
         classNames(
-          "flex gap-x-2 items-center font-medium rounded-lg text-sm",
+          'flex gap-x-2 items-center font-medium rounded-lg text-sm',
           {
-            "px-5 py-2.5": !disablePadding,
-            "focus:ring-4 ": !disableFocus,
-            "text-white bg-cyan-700 hover:bg-cyan-800":
+            'px-5 py-2.5': !disablePadding,
+            'focus:ring-4 ': !disableFocus,
+            'text-white bg-cyan-700 hover:bg-cyan-800':
               variant === ButtonColorVariant.DEFAULT,
-            "focus:ring-cyan-500":
+            'focus:ring-cyan-500':
               variant === ButtonColorVariant.DEFAULT && !disableFocus,
-            "text-gray-900 bg-white border border-gray-200 hover:bg-gray-100 hover:text-cyan-700":
+            'text-gray-900 bg-white border border-gray-200 hover:bg-gray-100 hover:text-cyan-700':
               variant === ButtonColorVariant.ALTERNATIVE,
-            "focus:z-10 focus:ring-gray-200":
+            'focus:z-10 focus:ring-gray-200':
               variant === ButtonColorVariant.ALTERNATIVE && !disableFocus,
-            "text-white bg-gray-800 hover:bg-gray-900 focus:outline-none":
+            'text-white bg-gray-800 hover:bg-gray-900 focus:outline-none':
               variant === ButtonColorVariant.DARK,
-            "focus:ring-gray-300":
+            'focus:ring-gray-300':
               variant === ButtonColorVariant.DARK && !disableFocus,
-            "text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100":
+            'text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100':
               variant === ButtonColorVariant.LIGHT,
-            "focus:ring-gray-200":
+            'focus:ring-gray-200':
               variant === ButtonColorVariant.LIGHT && !disableFocus,
-            "focus:outline-none text-white bg-green-700 hover:bg-green-800":
+            'focus:outline-none text-white bg-green-700 hover:bg-green-800':
               variant === ButtonColorVariant.GREEN,
-            "focus:ring-green-300":
+            'focus:ring-green-300':
               variant === ButtonColorVariant.GREEN && !disableFocus,
-            "focus:outline-none text-white bg-red-700 hover:bg-red-800":
+            'focus:outline-none text-white bg-red-700 hover:bg-red-800':
               variant === ButtonColorVariant.RED,
-            "focus:ring-red-300":
+            'focus:ring-red-300':
               variant === ButtonColorVariant.RED && !disableFocus,
-            "focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500":
+            'focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500':
               variant === ButtonColorVariant.YELLOW,
-            "focus:ring-yellow-300":
+            'focus:ring-yellow-300':
               variant === ButtonColorVariant.YELLOW && !disableFocus,
-            "focus:outline-none text-white bg-purple-700 hover:bg-purple-800":
+            'focus:outline-none text-white bg-purple-700 hover:bg-purple-800':
               variant === ButtonColorVariant.PURPLE,
-            "focus:ring-purple-300":
+            'focus:ring-purple-300':
               variant === ButtonColorVariant.PURPLE && !disableFocus,
-            "focus:ring-none bg-transparent outline-none border-none":
+            'focus:ring-none bg-transparent outline-none border-none':
               variant === ButtonColorVariant.TRANSPARENT,
           },
           className
