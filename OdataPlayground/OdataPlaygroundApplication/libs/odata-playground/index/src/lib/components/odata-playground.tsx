@@ -15,7 +15,7 @@ import {
   useOdataScheme,
   useReponseArea,
   useRequestOdata,
-} from '@odata-playground/odata/common';
+} from '@odata-playground/odata/index';
 import { useBaseUrl, HttpMethod } from '@odata-playground/common';
 import { OdataEndpointSectionPlaceholderContainer } from './odata-endpoint-section-placeholder-container';
 import { OdataEndpointSections } from './odata-endpoint-sections';

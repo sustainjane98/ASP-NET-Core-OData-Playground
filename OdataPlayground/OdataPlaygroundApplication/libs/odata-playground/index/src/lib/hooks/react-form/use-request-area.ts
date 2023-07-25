@@ -1,20 +1,22 @@
-import { OdataMetadataScheme } from '../../types/odata-metadata-scheme.type';
 import { useUpdateEffect } from 'usehooks-ts';
-import { OdataRequestForm } from '@odata-playground/odata/common';
+import { OdataRequestForm } from '@odata-playground/odata/index';
 import { UseFormReturn, useWatch } from 'react-hook-form';
-import { HttpMethod } from '@odata-playground/common';
+import { HttpMethod, useJSONFormat } from '@odata-playground/common';
 import {
   findEntityTypeInCollection,
   mapEntityTypeToJsonExample,
   mapSchemeToEntityTypes,
 } from '@odata-playground/odata/common';
 import { useCollectionName } from './use-collection-name.hook';
+import { OdataMetadataScheme } from '../../../../../common/src/lib/types/odata-metadata-scheme.type';
 
 export const useRequestArea = (
   methods: UseFormReturn<OdataRequestForm, any, undefined>,
   metadata?: OdataMetadataScheme
 ) => {
   const httpMethod = useWatch({ control: methods.control, name: 'httpMethod' });
+
+  const prettifyJSON = useJSONFormat();
 
   const collName = useCollectionName(methods.control);
 
@@ -31,7 +33,7 @@ export const useRequestArea = (
 
       methods.setValue(
         'requestArea',
-        JSON.stringify(mapEntityTypeToJsonExample(et))
+        prettifyJSON(mapEntityTypeToJsonExample(et))
       );
       return;
     }

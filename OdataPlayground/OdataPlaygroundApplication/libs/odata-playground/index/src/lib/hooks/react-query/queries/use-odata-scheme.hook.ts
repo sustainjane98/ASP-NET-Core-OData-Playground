@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import { OdataDebugScheme } from '../../../types/odata-debug-scheme';
 import { useOdataPath } from '../../use-odata-path.hook';
+import { OdataDebugScheme } from '@odata-playground/odata/common';
 
 export const useOdataScheme = () => {
   const odataPath = useOdataPath();

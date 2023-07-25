@@ -1,7 +1,7 @@
 import { OdataEndpointSection } from './odata-endpoint-section';
 import { HttpMethod } from '@odata-playground/common';
 import React from 'react';
-import { useOdataScheme } from '@odata-playground/odata/common';
+import { useOdataScheme } from '@odata-playground/odata/index';
 import { mapOdataDebugSchemeToOdataDebugGroups } from '@odata-playground/odata/common';
 import { DataTestids } from '@odata-playground/odata-e2e/data-testids';
 
