@@ -1,3 +1,5 @@
+import { CommonElementPropsWithName } from '@odata-playground/common';
+
 export type TextfieldFilter = {
   selector: RegExp;
   key: string;
@@ -6,3 +8,6 @@ export type TextfieldFilter = {
 };
 
 export type TextfieldFilters = TextfieldFilter[];
+
+export type TextfieldFiltersWithCommon = (TextfieldFilter &
+  CommonElementPropsWithName)[];

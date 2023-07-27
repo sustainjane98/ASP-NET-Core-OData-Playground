@@ -4,7 +4,7 @@ import { mergeRefs } from 'react-merge-refs';
 import { Button, ButtonColorVariant, ButtonProps } from './button';
 import {
   TextfieldFilter,
-  TextfieldFilters,
+  TextfieldFiltersWithCommon,
 } from '@odata-playground/odata/common';
 
 export interface TextfieldProps
@@ -16,7 +16,7 @@ export interface TextfieldProps
     'autoComplete'
   > {
   label?: string;
-  autoComplete?: TextfieldFilters;
+  autoComplete?: TextfieldFiltersWithCommon;
   additionalAutocompleteFilters?: (value: TextfieldFilter) => boolean;
   buttonProps?: (ButtonProps & { direction?: 'right' | 'left' })[];
   dropdowns?: React.ReactElement[];
@@ -70,18 +70,18 @@ export const Textfield = React.forwardRef<HTMLInputElement, TextfieldProps>(
       );
     }, [additionalAutocompleteFilters, autoComplete, currentValue]);
 
-    let id: number | undefined;
+    let timeoutId: number | undefined;
 
     return (
       <div
         className="relative"
         onClick={() => {
-          window.clearTimeout(id);
-          id = undefined;
+          window.clearTimeout(timeoutId);
+          timeoutId = undefined;
           setInputSelected(true);
         }}
         onBlur={() => {
-          id = window.setTimeout(() => setInputSelected(false), 200);
+          timeoutId = window.setTimeout(() => setInputSelected(false), 200);
         }}
       >
         {label && (
@@ -128,27 +128,32 @@ export const Textfield = React.forwardRef<HTMLInputElement, TextfieldProps>(
           autoCompleteToDisplay.length > 0 &&
           inputSelected && (
             <ul className="absolute top-[calc(100%_-_2px)] p-2.5 flex flex-col gap-y-2.5 max-h-72 overflow-scroll w-full border-b border-l border-r border-gray-200 bg-gray-50 text-gray-900 text-sm rounded-b-lg">
-              {autoCompleteToDisplay?.map(({ key, value }, i) => (
-                <li
-                  key={`autocomplete-${key}-${i}`}
-                  className={'hover:text-cyan-800'}
-                >
-                  <Button
-                    variant={ButtonColorVariant.TRANSPARENT}
-                    className={'w-full p-0 focus:ring-0'}
-                    onClick={() => {
-                      window.clearTimeout(id);
-                      id = undefined;
-
-                      setInputSelected(true);
-                      handleChange?.(inputProps.name, currentValue + key);
-                      inputRef.current?.focus();
-                    }}
+              {autoCompleteToDisplay?.map(
+                ({ key, value, dataTestId, id, name }, i) => (
+                  <li
+                    key={`autocomplete-${key}-${i}`}
+                    className={'hover:text-cyan-800'}
                   >
-                    {value ?? key}
-                  </Button>
-                </li>
-              ))}
+                    <Button
+                      dataTestId={dataTestId}
+                      name={name}
+                      id={id}
+                      variant={ButtonColorVariant.TRANSPARENT}
+                      className={'w-full p-0 focus:ring-0'}
+                      onClick={() => {
+                        window.clearTimeout(timeoutId);
+                        timeoutId = undefined;
+
+                        setInputSelected(true);
+                        handleChange?.(inputProps.name, currentValue + key);
+                        inputRef.current?.focus();
+                      }}
+                    >
+                      {value ?? key}
+                    </Button>
+                  </li>
+                )
+              )}
             </ul>
           )}
       </div>

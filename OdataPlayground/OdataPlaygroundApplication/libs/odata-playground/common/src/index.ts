@@ -6,6 +6,7 @@ export type { OdataDebugSchemeEntry } from './lib/types/odata-debug-scheme-entry
 export type {
   TextfieldFilters,
   TextfieldFilter,
+  TextfieldFiltersWithCommon,
 } from './lib/types/textfield-filter.type';
 export {
   mapEntityTypeToJsonExample,
@@ -22,3 +23,7 @@ export type { TextfieldProps } from './lib/components/react-form/textfield';
 export { Dropdown } from './lib/components/react-form/dropdown';
 export type { DropDownProps } from './lib/components/react-form/dropdown';
 export { useNavItems } from './lib/hooks/zustand/use-nav-items.hook';
+export type {
+  EntityType,
+  OdataMetadataScheme,
+} from './lib/types/odata-metadata-scheme.type';

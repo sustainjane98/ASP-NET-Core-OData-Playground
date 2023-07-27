@@ -1,7 +1,7 @@
 import { useMutation } from 'react-query';
 import { HttpMethod } from '@odata-playground/common';
 import axios from 'axios';
-import { OdataScheme } from '../../../types/odata-scheme.type';
+import { OdataScheme } from '@odata-playground/odata/common';
 
 export const useRequestOdata = () =>
   useMutation(

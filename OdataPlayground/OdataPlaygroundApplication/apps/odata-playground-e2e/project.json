@@ -10,12 +10,7 @@
       "options": {
         "outputPath": "dist/apps/odata-playground-e2e/test-results",
         "playwrightConfig": "apps/odata-playground-e2e/playwright.config.ts",
-        "devServerTarget": "odata-playground:serve:development"
-      },
-      "configurations": {
-        "production": {
-          "devServerTarget": "odata-playground:serve:production"
-        }
+        "devServerTarget": "odata-playground:serve:production"
       }
     },
     "e2e-headed": {
@@ -24,13 +19,8 @@
       "options": {
         "outputPath": "dist/apps/odata-playground-e2e/test-results",
         "playwrightConfig": "apps/odata-playground-e2e/playwright.config.ts",
-        "devServerTarget": "odata-playground:serve:development",
+        "devServerTarget": "odata-playground:serve:production",
         "headed": true
-      },
-      "configurations": {
-        "production": {
-          "devServerTarget": "odata-playground:serve:production"
-        }
       }
     },
     "show-report": {
