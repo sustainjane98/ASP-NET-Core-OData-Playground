@@ -7,12 +7,15 @@
     "odata-playground:build-dev": "nx run odata-playground:build:development",
     "odata-playground:build-prod": "nx run odata-playground:build:production",
     "odata-playground:start-dev": "nx run odata-playground:serve:development",
+    "odata-playground:start-prod": "nx run odata-playground:serve:production",
     "odata-playground-storybook:start": "nx run odata-playground:storybook",
     "odata-playground-i18n:build": "nx run @odata-playground/i18n/vite:build",
-    "postinstall": "npm run odata-playground-i18n:build",
+    "odata-playground-application-config:build": "nx run @odata-playground/odata/application-config:build",
+    "postinstall": "npm run odata-playground-i18n:build && npm run odata-playground-application-config:build",
     "odata-playground-e2e:start": "nx run odata-playground-e2e:e2e",
     "odata-playground-e2e:start-headed": "nx run odata-playground-e2e:e2e-headed",
-    "odata-playground-e2e:show-report": "nx run odata-playground-e2e:show-report"
+    "odata-playground-e2e:show-report": "nx run odata-playground-e2e:show-report",
+    "lint": "nx run-many -t lint"
   },
   "private": true,
   "dependencies": {
@@ -45,6 +48,7 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/preset-react": "^7.14.5",
     "@hookform/devtools": "^4.3.1",
+    "@ns3/nx-playwright": "^4.2.0",
     "@nx/cypress": "16.5.3",
     "@nx/esbuild": "16.5.3",
     "@nx/eslint-plugin": "16.5.3",
@@ -54,7 +58,6 @@
     "@nx/storybook": "^16.5.3",
     "@nx/vite": "16.5.3",
     "@nx/workspace": "16.5.3",
-    "@nxkit/playwright": "^3.0.2",
     "@playwright/test": "^1.32.1",
     "@storybook/addon-essentials": "^7.1.0",
     "@storybook/addon-interactions": "^7.1.0",

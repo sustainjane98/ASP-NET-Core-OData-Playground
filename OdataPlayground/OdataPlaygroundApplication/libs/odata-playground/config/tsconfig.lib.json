@@ -1,8 +1,12 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
+    "module": "NodeNext",
     "outDir": "../../dist/out-tsc",
-    "types": ["node"]
+    "types": ["node"],
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "removeComments": true
   },
   "files": [
     "../../../node_modules/@nx/react/typings/cssmodule.d.ts",

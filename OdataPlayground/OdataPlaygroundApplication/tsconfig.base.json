@@ -15,7 +15,16 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@odata-playground/common": ["libs/common/src/index.ts"],
+      "@odata-playground/common": ["libs/common/main/src/index.ts"],
+      "@odata-playground/odata-e2e/data-testids": [
+        "libs/odata-playground-e2e/data-testids/src/index.ts"
+      ],
+      "@odata-playground/odata/application-config": [
+        "libs/odata-playground/application-config/src/index.ts"
+      ],
+      "@odata-playground/odata/application-config/dist": [
+        "libs/odata-playground/application-config/dist/src"
+      ],
       "@odata-playground/odata/common": [
         "libs/odata-playground/common/src/index.ts"
       ],
@@ -37,7 +46,7 @@
       "@odata-playground/odata/testing/decorators": [
         "libs/odata-playground/testing/src/index.ts"
       ],
-      "@odata-playground/odata-e2e/data-testids": ["libs/odata-playground-e2e/data-testids/src/index.ts"]
+      "@odata-playground/common/enums": ["libs/common/enums/src/index.ts"],
     }
   },
   "exclude": ["node_modules", "tmp"]

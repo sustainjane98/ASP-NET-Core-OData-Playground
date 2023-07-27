@@ -4,7 +4,7 @@ import {
   DropDownProps as DropDownPropsCommon,
 } from '@odata-playground/common';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { CommonElementPropsWithName } from '../../../../../../common/src/lib/types/common-elements-props.type';
+import { CommonElementPropsWithName } from '@odata-playground/common';
 
 export type DropDownProps = Omit<DropDownPropsCommon, 'selectedValue'> &
   CommonElementPropsWithName;

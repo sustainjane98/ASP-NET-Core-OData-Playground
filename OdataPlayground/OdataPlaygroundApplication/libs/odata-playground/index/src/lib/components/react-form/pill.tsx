@@ -1,8 +1,7 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { OdataRequestForm } from '@odata-playground/odata/common';
+import { OdataRequestForm } from '../../types/odata-request-form.type';
 import { HttpMethod } from '@odata-playground/common';
-import { twMerge } from 'tailwind-merge';
 import { Pill as PillCommon, PillProps } from '@odata-playground/common';
 export interface Props extends PillProps {
   urlPart: string;

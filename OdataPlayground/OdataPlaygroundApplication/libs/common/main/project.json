@@ -1,7 +1,7 @@
 {
   "name": "common",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/common/src",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "src",
   "projectType": "library",
   "tags": [],
   "targets": {
@@ -9,7 +9,7 @@
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/common/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["libs/common/main/**/*.{ts,tsx,js,jsx}"]
       }
     }
   }

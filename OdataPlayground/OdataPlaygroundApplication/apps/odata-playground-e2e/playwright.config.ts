@@ -1,97 +1,22 @@
 import type { PlaywrightTestConfig } from '@playwright/test';
-import { devices } from '@playwright/test';
 
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// require('dotenv').config();
+const BASE_URL = process.env['BASE_URL'];
 
-/**
- * See https://playwright.dev/docs/test-configuration for more information
- */
-
-const baseURL =
-  process.env.E2E_BASE_URL ||
-  'http://localhost:3000/?odataPath=http://localhost:8080/';
-
-export const config: PlaywrightTestConfig = {
-  testDir: './src/e2e',
-  retries: process.env.CI ? 2 : 0,
-  maxFailures: 2,
-  timeout: 30 * 1000,
-  expect: {
-    timeout: 5000,
-  },
+const config: PlaywrightTestConfig = {
+  testDir: './tests',
+  /* Fail the build on CI if you accidentally left test.only in the source code. */
+  forbidOnly: !!process.env['CI'],
+  /* Retry on CI only */
+  retries: process.env['CI'] ? 2 : 0,
+  /* Opt out of parallel tests on CI. */
+  workers: process.env['CI'] ? 1 : undefined,
+  /* TestOptions https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    actionTimeout: 0,
-    baseURL,
+    /* Base URL to use in actions like `await page.goto('/')`. */
+    baseURL: BASE_URL,
+    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
   },
-  reporter: [
-    [
-      'html',
-      {
-        outputFolder: '../../dist/apps/odata-playground-e2e/playwright-report',
-      },
-    ],
-    [
-      'json',
-      {
-        outputFile:
-          '../../dist/apps/odata-playground-e2e/playwright-report/test-results.json',
-      },
-    ],
-  ],
-  fullyParallel: true,
-  forbidOnly: !!process.env.CI,
-  workers: process.env.CI ? 1 : undefined,
-  projects: [
-    {
-      name: 'chromium',
-      use: {
-        ...devices['Desktop Chrome'],
-      },
-    },
-    {
-      name: 'firefox',
-      use: {
-        ...devices['Desktop Firefox'],
-      },
-    },
-    {
-      name: 'webkit',
-      use: {
-        ...devices['Desktop Safari'],
-      },
-    },
-    /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: {
-    //     ...devices['Pixel 5'],
-    //   },
-    // },
-    // {
-    //   name: 'Mobile Safari',
-    //   use: {
-    //     ...devices['iPhone 12'],
-    //   },
-    // },
-    /* Test against branded browsers. */
-    // {
-    //   name: 'Microsoft Edge',
-    //   use: {
-    //     channel: 'msedge',
-    //   },
-    // },
-    // {
-    //   name: 'Google Chrome',
-    //   use: {
-    //     channel: 'chrome',
-    //   },
-    // },
-  ],
 };
 
 export default config;

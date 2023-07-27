@@ -3,7 +3,7 @@ build
 dist
 apps/odata-playground/public/locales
 libs/odata-playground/i18n/vite/dist
-
+libs/odata-playground/application-config/dist
 # Playwright
 **/test-results/
 **/playwright-report/

@@ -1,4 +1,4 @@
-import * as hash from 'object-hash';
+import hash from 'object-hash';
 
 export const DataTestidsIndex = {
   SEND_BUTTON: '2c6e603e-9158-44ea-ae60-3e915864eae6',

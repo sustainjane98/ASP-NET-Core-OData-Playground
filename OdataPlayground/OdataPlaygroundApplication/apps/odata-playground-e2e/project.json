@@ -1,52 +1,24 @@
 {
   "name": "odata-playground-e2e",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/odata-playground-e2e",
   "projectType": "application",
-  "sourceRoot": "apps/odata-playground-e2e/src",
   "targets": {
     "e2e": {
-      "executor": "@nxkit/playwright:test",
-      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "executor": "@ns3/nx-playwright:playwright",
       "options": {
-        "outputPath": "dist/apps/odata-playground-e2e/test-results",
-        "playwrightConfig": "apps/odata-playground-e2e/playwright.config.ts",
-        "devServerTarget": "odata-playground:serve:development"
-      },
-      "configurations": {
-        "production": {
-          "devServerTarget": "odata-playground:serve:production"
-        }
-      }
-    },
-    "e2e-headed": {
-      "executor": "@nxkit/playwright:test",
-      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
-      "options": {
-        "outputPath": "dist/apps/odata-playground-e2e/test-results",
-        "playwrightConfig": "apps/odata-playground-e2e/playwright.config.ts",
-        "devServerTarget": "odata-playground:serve:development",
-        "headed": true
-      },
-      "configurations": {
-        "production": {
-          "devServerTarget": "odata-playground:serve:production"
-        }
-      }
-    },
-    "show-report": {
-      "executor": "@nxkit/playwright:show-report",
-      "options": {
-        "reportPath": "dist/apps/odata-playground-e2e/playwright-report"
+        "command": "playwright test",
+        "config": "apps/odata-playground-e2e/playwright.config.ts",
+        "devServerTarget": "odata-playground:serve"
       }
     },
     "lint": {
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/odata-playground-e2e/**/*.{js,ts}"]
+        "lintFilePatterns": ["apps/my-desktop-e2e/**/*.{js,ts}"]
       }
     }
   },
-  "tags": [],
-  "implicitDependencies": ["odata-playground"]
+  "tags": []
 }

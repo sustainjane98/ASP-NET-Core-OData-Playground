@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query';
 import { useOdataPath } from '../../use-odata-path.hook';
 import axios from 'axios';
-import { OdataMetadataScheme } from '../../../types/odata-metadata-scheme.type';
+import { OdataMetadataScheme } from '@odata-playground/odata/common';
 
 export const useOdataMetadataScheme = () => {
   const odataPath = useOdataPath();
