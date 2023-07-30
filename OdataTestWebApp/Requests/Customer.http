@@ -1,0 +1,8 @@
+### Request all Customers
+GET {{host}}/Customer
+
+### Create new Customer
+POST {{host}}/Customer
+Content-Type: application/json
+
+{ "Id": 1, "Name": "Lorem Ipsum" }

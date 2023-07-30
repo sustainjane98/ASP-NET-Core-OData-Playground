@@ -23,7 +23,10 @@ import {
   TranslationKeysIndexEnum,
   useTranslation,
 } from '@odata-playground/odata/i18n/config';
-import { mapOdataDebugSchemeToTextfieldFilter } from '@odata-playground/odata/common';
+import {
+  mapOdataDebugSchemeToTextfieldFilter,
+  OdataScheme,
+} from '@odata-playground/odata/common';
 import { Textfield } from '@odata-playground/odata/common';
 import { DataTestids } from '@odata-playground/odata-e2e/data-testids';
 import { IndexRequestAndReponseFormData } from '../enums/index-request-and-reponse-form-data.enum';
@@ -55,12 +58,19 @@ export const OdataPlayground: React.FC<Props> = ({ textfieldAutocomplete }) => {
   const inputRef = React.createRef<HTMLInputElement>();
   const httpMethod = useWatch({ control: methods.control, name: 'httpMethod' });
   const {
+    error,
     data: odataRequestResponseData,
     isSuccess,
     mutate,
   } = useRequestOdata();
 
-  useReponseArea(methods, odataRequestResponseData, isSuccess);
+  // @ts-ignore
+  useReponseArea<AxiosResponse<OdataScheme> | undefined, typeof methods>(
+    methods,
+    odataRequestResponseData,
+    isSuccess,
+    error
+  );
   useBaseUrl(methods);
   useRequestArea(methods, metadata);
 

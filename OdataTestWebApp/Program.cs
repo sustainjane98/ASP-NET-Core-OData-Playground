@@ -8,19 +8,20 @@ var builder = WebApplication.CreateBuilder(args);
 
 var config = new HostConfiguration(builder.Configuration);
 
-builder.Services.AddControllers().AddOData(
-    options => options.Select().Filter().EnableQueryFeatures().AddRouteComponents(
-        "",
-        EdmModel.GetModel()));
-
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000");
+            policy.WithOrigins("http://localhost:3000").AllowAnyMethod()
+                .AllowAnyHeader();
         });
 });
+
+builder.Services.AddControllers().AddOData(
+    options => options.Select().Filter().EnableQueryFeatures().AddRouteComponents(
+        "",
+        EdmModel.GetModel()));
 
 var app = builder.Build();
 
