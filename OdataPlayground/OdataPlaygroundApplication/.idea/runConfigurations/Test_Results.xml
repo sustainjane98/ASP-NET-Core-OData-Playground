@@ -1,14 +1,12 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Start Ladle" type="js.build_tools.npm">
+  <configuration default="false" name="Test Results" type="js.build_tools.npm">
     <package-json value="$PROJECT_DIR$/package.json" />
     <command value="run" />
     <scripts>
-      <script value="ladle" />
+      <script value="odata-playground-e2e:test-results" />
     </scripts>
     <node-interpreter value="project" />
     <envs />
-    <method v="2">
-      <option name="LaunchBrowser.Before.Run" url="http://localhost:61000" />
-    </method>
+    <method v="2" />
   </configuration>
 </component>

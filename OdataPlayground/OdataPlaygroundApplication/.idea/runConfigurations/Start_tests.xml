@@ -3,7 +3,7 @@
     <package-json value="$PROJECT_DIR$/package.json" />
     <command value="run" />
     <scripts>
-      <script value="odata-playground-e2e:start" />
+      <script value="odata-playground-e2e:test" />
     </scripts>
     <node-interpreter value="project" />
     <envs />

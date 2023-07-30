@@ -1,30 +1,30 @@
 import { test } from '@playwright/test';
-import {
-  dataTestIdGenerator,
-  DataTestids,
-} from '@odata-playground/odata-e2e/data-testids';
-import { ApplicationConfig } from '@odata-playground/odata/application-config';
 import { HttpMethod } from '@odata-playground/common/enums';
+import { IndexPage } from '../pages/index.page';
 
 test.describe('Index Page', () => {
+  let indexPage: IndexPage;
+
   test.beforeEach(async ({ page }) => {
-    await page.goto(ApplicationConfig.URL);
+    indexPage = new IndexPage(page);
+    await indexPage.goto();
   });
 
-  test('Send a customer GET Request via Endpoint Section', async ({ page }) => {
-    await page
-      .locator(
-        dataTestIdGenerator(
-          DataTestids.Index.ODATA_ENDPOINT_SECTION_URL(
-            'Customer',
-            HttpMethod.GET
-          )
-        )
-      )
-      .click();
+  test('Send a customer GET Request via Endpoint Section', async () => {
+    await indexPage.clickOnRequestPill('Customer', HttpMethod.GET);
+    await Promise.all([
+      indexPage.waitForSuccessResponse('Customer', HttpMethod.GET),
+      await indexPage.clickSend(),
+    ]);
+  });
 
-    await page
-      .locator(dataTestIdGenerator(DataTestids.Index.SEND_BUTTON))
-      .click();
+  test('Send a customer POST Request via Endpoint Section', async () => {
+    await indexPage.clickOnRequestPill('Customer', HttpMethod.POST);
+    const customerPostResponse = indexPage.waitForSuccessResponse(
+      'Customer',
+      HttpMethod.POST
+    );
+    await indexPage.clickSend();
+    await customerPostResponse;
   });
 });

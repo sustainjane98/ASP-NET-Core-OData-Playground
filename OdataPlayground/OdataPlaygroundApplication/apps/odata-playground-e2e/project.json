@@ -9,7 +9,18 @@
       "options": {
         "command": "playwright test",
         "config": "apps/odata-playground-e2e/playwright.config.ts",
-        "devServerTarget": "odata-playground:serve"
+        "devServerTarget": "odata-playground:serve:production"
+      },
+      "configurations": {
+        "debug": {
+            "command": "playwright test --headed --debug"
+        }
+      }
+    },
+    "show-results": {
+      "executor": "@ns3/nx-playwright:playwright",
+      "options": {
+        "command": "playwright show-report dist/apps/odata-playground-e2e/playwright-report"
       }
     },
     "lint": {
