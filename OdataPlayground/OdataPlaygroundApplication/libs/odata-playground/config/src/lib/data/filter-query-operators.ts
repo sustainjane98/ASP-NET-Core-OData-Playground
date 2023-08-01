@@ -1,6 +1,6 @@
 import { TextfieldFilters } from '@odata-playground/odata/common';
 
-const FilterQueryOperatorsBasic: Record<string, string> = {
+export const FilterQueryOperatorsBasic: Record<string, string> = {
   EQUALS: "Name eq 'Customer 2'",
   NOT_EQUALS: "Name ne 'Customer 2'",
   LESS_THAN: 'Age lt 2',

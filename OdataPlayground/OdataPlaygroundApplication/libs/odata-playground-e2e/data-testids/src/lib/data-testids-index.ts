@@ -15,6 +15,9 @@ export const DataTestidsIndex = {
   URL_TEXTFIELD: '5f76e220-1866-4b73-b1c7-016bb637ce51',
   RESPONSE_AREA: '7d217e95-e2f4-4983-a515-8925d1a587ca',
   REQUEST_AREA: '2a431999-8f6d-45b3-b7fa-56d2d2d81c09',
+  URL_TEXTFIELD_AUTOCOMPLETE_OPTION(key: string) {
+    return `51a334b7-321c-4b96-a96a-a5cda9d33928-${hash({ key })}`;
+  },
 };
 
 export type DataTestidsIndex = typeof DataTestidsIndex;

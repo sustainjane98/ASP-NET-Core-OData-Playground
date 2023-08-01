@@ -19,7 +19,7 @@ export const config: UserConfigFn = ({ mode }) => ({
   plugins: [
     svgr(),
     react(),
-    copyFilesI18n(mode),
+    copyFilesI18n,
     viteTsConfigPaths({
       root: '../../',
     }),

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useWatch } from 'react-hook-form';
 import { mergeRefs } from 'react-merge-refs';
 import { Button, ButtonColorVariant, ButtonProps } from './button';
@@ -55,24 +55,18 @@ export const Textfield = React.forwardRef<HTMLInputElement, TextfieldProps>(
 
     const [inputSelected, setInputSelected] = useState<boolean>(false);
 
-    const [autoCompleteToDisplay, setAutoCompleteToDisplay] =
-      useState<typeof autoComplete>(autoComplete);
-
-    useEffect(() => {
-      setAutoCompleteToDisplay(
-        autoComplete?.filter?.(({ selector, httpMethod, ...other }) => {
-          return (
-            selector.test(currentValue) &&
-            (additionalAutocompleteFilters?.({
-              selector,
-              httpMethod,
-              ...other,
-            }) ??
-              true)
-          );
-        }) ?? []
-      );
-    }, [additionalAutocompleteFilters, autoComplete, currentValue]);
+    const autoCompleteToDisplay =
+      autoComplete?.filter?.(({ selector, httpMethod, ...other }) => {
+        return (
+          selector.test(currentValue) &&
+          (additionalAutocompleteFilters?.({
+            selector,
+            httpMethod,
+            ...other,
+          }) ??
+            true)
+        );
+      }) ?? [];
 
     let timeoutId: number | undefined;
 

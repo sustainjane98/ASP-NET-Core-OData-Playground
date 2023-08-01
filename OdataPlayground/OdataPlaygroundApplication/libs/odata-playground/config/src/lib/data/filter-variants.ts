@@ -1,6 +1,6 @@
 import { TextfieldFilters } from '@odata-playground/odata/common';
 
-const FilterVariantBasic: Record<string, string> = {
+export const FilterVariantBasic: Record<string, string> = {
   FILTER: 'filter',
   SELECT: 'select',
   STOP: 'stop',

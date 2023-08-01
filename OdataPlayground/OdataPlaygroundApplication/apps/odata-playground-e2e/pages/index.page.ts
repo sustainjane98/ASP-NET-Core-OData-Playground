@@ -5,6 +5,7 @@ import {
   DataTestids,
 } from '@odata-playground/odata-e2e/data-testids';
 import { HttpMethod } from '@odata-playground/common/enums';
+import { FilterVariants } from '@odata-playground/odata/config';
 
 export class IndexPage {
   public constructor(private page: Page) {}
@@ -29,12 +30,27 @@ export class IndexPage {
     );
   }
 
+  public async clickOnUrlTextfieldAutocompleteOption(
+    key: (typeof FilterVariants)[0]['key']
+  ) {
+    await this.page
+      .getByTestId(DataTestids.Index.URL_TEXTFIELD_AUTOCOMPLETE_OPTION(key))
+      .click();
+  }
+
   public async typeInUrlTextfield(url: string) {
     const textfield = await this.page.locator(
       `${dataTestIdGenerator(DataTestids.Index.URL_TEXTFIELD)} input`
     );
+    await textfield.click();
     await textfield.focus();
     await textfield.type(url);
+  }
+
+  public async focusUrlTextfield() {
+    await this.page
+      .locator(`${dataTestIdGenerator(DataTestids.Index.URL_TEXTFIELD)}`)
+      .focus();
   }
 
   public async selectHttpMethod(method: HttpMethod) {

@@ -26,6 +26,8 @@ import {
 import {
   mapOdataDebugSchemeToTextfieldFilter,
   OdataScheme,
+  TextfieldFilters,
+  TextfieldFiltersWithCommon,
 } from '@odata-playground/odata/common';
 import { Textfield } from '@odata-playground/odata/common';
 import { DataTestids } from '@odata-playground/odata-e2e/data-testids';
@@ -33,7 +35,7 @@ import { IndexRequestAndReponseFormData } from '../enums/index-request-and-repon
 import { OdataRequestForm } from '../types/odata-request-form.type';
 
 export interface Props {
-  textfieldAutocomplete: any;
+  textfieldAutocomplete: TextfieldFilters;
 }
 
 /**
@@ -91,7 +93,17 @@ export const OdataPlayground: React.FC<Props> = ({ textfieldAutocomplete }) => {
           autoComplete={[
             ...textfieldAutocomplete,
             ...mapOdataDebugSchemeToTextfieldFilter(data),
-          ]}
+          ].map(
+            (tf) =>
+              ({
+                ...tf,
+                id: `textfield-autocomplete-${tf.key}`,
+                name: `textfield-autocomplete-${tf.key}`,
+                dataTestId: DataTestids.Index.URL_TEXTFIELD_AUTOCOMPLETE_OPTION(
+                  tf.key
+                ),
+              } as TextfieldFiltersWithCommon[0])
+          )}
           additionalAutocompleteFilters={({ httpMethod }) => {
             const httpMethodVal = methods.getValues('httpMethod');
 
