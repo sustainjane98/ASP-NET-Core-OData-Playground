@@ -1,0 +1,14 @@
+{
+  "data": {
+    "@odata.context": "http://localhost:5000/$metadata#Customer/$entity",
+    "Id": 0,
+    "Name": ""
+  },
+  "status": {
+    "code": 201,
+    "message": "Created"
+  },
+  "responseHeaders": {
+    "content-type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8"
+  }
+}

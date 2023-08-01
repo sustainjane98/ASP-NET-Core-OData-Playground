@@ -6,13 +6,15 @@ import {
   TextfieldFilter,
   TextfieldFiltersWithCommon,
 } from 'libs/odata-playground/common/src';
+import { CommonElementProps } from '../types/common-elements-props.type';
 
 export interface TextfieldProps
   extends Omit<
     React.DetailedHTMLProps<
       React.InputHTMLAttributes<HTMLInputElement>,
       HTMLInputElement
-    >,
+    > &
+      CommonElementProps,
     'autoComplete'
   > {
   label?: string;
@@ -38,6 +40,8 @@ export const Textfield = React.forwardRef<HTMLInputElement, TextfieldProps>(
       dropdowns,
       additionalAutocompleteFilters,
       autoComplete,
+      id,
+      dataTestId,
       ...inputProps
     },
     ref
@@ -74,6 +78,8 @@ export const Textfield = React.forwardRef<HTMLInputElement, TextfieldProps>(
 
     return (
       <div
+        id={id}
+        data-test-id={dataTestId}
         className="relative"
         onClick={() => {
           window.clearTimeout(timeoutId);

@@ -17,6 +17,10 @@
         },
         "production": {
           "mode": "production"
+        },
+        "productionTesting": {
+          "mode": "production",
+          "configFile": "apps/odata-playground/vite-testing.config.ts"
         }
       }
     },
@@ -33,6 +37,10 @@
         },
         "production": {
           "buildTarget": "odata-playground:build:production",
+          "hmr": false
+        },
+        "productionTesting": {
+          "buildTarget": "odata-playground:build:productionTesting",
           "hmr": false
         }
       }
@@ -74,7 +82,6 @@
           "quiet": true
         }
       }
-    }
-  },
+    }},
   "tags": []
 }

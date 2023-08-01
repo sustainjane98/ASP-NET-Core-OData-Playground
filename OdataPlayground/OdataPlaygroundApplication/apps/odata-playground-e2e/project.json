@@ -4,12 +4,12 @@
   "sourceRoot": "apps/odata-playground-e2e",
   "projectType": "application",
   "targets": {
-    "e2e": {
+    "start": {
       "executor": "@ns3/nx-playwright:playwright",
       "options": {
         "command": "playwright test",
-        "config": "apps/odata-playground-e2e/playwright.config.ts",
-        "devServerTarget": "odata-playground:serve:production"
+        "config": "apps/odata-playground-e2e/playwright-local.config.ts",
+        "devServerTarget": "odata-playground:serve:productionTesting"
       },
       "configurations": {
         "debug": {
@@ -17,10 +17,44 @@
         }
       }
     },
+    "update-snapshots": {
+      "executor": "@ns3/nx-playwright:playwright",
+      "options": {
+        "command": "playwright test --update-snapshots",
+        "config": "apps/odata-playground-e2e/playwright-local.config.ts",
+        "devServerTarget": "odata-playground:serve:productionTesting"
+      }
+    },
+    "start-ci": {
+      "executor": "@ns3/nx-playwright:playwright",
+      "options": {
+        "command": "playwright test",
+        "config": "apps/odata-playground-e2e/playwright-ci.config.ts",
+        "devServerTarget": "odata-playground:serve:productionTesting"
+      },
+      "configurations": {
+        "debug": {
+          "command": "playwright test --headed --debug"
+        }
+      }
+    },
+    "codegen": {
+      "executor": "@ns3/nx-playwright:playwright",
+      "options": {
+        "command": "playwright codegen http://localhost:5050?odataPath=http://localhost:5000",
+        "devServerTarget": "odata-playground:serve:productionTesting"
+      }
+    },
     "show-results": {
       "executor": "@ns3/nx-playwright:playwright",
       "options": {
-        "command": "playwright show-report dist/apps/odata-playground-e2e/playwright-report"
+        "command": "playwright show-report dist/apps/odata-playground-e2e/html"
+      }
+    },
+    "show-trace": {
+      "executor": "@ns3/nx-playwright:playwright",
+      "options": {
+        "command": "playwright show-trace"
       }
     },
     "lint": {

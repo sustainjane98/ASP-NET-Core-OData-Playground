@@ -1,30 +1,57 @@
-import { test } from '@playwright/test';
+import { test } from '../fixtures/index.fixture';
 import { HttpMethod } from '@odata-playground/common/enums';
-import { IndexPage } from '../pages/index.page';
 
 test.describe('Index Page', () => {
-  let indexPage: IndexPage;
+  test('Send a customer GET Request via Endpoint Section', async ({
+    indexPage,
+  }) => {
+    const url = 'Customer';
+    const method = HttpMethod.GET;
 
-  test.beforeEach(async ({ page }) => {
-    indexPage = new IndexPage(page);
-    await indexPage.goto();
-  });
-
-  test('Send a customer GET Request via Endpoint Section', async () => {
-    await indexPage.clickOnRequestPill('Customer', HttpMethod.GET);
+    await indexPage.clickOnRequestPill(url, method);
     await Promise.all([
-      indexPage.waitForSuccessResponse('Customer', HttpMethod.GET),
+      indexPage.waitForSuccessResponse(url, method),
       await indexPage.clickSend(),
     ]);
+    await indexPage.snapshotResponseAreaWithCustomName(url, method);
   });
 
-  test('Send a customer POST Request via Endpoint Section', async () => {
-    await indexPage.clickOnRequestPill('Customer', HttpMethod.POST);
-    const customerPostResponse = indexPage.waitForSuccessResponse(
-      'Customer',
-      HttpMethod.POST
-    );
-    await indexPage.clickSend();
-    await customerPostResponse;
+  test('Send a customer GET Request via TextField', async ({ indexPage }) => {
+    const url = 'Customer';
+    const method = HttpMethod.GET;
+
+    await indexPage.typeInUrlTextfield(`/${url}`);
+    await Promise.all([
+      indexPage.waitForSuccessResponse(url, method),
+      await indexPage.clickSend(),
+    ]);
+    await indexPage.snapshotResponseAreaWithCustomName(url, method);
+  });
+
+  test('Send a customer POST Request via Endpoint Section', async ({
+    indexPage,
+  }) => {
+    const url = 'Customer';
+    const method = HttpMethod.POST;
+
+    await indexPage.clickOnRequestPill(url, method);
+    await Promise.all([
+      indexPage.waitForSuccessResponse(url, method),
+      indexPage.clickSend(),
+    ]);
+    await indexPage.snapshotResponseAreaWithCustomName(url, method);
+  });
+
+  test('Send a customer POST Request via TextField', async ({ indexPage }) => {
+    const url = 'Customer';
+    const method = HttpMethod.POST;
+
+    await indexPage.typeInUrlTextfield(`/${url}`);
+    await indexPage.selectHttpMethod(method);
+    await Promise.all([
+      indexPage.waitForSuccessResponse(url, method),
+      indexPage.clickSend(),
+    ]);
+    await indexPage.snapshotResponseAreaWithCustomName(url, method);
   });
 });

@@ -83,6 +83,7 @@ export const OdataPlayground: React.FC<Props> = ({ textfieldAutocomplete }) => {
     >
       <FormProvider {...methods}>
         <Textfield
+          dataTestId={DataTestids.Index.URL_TEXTFIELD}
           ref={inputRef}
           id="odata-url-field"
           name={IndexRequestAndReponseFormData.URL}
@@ -126,18 +127,58 @@ export const OdataPlayground: React.FC<Props> = ({ textfieldAutocomplete }) => {
           dropdownProps={[
             {
               id: 'httpMethod-dropdown',
-              dataTestId: DataTestids.Index.DROPDOWN_HTTP_METHOD,
+              dataTestId: DataTestids.Index.DROPDOWN_HTTP_METHOD(),
               name: IndexRequestAndReponseFormData.HTTP_METHOD,
               handleChange: () => {
                 const baseUrl = methods.getValues('baseUrl');
                 methods.setValue('url', baseUrl);
               },
               values: [
-                { key: HttpMethod.GET, value: 'GET' },
-                { key: HttpMethod.POST, value: 'POST' },
-                { key: HttpMethod.PUT, value: 'PUT' },
-                { key: HttpMethod.PATCH, value: 'PATCH' },
-                { key: HttpMethod.DELETE, value: 'DELETE' },
+                {
+                  key: HttpMethod.GET,
+                  value: 'GET',
+                  id: 'httpOption-get',
+                  name: 'httpOption-get',
+                  dataTestId: DataTestids.Index.DROPDOWN_HTTP_METHOD(
+                    HttpMethod.GET
+                  ),
+                },
+                {
+                  key: HttpMethod.POST,
+                  value: 'POST',
+                  id: 'httpOption-post',
+                  name: 'httpOption-post',
+                  dataTestId: DataTestids.Index.DROPDOWN_HTTP_METHOD(
+                    HttpMethod.POST
+                  ),
+                },
+                {
+                  key: HttpMethod.PUT,
+                  value: 'PUT',
+                  id: 'httpOption-put',
+                  name: 'httpOption-put',
+                  dataTestId: DataTestids.Index.DROPDOWN_HTTP_METHOD(
+                    HttpMethod.PUT
+                  ),
+                },
+                {
+                  key: HttpMethod.PATCH,
+                  value: 'PATCH',
+                  id: 'httpOption-patch',
+                  name: 'httpOption-patch',
+                  dataTestId: DataTestids.Index.DROPDOWN_HTTP_METHOD(
+                    HttpMethod.PATCH
+                  ),
+                },
+                {
+                  key: HttpMethod.DELETE,
+                  value: 'DELETE',
+                  id: 'httpOption-delete',
+                  name: 'httpOption-delete',
+                  dataTestId: DataTestids.Index.DROPDOWN_HTTP_METHOD(
+                    HttpMethod.DELETE
+                  ),
+                },
               ],
             },
           ]}

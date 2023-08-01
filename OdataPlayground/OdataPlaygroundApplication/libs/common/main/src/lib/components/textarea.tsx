@@ -1,27 +1,25 @@
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 import classNames from 'classnames';
+import { CommonElementProps } from '../types/common-elements-props.type';
 
-export interface Props
-  extends React.DetailedHTMLProps<
-    React.TextareaHTMLAttributes<HTMLTextAreaElement>,
-    HTMLTextAreaElement
-  > {
+export type Props = {
   id: string;
   name: string;
   label?: string;
   readOnly?: boolean;
-}
+} & React.DetailedHTMLProps<
+  React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+  HTMLTextAreaElement
+> &
+  CommonElementProps;
 
 export const Textarea = React.forwardRef<HTMLTextAreaElement, Props>(
-  ({ label, ...areaProps }, ref) => {
+  ({ label, id, dataTestId, ...areaProps }, ref) => {
     return (
-      <div className={areaProps.className}>
+      <div className={areaProps.className} data-test-id={dataTestId} id={id}>
         {label && (
-          <label
-            htmlFor={areaProps.id}
-            className="block mb-2 text-sm font-medium text-gray-900"
-          >
+          <label className="block mb-2 text-sm font-medium text-gray-900">
             {label}
           </label>
         )}

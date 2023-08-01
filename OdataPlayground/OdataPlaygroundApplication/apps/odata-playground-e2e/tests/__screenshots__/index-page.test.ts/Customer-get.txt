@@ -1,0 +1,26 @@
+{
+  "data": {
+    "@odata.context": "http://localhost:5000/$metadata#Customer",
+    "value": [
+      {
+        "Id": 1,
+        "Name": "Customer 1"
+      },
+      {
+        "Id": 2,
+        "Name": "Customer 2"
+      },
+      {
+        "Id": 3,
+        "Name": "Customer 3"
+      }
+    ]
+  },
+  "status": {
+    "code": 200,
+    "message": "OK"
+  },
+  "responseHeaders": {
+    "content-type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8"
+  }
+}

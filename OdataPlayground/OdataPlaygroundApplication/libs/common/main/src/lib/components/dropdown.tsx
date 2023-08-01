@@ -2,9 +2,10 @@ import React, { PropsWithChildren, useState } from 'react';
 import { Button, ButtonColorVariant, ButtonProps } from './button';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
 import classNames from 'classnames';
+import { CommonElementPropsWithName } from '../types/common-elements-props.type';
 
 export interface Props extends PropsWithChildren, Omit<ButtonProps, 'name'> {
-  values: { key: string; value: string }[];
+  values: ({ key: string; value: string } & CommonElementPropsWithName)[];
   handleChange?: (key: string, value: string) => void;
   placeholderValue?: string;
   selectedValue: string;
@@ -56,12 +57,12 @@ export const Dropdown: React.FC<Props> = ({
             className={'py-2 text-sm text-gray-700 dark:text-gray-200'}
             aria-labelledby="dropdown-button"
           >
-            {values.map(({ key, value }, i) => (
+            {values.map(({ key, value, id, name, dataTestId }, i) => (
               <li key={`dropdown-element-${i}`}>
                 <Button
-                  id={`${id}-${key}`}
-                  name={`${id}-${key}`}
-                  dataTestId={`${dataTestId}-${key}`}
+                  id={id}
+                  name={name}
+                  dataTestId={dataTestId}
                   variant={ButtonColorVariant.TRANSPARENT}
                   onClick={() => {
                     handleChange?.(key, value);

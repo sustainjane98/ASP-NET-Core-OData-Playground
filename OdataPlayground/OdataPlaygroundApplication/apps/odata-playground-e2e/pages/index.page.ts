@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
 import { ApplicationConfig } from '@odata-playground/odata/application-config';
 import {
   dataTestIdGenerator,
@@ -21,7 +21,7 @@ export class IndexPage {
 
         return (
           responseUrl.includes('Customer') &&
-          responseStatuscode === 200 &&
+          responseStatuscode < 300 &&
           requestHttpMethod === httpMethod.toUpperCase()
         );
       },
@@ -29,19 +29,53 @@ export class IndexPage {
     );
   }
 
+  public async typeInUrlTextfield(url: string) {
+    const textfield = await this.page.locator(
+      `${dataTestIdGenerator(DataTestids.Index.URL_TEXTFIELD)} input`
+    );
+    await textfield.focus();
+    await textfield.type(url);
+  }
+
+  public async selectHttpMethod(method: HttpMethod) {
+    await this.page
+      .getByTestId(DataTestids.Index.DROPDOWN_HTTP_METHOD())
+      .click();
+
+    await this.page
+      .getByTestId(DataTestids.Index.DROPDOWN_HTTP_METHOD(method))
+      .click();
+  }
+
+  public async snapshotResponseAreaWithCustomName(
+    url: string,
+    method: HttpMethod
+  ) {
+    const responseArea = await this.responseAreaText();
+
+    expect(responseArea).toMatchSnapshot({ name: `${url}-${method}.txt` });
+  }
+
+  public async responseAreaText() {
+    return await this.page.evaluate(
+      async ([responseAreaDataTestId]) => {
+        // The below instructions will run in the browser console ( context )
+        const textarea = document.querySelector<HTMLTextAreaElement>(
+          `${responseAreaDataTestId} textarea`
+        );
+        return textarea.value;
+      },
+      [dataTestIdGenerator(DataTestids.Index.RESPONSE_AREA)]
+    );
+  }
+
   public async clickOnRequestPill(url: string, method: HttpMethod) {
     await this.page
-      .locator(
-        dataTestIdGenerator(
-          DataTestids.Index.ODATA_ENDPOINT_SECTION_URL(url, method)
-        )
-      )
+      .getByTestId(DataTestids.Index.ODATA_ENDPOINT_SECTION_URL(url, method))
       .click();
   }
 
   public async clickSend() {
-    await this.page
-      .locator(dataTestIdGenerator(DataTestids.Index.SEND_BUTTON))
-      .click();
+    await this.page.getByTestId(DataTestids.Index.SEND_BUTTON).click();
   }
 }
