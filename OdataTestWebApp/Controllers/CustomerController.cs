@@ -1,48 +1,42 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
+using Microsoft.EntityFrameworkCore;
+using OdataTestWebApp.Configurations;
+using OdataTestWebApp.Mappers;
 using OdataTestWebApp.Models;
+using OdataTestWebApp.Models.Daos;
+using OdataTestWebApp.Models.Dtos;
 
 namespace OdataTestWebApp.Controllers;
 
-    public class CustomerController : ODataController
+public class CustomerController : ODataController
+{
+    private readonly OdatatestWebAppDbContext _context;
+
+
+    public CustomerController(OdatatestWebAppDbContext context)
     {
-        private static readonly Random Random = new Random();
-        private static readonly List<Customer> Customers = new List<Customer>(
-            Enumerable.Range(1, 3).Select(idx => new Customer
-            {
-                Id = idx,
-                Name = $"Customer {idx}",
-                Orders = new List<Order>(
-                    Enumerable.Range(1, 2).Select(dx => new Order
-                    {
-                        Id = (idx - 1) * 2 + dx,
-                        Amount = Random.Next(1, 9) * 10
-                    }))
-            }));
-
-        [EnableQuery]
-        public ActionResult<IEnumerable<Customer>> Get()
-        {
-            return Ok(Customers);
-        }
-
-        [EnableQuery]
-        public ActionResult<Customer> Get([FromRoute] int key)
-        {
-            var item = Customers.SingleOrDefault(d => d.Id.Equals(key));
-
-            if (item == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(item);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Customer c)
-        {
-            return Created(c);
-        }
+        _context = context;
     }
+
+    [EnableQuery]
+    public ActionResult<IEnumerable<CustomerDao>> Get()
+    {
+        return Ok();
+    }
+
+    [EnableQuery]
+    public async Task<ActionResult<CustomerDao>> Get([FromRoute] int key)
+    {
+        return Ok(await _context.Customers.FirstOrDefaultAsync(c => c.Id == key));
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> Post([FromBody] CreateCustomerDto c)
+    {
+        _context.Customers.Add(c.CreateCustomerDtoToCustomerDao());
+        await _context.SaveChangesAsync();
+        return Ok();
+    }
+}

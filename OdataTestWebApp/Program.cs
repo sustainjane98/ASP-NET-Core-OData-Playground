@@ -2,26 +2,17 @@ using Microsoft.AspNetCore.OData;
 using OdataPlayground.Handlers;
 using OdataPlayground.Models;
 using OdataTestWebApp.Configurations;
-using OdataTestWebApp.Models;
+using OdataTestWebApp.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var config = new HostConfiguration(builder.Configuration);
 
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(
-        policy =>
-        {
-            policy.WithOrigins("http://localhost:3000", "http://localhost:5050").AllowAnyMethod()
-                .AllowAnyHeader();
-        });
-});
+builder.Services.ConfigureCors();
 
-builder.Services.AddControllers().AddOData(
-    options => options.Select().Filter().EnableQueryFeatures().AddRouteComponents(
-        "",
-        EdmModel.GetModel()));
+builder.Services.InjectDependencies();
+
+builder.Services.AddControllers().ConfigureOdata();
 
 var app = builder.Build();
 

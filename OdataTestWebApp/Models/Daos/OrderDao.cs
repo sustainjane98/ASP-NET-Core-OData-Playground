@@ -1,6 +1,6 @@
-namespace OdataTestWebApp.Models;
+namespace OdataTestWebApp.Models.Daos;
 
-public class Order
+public class OrderDao
 {
     public int Id { get; set; }
     public decimal Amount { get; set; }
