@@ -1,5 +1,5 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { routingConfig } from "../configs/routing-config";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { routingConfig } from '../configs/routing-config';
 
 const br = createBrowserRouter(routingConfig);
 

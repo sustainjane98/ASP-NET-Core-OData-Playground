@@ -1,6 +1,6 @@
 namespace OdataTestWebApp.Models.Dtos;
 
-public class CreateCustomerDto
+public class CreateCustomer
 {
     public string Name { get; set; }
 }

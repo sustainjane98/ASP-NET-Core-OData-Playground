@@ -1,5 +1,4 @@
-import React, { PropsWithChildren } from "react";
-
+import React, { PropsWithChildren } from 'react';
 export interface Props extends PropsWithChildren {}
 
 /**

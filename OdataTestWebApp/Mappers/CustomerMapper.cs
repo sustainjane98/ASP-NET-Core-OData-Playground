@@ -7,7 +7,17 @@ namespace OdataTestWebApp.Mappers;
 [Mapper]
 public static partial class CustomerMapper
 {
-    public static partial CreateCustomerDto CustomerDaoToCreateCustomerDto(this CustomerDao dao);
+    [MapperIgnoreSource(nameof(CustomerDao.Id))]
+    [MapperIgnoreSource(nameof(CustomerDao.Orders))]
+    public static partial CreateCustomer CustomerDaoToCreateCustomerDto(this CustomerDao customerDao);
     
-    public static partial CustomerDao CreateCustomerDtoToCustomerDao(this CreateCustomerDto dao);
+    public static partial Customer CustomerDaoToCustomerDto(this CustomerDao customerDao);
+    
+    public static partial CustomerDao CustomerDtoToCustomerDao(this Customer customerDto);
+    
+    [MapperIgnoreTarget(nameof(CustomerDao.Id))]
+    [MapperIgnoreTarget(nameof(CustomerDao.Orders))]
+    public static partial CustomerDao CreateCustomerDtoToCustomerDao(this CreateCustomer createCustomerDto);
+    
+    public static partial IQueryable<Customer> CustomerDaoToCustomerDto(this IQueryable<CustomerDao> customerDaos);
 }

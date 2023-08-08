@@ -8,9 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 var config = new HostConfiguration(builder.Configuration);
 
-builder.Services.ConfigureCors();
+builder.ConfigureCors();
 
-builder.Services.InjectDependencies();
+builder.InjectDependencies();
 
 builder.Services.AddControllers().ConfigureOdata();
 
