@@ -9,7 +9,7 @@ export const useCollectionName = (control?: Control<OdataRequestForm, any>) => {
   useEffect(() => {
     const cn = url.split('/')?.[3];
 
-    setCollName(cn ?? '');
+    setCollName(cn);
   }, [url]);
 
   return collName;

@@ -27,3 +27,4 @@ export type {
   EntityType,
   OdataMetadataScheme,
 } from './lib/types/odata-metadata-scheme.type';
+export { isMetadataScheme } from './lib/types/odata-metadata-scheme.typeguard';

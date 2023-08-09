@@ -21,19 +21,19 @@ export const useRequestArea = (
   const collName = useCollectionName(methods.control);
 
   useUpdateEffect(() => {
-    if (metadata && httpMethod !== HttpMethod.GET) {
+    if (metadata && httpMethod !== HttpMethod.GET && collName) {
       const entity = mapSchemeToEntityTypes(metadata) ?? [];
 
-      const et = findEntityTypeInCollection(entity, collName);
+      const entityType = findEntityTypeInCollection(entity, collName);
 
-      if (!et) {
+      if (!entityType) {
         methods.setValue('requestArea', '');
         return;
       }
 
       methods.setValue(
         'requestArea',
-        prettifyJSON(mapEntityTypeToJsonExample(et))
+        prettifyJSON(mapEntityTypeToJsonExample(entityType))
       );
       return;
     }
