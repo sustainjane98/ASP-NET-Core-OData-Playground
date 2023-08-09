@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Deltas;
+using Microsoft.AspNetCore.OData.Formatter;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Microsoft.EntityFrameworkCore;
@@ -19,16 +21,16 @@ public class CustomerController : ODataController
         _context = context;
     }
 
-    [EnableQuery]
+    [EnableQuery(PageSize = 6)]
     public ActionResult<IQueryable<Customer>> Get()
     {
-        return Ok(_context.Customers.CustomerDaoToCustomerDto());
+        return Ok(_context.Customers.AsSplitQuery().CustomerDaoToCustomerDto());
     }
 
     [EnableQuery]
     public async Task<ActionResult<IQueryable<Customer>>> Get([FromRoute] int key)
     {
-        return Ok((await _context.Customers.FirstOrDefaultAsync(c => c.Id == key))?.CustomerDaoToCustomerDto());
+        return Ok((await _context.Customers.AsSplitQuery().FirstOrDefaultAsync(c => c.Id == key))?.CustomerDaoToCustomerDto());
     }
 
     [HttpPost]
@@ -62,4 +64,52 @@ public class CustomerController : ODataController
         await _context.SaveChangesAsync();
         return Updated(customer.Id);
     }
+    
+    public async Task<ActionResult> Delete([FromRoute] int key)
+    {
+        var customer = _context.Customers.SingleOrDefault(d => d.Id == key);
+        if (customer != null)
+        {
+            _context.Customers.Remove(customer);
+        }
+        await _context.SaveChangesAsync();
+        return NoContent();
+    }
+    
+    [HttpGet("[controller]/mostRecent()")]
+    public async Task<IActionResult> MostRecent()
+    {
+        var latestCustomerDao = await _context.Customers.OrderByDescending(customer => customer.Updated).FirstOrDefaultAsync();
+        return Ok(latestCustomerDao);
+    }
+    
+    [HttpGet("ReturnMostRecentCustomer()")]
+    public async Task<IActionResult> ReturnMostRecentCustomer()
+    {
+        var latestCustomerDao = await _context.Customers.OrderByDescending(customer => customer.Updated).FirstOrDefaultAsync();
+        return Ok(latestCustomerDao);
+    }
+    
+    [HttpPut("[controller]({key:int})/ResetName")]
+    public async Task<IActionResult> ResetName([FromODataUri] int key, ODataActionParameters parameters)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState.ValidationState);
+        }
+
+        var updatedCustomerDao = await _context.Customers.FirstOrDefaultAsync((customer) => customer.Id == key);
+
+
+        if (updatedCustomerDao is null)
+        {
+            return NotFound();
+        }
+        
+        updatedCustomerDao.Name = "";
+
+        return Ok();
+    }
+    
+    
 }

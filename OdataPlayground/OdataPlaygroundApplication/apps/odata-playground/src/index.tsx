@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import './styles.css';
 import 'flowbite';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { Wrappers } from '@odata-playground/odata/common';
+import { SomethingWentWrong, Wrappers } from '@odata-playground/odata/common';
 import { Router } from './components/router';
+import { ErrorBoundary } from 'react-error-boundary';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,10 +14,14 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <Wrappers>
-      <Router />
-      <ReactQueryDevtools initialIsOpen={false} />
-    </Wrappers>
+    <ErrorBoundary fallback={<SomethingWentWrong />}>
+      <Suspense>
+        <Wrappers>
+          <Router />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </Wrappers>
+      </Suspense>
+    </ErrorBoundary>
   </React.StrictMode>
 );
 

@@ -31,4 +31,9 @@ public class AppDbContext: DbContext
 
         optionsBuilder.UseNpgsql(connection.ToString());
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<CustomerDao>().HasMany(e => e.Orders).WithOne(e => e.Customer).HasForeignKey(e => e.CustomerId);
+    }
 }   

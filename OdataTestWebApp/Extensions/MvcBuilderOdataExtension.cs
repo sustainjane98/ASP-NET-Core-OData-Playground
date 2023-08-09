@@ -11,7 +11,10 @@ public static class MvcBuilderOdataExtension
     private static IEdmModel GetOdataTestWebApplicationModel()
     {
         var modelBuilder = new ODataConventionModelBuilder();
+        modelBuilder.Function("returnMostRecentCustomer").ReturnsFromEntitySet<Customer>("customer");
         modelBuilder.EntitySet<Customer>(nameof(Customer));
+        modelBuilder.EntityType<Customer>().Function("mostRecent")
+            .Returns<string>();
         modelBuilder.Singleton<SettingDao>(nameof(SettingDao));
         return modelBuilder.GetEdmModel();
     }

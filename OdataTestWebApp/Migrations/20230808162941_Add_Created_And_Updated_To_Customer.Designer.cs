@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using OdataTestWebApp.Configurations;
@@ -11,9 +12,11 @@ using OdataTestWebApp.Configurations;
 namespace OdataTestWebApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230808162941_Add_Created_And_Updated_To_Customer")]
+    partial class Add_Created_And_Updated_To_Customer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,13 +61,12 @@ namespace OdataTestWebApp.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("numeric");
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("integer")
-                        .HasColumnName("CustomerId");
+                    b.Property<int?>("CustomerDaoId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("CustomerDaoId");
 
                     b.ToTable("Orders");
                 });
@@ -85,18 +87,14 @@ namespace OdataTestWebApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Setting");
+                    b.ToTable("Settings");
                 });
 
             modelBuilder.Entity("OdataTestWebApp.Models.Daos.OrderDao", b =>
                 {
-                    b.HasOne("OdataTestWebApp.Models.Daos.CustomerDao", "Customer")
+                    b.HasOne("OdataTestWebApp.Models.Daos.CustomerDao", null)
                         .WithMany("Orders")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
+                        .HasForeignKey("CustomerDaoId");
                 });
 
             modelBuilder.Entity("OdataTestWebApp.Models.Daos.CustomerDao", b =>

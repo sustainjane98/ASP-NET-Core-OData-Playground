@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@odata-playground/common": ["libs/common/main/src/index.ts"],
+      "@odata-playground/common/enums": ["libs/common/enums/src/index.ts"],
       "@odata-playground/odata-e2e/data-testids": [
         "libs/odata-playground-e2e/data-testids/src/index.ts"
       ],
@@ -46,7 +47,7 @@
       "@odata-playground/odata/testing/decorators": [
         "libs/odata-playground/testing/src/index.ts"
       ],
-      "@odata-playground/common/enums": ["libs/common/enums/src/index.ts"],
+      "tailwind-utilities": ["libs/tailwind-utilities/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
