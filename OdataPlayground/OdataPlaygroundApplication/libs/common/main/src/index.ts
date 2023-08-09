@@ -23,3 +23,7 @@ export type {
   CommonElementProps,
   CommonElementPropsWithName,
 } from './lib/types/common-elements-props.type';
+export { DialogWithTitleAndDescription } from './lib/components/dialog-with-title-and-description';
+export type { DialogWithTitleAndDescriptionProps } from './lib/components/dialog-with-title-and-description';
+export { DialogWrapper } from './lib/components/dialog-wrapper';
+export type { DialogWrapperProps } from './lib/components/dialog-wrapper';

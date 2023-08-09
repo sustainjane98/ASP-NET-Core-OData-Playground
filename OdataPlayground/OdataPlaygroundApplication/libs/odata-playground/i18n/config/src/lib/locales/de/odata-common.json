@@ -1,5 +1,6 @@
 {
   "unknown_error": "Unbekannter Fehler",
   "explaining_error_text": "Es tut uns leid, aber in unserer Anwendung ist ein unbekannter Fehler aufgetreten. Unser Team arbeitet bereits daran, das Problem zu beheben. Wir entschuldigen uns für eventuelle Unannehmlichkeiten und danken für Ihr Verständnis. Wir werden Sie auf dem Laufenden halten. Danke.",
-  "reload": "Neu laden"
+  "reload": "Neu laden",
+  "show_error": "Zeige Fehlerdetails"
 }

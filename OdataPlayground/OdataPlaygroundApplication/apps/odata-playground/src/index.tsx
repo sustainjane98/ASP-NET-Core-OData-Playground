@@ -4,9 +4,13 @@ import reportWebVitals from './reportWebVitals';
 import './styles.css';
 import 'flowbite';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { SomethingWentWrong, Wrappers } from '@odata-playground/odata/common';
+import { Wrappers } from '@odata-playground/odata/common';
 import { Router } from './components/router';
 import { ErrorBoundary } from 'react-error-boundary';
+import {
+  ERROR_DIALOG_ID,
+  SomethingWentWrong,
+} from '@odata-playground/odata/error';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -22,6 +26,7 @@ root.render(
         </Wrappers>
       </Suspense>
     </ErrorBoundary>
+    <div id={ERROR_DIALOG_ID} className="absolute top-0 left-0" />
   </React.StrictMode>
 );
 

@@ -13,6 +13,6 @@
   }
 
   div#root {
-    @apply flex flex-col;
+    @apply flex flex-col relative;
   }
 }

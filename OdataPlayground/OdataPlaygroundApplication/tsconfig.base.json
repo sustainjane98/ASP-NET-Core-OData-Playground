@@ -47,7 +47,7 @@
       "@odata-playground/odata/testing/decorators": [
         "libs/odata-playground/testing/src/index.ts"
       ],
-      "tailwind-utilities": ["libs/tailwind-utilities/src/index.ts"]
+      "@odata-playground/odata/error": ["libs/odata-playground/error/src/index.ts"],
     }
   },
   "exclude": ["node_modules", "tmp"]

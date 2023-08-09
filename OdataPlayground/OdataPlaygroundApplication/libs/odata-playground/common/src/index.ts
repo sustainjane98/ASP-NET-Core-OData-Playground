@@ -27,4 +27,3 @@ export type {
   EntityType,
   OdataMetadataScheme,
 } from './lib/types/odata-metadata-scheme.type';
-export { SomethingWentWrong } from './lib/components/react-router/404';
