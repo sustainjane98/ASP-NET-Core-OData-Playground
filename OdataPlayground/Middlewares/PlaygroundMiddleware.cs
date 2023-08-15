@@ -42,6 +42,12 @@ public class PlaygroundMiddleware
             return;
         }
         
+        if (requestPath.StartsWith("/locales"))
+        {
+            await context.ProvideOdataStaticAssets(requestPath, "");
+            return;
+        }
+        
         await Next.Invoke(context);
         
     }

@@ -6,6 +6,7 @@
     "clear-cache": "nx reset",
     "odata-playground:build-dev": "nx run odata-playground:build:development",
     "odata-playground:build-prod": "nx run odata-playground:build:production",
+    "odata-playground:build-prod-integrated": "nx run odata-playground:build:production-integrated",
     "odata-playground:start-dev": "nx run odata-playground:serve:development",
     "odata-playground:start-prod": "nx run odata-playground:serve:production",
     "odata-playground-e2e:test": "nx run odata-playground-e2e:start",

@@ -15,7 +15,7 @@ public static class HttpContextExtensions
         
         string resultHtml;
 
-        await using (FileStream fs = new FileStream("../OdataPlayground/OdataPlaygroundApplication/build/index.html", FileMode.OpenOrCreate,
+        await using (FileStream fs = new FileStream("../OdataPlayground/OdataPlaygroundApplication/dist/apps/odata-playground/index.html", FileMode.OpenOrCreate,
                          FileAccess.Read))
         {
             using (StreamReader mStreamWriter = new StreamReader(fs))
@@ -32,30 +32,45 @@ public static class HttpContextExtensions
 
     internal static async Task ProvideOdataStaticAssets(this HttpContext context, string path, string configPath)
     {
-
-        if (context.Response.HasStarted)
+        try
         {
-            return;
-        }
-        
-        string result;
 
-        string subPath = path.Replace(configPath, "");
-
-        await using (FileStream fs = new FileStream($"../OdataPlayground/OdataPlaygroundApplication/build/{subPath}", FileMode.Open,
-                         FileAccess.Read))
-        {
-            using (StreamReader mStreamWriter = new StreamReader(fs))
+            if (context.Response.HasStarted)
             {
-                result = await mStreamWriter.ReadToEndAsync();
+                return;
             }
-        }
 
-        var mimeType = MimeTypes.GetMimeType(subPath);
-        
-        context.Response.StatusCode = (int)HttpStatusCode.OK;
-        context.Response.ContentType = mimeType;
-        await context.Response.WriteAsync(result);
+            string result;
+
+            string subPath = path;
+
+            if (configPath != "")
+            {
+                subPath = path.Replace(configPath, "");
+            }
+
+            await using (FileStream fs = new FileStream(
+                             $"../OdataPlayground/OdataPlaygroundApplication/dist/apps/odata-playground/{subPath}",
+                             FileMode.Open,
+                             FileAccess.Read))
+            {
+                using (StreamReader mStreamWriter = new StreamReader(fs))
+                {
+                    result = await mStreamWriter.ReadToEndAsync();
+                }
+            }
+
+            var mimeType = MimeTypes.GetMimeType(subPath);
+
+            context.Response.StatusCode = (int) HttpStatusCode.OK;
+            context.Response.ContentType = mimeType;
+            await context.Response.WriteAsync(result);
+        }
+        catch (Exception e)
+        {
+            context.Response.StatusCode = (int) HttpStatusCode.NotFound;
+            await context.Response.WriteAsync(e.Message);
+        }
     }
     
     

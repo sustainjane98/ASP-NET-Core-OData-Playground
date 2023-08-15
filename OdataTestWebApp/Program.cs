@@ -24,11 +24,10 @@ app.UseCors();
 
 app.MapControllers();
 
+app.UseODataRouteDebug();
+
 if (builder.Environment.IsDevelopment())
 {
-    
-    app.UseODataRouteDebug();
-    
     app.UseOdataPlaygroundUiDev(new OdataPlaygroundConfigurationOptionsDev()
     {
         UiPath = "/odata",
