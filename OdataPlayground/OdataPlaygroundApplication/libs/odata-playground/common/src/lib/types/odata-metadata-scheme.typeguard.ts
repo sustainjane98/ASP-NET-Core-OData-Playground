@@ -7,5 +7,5 @@ export const isMetadataScheme = (
     return false;
   }
 
-  return typeof b === 'object' && typeof b.Key != 'undefined';
+  return typeof b?.Key != 'undefined';
 };

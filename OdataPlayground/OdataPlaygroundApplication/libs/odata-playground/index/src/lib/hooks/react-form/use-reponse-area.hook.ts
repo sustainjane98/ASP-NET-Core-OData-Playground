@@ -24,8 +24,8 @@ export const useReponseArea = <
       prettifyJSON({
         data: axiosResponseData?.data ?? '',
         status: {
-          code: axiosResponseData.status ?? errorStatusCode,
-          message: axiosResponseData.statusText ?? errorStatusMessage,
+          code: axiosResponseData?.status ?? errorStatusCode,
+          message: axiosResponseData?.statusText ?? errorStatusMessage,
         },
         responseHeaders: axiosResponseData?.headers,
         requestHeaders: axiosResponseData?.request?.headers,
