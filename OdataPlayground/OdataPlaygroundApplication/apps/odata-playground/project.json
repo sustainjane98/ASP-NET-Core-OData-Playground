@@ -9,8 +9,7 @@
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/apps/odata-playground",
-        "base": "/odata"
+        "outputPath": "dist/apps/odata-playground"
       },
       "configurations": {
         "development": {
@@ -21,8 +20,8 @@
         },
         "production-integrated": {
           "mode": "production",
-          "configFile": "apps/odata-playground/vite-integrated.config.ts"
-
+          "configFile": "apps/odata-playground/vite-integrated.config.ts",
+          "base": "/odata"
         },
         "productionTesting": {
           "mode": "production",
