@@ -15,7 +15,11 @@ export {
   mapOdataDebugSchemeToOdataDebugGroups,
   mapOdataDebugSchemeToTextfieldFilter,
 } from './lib/utils/mapper';
-export { findEntityTypeInCollection } from './lib/utils/helper';
+export {
+  findEntityTypeInCollection,
+  addObjectOrArrayToArray,
+  findModelnameForOdataCollectionname,
+} from './lib/utils/helper';
 export { Wrappers } from './lib/components/wrappers';
 export { Textarea } from './lib/components/react-form/textarea';
 export { Textfield } from './lib/components/react-form/textfield';

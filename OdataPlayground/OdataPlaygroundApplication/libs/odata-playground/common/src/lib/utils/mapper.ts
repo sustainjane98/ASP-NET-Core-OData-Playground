@@ -74,12 +74,10 @@ export const mapEntityTypeToJsonExample = (et: EntityType) => {
   return exampleJson;
 };
 
-export const mapSchemeToEntityTypes = (
-  scheme: OdataMetadataScheme
-): EntityType[] | undefined => {
-  return scheme['edmx:Edmx']['edmx:DataServices'].Schema.find(
-    ({ '@Namespace': ns }) => ns.includes('Models')
-  )?.EntityType;
+export const mapSchemeToEntityTypes = (scheme: OdataMetadataScheme) => {
+  return scheme['edmx:Edmx']['edmx:DataServices'].Schema.filter(
+    ({ EntityType }) => EntityType !== undefined
+  ).flatMap(({ EntityType }) => EntityType as EntityType[]);
 };
 
 export const mapTypeToExampleValue = (type: string) =>
