@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using OdataTestWebApp.Configurations;
@@ -11,9 +12,11 @@ using OdataTestWebApp.Configurations;
 namespace OdataTestWebApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230916143530_Rename_Table_Settings_To_Setting")]
+    partial class Rename_Table_Settings_To_Setting
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,7 +72,7 @@ namespace OdataTestWebApp.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("OdataTestWebApp.Models.Daos.Setting.SettingDao", b =>
+            modelBuilder.Entity("OdataTestWebApp.Models.Daos.SettingDao", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -83,52 +86,9 @@ namespace OdataTestWebApp.Migrations
                     b.Property<bool>("ShouldEnablePerformanceMode")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("SubItemId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("SubItemId")
-                        .IsUnique();
 
                     b.ToTable("Setting");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            IsProduction = true,
-                            ShouldEnablePerformanceMode = true,
-                            SubItemId = 1
-                        });
-                });
-
-            modelBuilder.Entity("OdataTestWebApp.Models.Daos.Setting.SettingSubItemDao", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("SettingId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SettingSubItem");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "",
-                            SettingId = 1
-                        });
                 });
 
             modelBuilder.Entity("OdataTestWebApp.Models.Daos.OrderDao", b =>
@@ -142,26 +102,9 @@ namespace OdataTestWebApp.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("OdataTestWebApp.Models.Daos.Setting.SettingDao", b =>
-                {
-                    b.HasOne("OdataTestWebApp.Models.Daos.Setting.SettingSubItemDao", "SubItem")
-                        .WithOne("Setting")
-                        .HasForeignKey("OdataTestWebApp.Models.Daos.Setting.SettingDao", "SubItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("SubItem");
-                });
-
             modelBuilder.Entity("OdataTestWebApp.Models.Daos.CustomerDao", b =>
                 {
                     b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("OdataTestWebApp.Models.Daos.Setting.SettingSubItemDao", b =>
-                {
-                    b.Navigation("Setting")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

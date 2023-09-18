@@ -5,11 +5,16 @@ import {
   TextfieldFilter,
   TextfieldFilters,
 } from '../types/textfield-filter.type';
-import { HttpMethod } from '@odata-playground/common';
+import { HttpMethod } from '@odata-playground/common/enums';
 import {
+  ComplexType,
+  EntityContainer,
   EntityType,
   OdataMetadataScheme,
+  Property,
+  PropertyResolved,
 } from '../types/odata-metadata-scheme.type';
+import { findEntityTypeInCollection } from './helper';
 
 const odataSelector = /https*:\/\/[A-Za-z]*:*\d{1,4}\/$/;
 
@@ -59,13 +64,42 @@ export const mapOdataDebugSchemeToTextfieldFilter = (
   );
 };
 
-export const mapEntityTypeToJsonExample = (et: EntityType) => {
+export const mapEntityTypeToJsonExample = (
+  properties: Property | PropertyResolved | (Property | PropertyResolved)[]
+) => {
   let exampleJson = {};
-  const properties = et.Property;
 
-  for (const prop of properties) {
-    const type = prop['@Type']?.replace('Edm.', '').toLowerCase();
+  if (Array.isArray(properties))
+    for (const prop of properties) {
+      exampleJson = {
+        ...exampleJson,
+        ...mapSingleEntityTypeToJSON(prop),
+      };
+    }
+  else exampleJson = mapSingleEntityTypeToJSON(properties);
 
+  return exampleJson;
+};
+
+const mapSingleEntityTypeToJSON = (prop: Property | PropertyResolved) => {
+  let exampleJson = {};
+  const type = prop['@Type']?.replace('Edm.', '').toLowerCase();
+
+  if (!isExampleValue(type)) {
+    const entityValue = mapEntityTypeToJsonExample(
+      (prop as PropertyResolved).Property
+    );
+
+    if (checkIsCollection(type)) {
+      exampleJson = Object.assign(exampleJson, {
+        [prop['@Name']]: [entityValue],
+      });
+    } else {
+      exampleJson = Object.assign(exampleJson, {
+        [prop['@Name']]: entityValue,
+      });
+    }
+  } else {
     exampleJson = Object.assign(exampleJson, {
       [prop['@Name']]: mapTypeToExampleValue(type),
     });
@@ -74,16 +108,59 @@ export const mapEntityTypeToJsonExample = (et: EntityType) => {
   return exampleJson;
 };
 
-export const mapSchemeToEntityTypes = (scheme: OdataMetadataScheme) => {
-  return scheme['edmx:Edmx']['edmx:DataServices'].Schema.filter(
-    ({ EntityType }) => EntityType !== undefined
-  ).flatMap(({ EntityType }) => EntityType as EntityType[]);
+export const mapSchemeToEntityTypes = (
+  scheme: OdataMetadataScheme
+): (ComplexType | EntityType | EntityContainer)[] => {
+  return Object.values(
+    Object.values(scheme['edmx:Edmx']['edmx:DataServices'].Schema).flat()
+  )
+    .flatMap((e) => Object.values(e))
+    .flat()
+    .filter((e) => typeof e !== 'string' && typeof e !== 'undefined') as never;
 };
 
-export const mapTypeToExampleValue = (type: string) =>
-  ({
-    string: '',
-    int32: 0,
-    int64: 0,
-    int: 0,
-  }[type]);
+export const exampleValues: Record<string, number | boolean | string> = {
+  string: '',
+  int32: 100,
+  int64: 100,
+  int: 100,
+  decimal: 20,
+  boolean: false,
+};
+
+export const exampleKeys = Object.keys(exampleValues);
+
+export const isExampleValue = (type: string) => exampleKeys.includes(type);
+
+export const checkIsCollection = (type: string) =>
+  type.startsWith('collection(');
+
+export const mapTypeToExampleValue = (type: string) => exampleValues[type];
+
+export const mapEntitySubtypes = (
+  et: EntityType,
+  collection: (ComplexType | EntityType | EntityContainer)[]
+) => {
+  const properties = et.Property;
+
+  if (Array.isArray(properties)) {
+    for (const prop of properties) {
+      mapSingleSubtype(prop, collection);
+    }
+  } else {
+    mapSingleSubtype(properties, collection);
+  }
+};
+
+const mapSingleSubtype = (
+  prop: Property,
+  collection: (ComplexType | EntityType | EntityContainer)[]
+) => {
+  const type = prop['@Type'].match(/\w+\)?$/)?.[0]?.replace(')', '') ?? '';
+
+  if (!isExampleValue(type?.toLowerCase() ?? '')) {
+    const subEntityType = findEntityTypeInCollection(collection, type);
+    if (subEntityType)
+      (prop as PropertyResolved).Property = subEntityType.Property;
+  }
+};

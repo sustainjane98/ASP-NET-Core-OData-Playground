@@ -21,11 +21,25 @@ interface EdmxDataServices {
 interface Schema {
   '@Namespace': string;
   '@xmlns': string;
-  EntityType?: EntityType[];
+  EntityType?: EntityType | EntityType[];
   EntityContainer?: EntityContainer;
+  ComplexType: ComplexType | ComplexType[];
+  [x: string]:
+    | ComplexType
+    | string
+    | EntityType
+    | EntityContainer
+    | ComplexType[]
+    | EntityType[]
+    | undefined;
 }
 
-interface EntityContainer {
+export type ComplexType = {
+  '@Name': string;
+  Property: Property[];
+};
+
+export interface EntityContainer {
   '@Name': string;
   EntitySet: EntitySet | EntitySet[];
   Singleton: EntitySet | EntitySet[];
@@ -40,7 +54,7 @@ export interface EntitySet {
 export interface EntityType {
   '@Name': string;
   Key: Key;
-  Property: Property[];
+  Property: Property | (Property | PropertyResolved)[] | PropertyResolved;
   NavigationProperty?: NavigationProperty;
 }
 
@@ -57,9 +71,13 @@ interface NavigationProperty {
   '@Type': string;
 }
 
-interface Property {
+export interface Property {
   '@Name': string;
   '@Type': string;
   '@Nullable': string;
   '@Scale'?: string;
+}
+
+export interface PropertyResolved extends Property {
+  Property: Property | Property[];
 }

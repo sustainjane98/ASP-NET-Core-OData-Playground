@@ -1,7 +1,7 @@
 import { useUpdateEffect } from 'usehooks-ts';
 import { OdataRequestForm } from '../../types/odata-request-form.type';
 import { UseFormReturn, useWatch } from 'react-hook-form';
-import { HttpMethod, useJSONFormat } from '@odata-playground/common';
+import { useJSONFormat } from '@odata-playground/common';
 import {
   EntityType,
   findEntityTypeInCollection,
@@ -11,6 +11,8 @@ import {
 import { useCollectionName } from './use-collection-name.hook';
 import { OdataMetadataScheme } from '@odata-playground/odata/common';
 import { findModelnameForOdataCollectionname } from '@odata-playground/odata/common';
+import { HttpMethod } from '@odata-playground/common/enums';
+import { mapEntitySubtypes } from '../../../../../common/src/lib/utils/mapper';
 
 export const useRequestArea = (
   methods: UseFormReturn<OdataRequestForm, any, undefined>,
@@ -24,9 +26,9 @@ export const useRequestArea = (
 
   useUpdateEffect(() => {
     if (metadata && httpMethod !== HttpMethod.GET && collName) {
-      const entity = mapSchemeToEntityTypes(metadata) ?? [];
+      const entityTypes = mapSchemeToEntityTypes(metadata) ?? [];
 
-      let entityType = findEntityTypeInCollection(entity, collName);
+      let entityType = findEntityTypeInCollection(entityTypes, collName);
 
       if (!entityType) {
         const resolvedEntityName = findModelnameForOdataCollectionname(
@@ -43,9 +45,15 @@ export const useRequestArea = (
         }
       }
 
+      if (!entityType) {
+        return;
+      }
+
+      mapEntitySubtypes(entityType, entityTypes);
+
       methods.setValue(
         'requestArea',
-        prettifyJSON(mapEntityTypeToJsonExample(entityType as EntityType))
+        prettifyJSON(mapEntityTypeToJsonExample(entityType.Property))
       );
       return;
     }

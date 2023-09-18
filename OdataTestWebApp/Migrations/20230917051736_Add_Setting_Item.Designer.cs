@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using OdataTestWebApp.Configurations;
@@ -11,9 +12,11 @@ using OdataTestWebApp.Configurations;
 namespace OdataTestWebApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230917051736_Add_Setting_Item")]
+    partial class Add_Setting_Item
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,15 +95,6 @@ namespace OdataTestWebApp.Migrations
                         .IsUnique();
 
                     b.ToTable("Setting");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            IsProduction = true,
-                            ShouldEnablePerformanceMode = true,
-                            SubItemId = 1
-                        });
                 });
 
             modelBuilder.Entity("OdataTestWebApp.Models.Daos.Setting.SettingSubItemDao", b =>
@@ -121,14 +115,6 @@ namespace OdataTestWebApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SettingSubItem");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "",
-                            SettingId = 1
-                        });
                 });
 
             modelBuilder.Entity("OdataTestWebApp.Models.Daos.OrderDao", b =>

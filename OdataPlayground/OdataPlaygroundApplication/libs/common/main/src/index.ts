@@ -13,7 +13,6 @@ export { Textarea } from './lib/components/textarea';
 export type { Props as TextareaProps } from './lib/components/textarea';
 export { Tooltip } from './lib/components/tooltip';
 export type { Props as TooltipProps } from './lib/components/textarea';
-export { HttpMethod } from '../../enums/src/index';
 export { useBaseUrl } from './lib/hooks/use-base-url.hook';
 export { usePreventClosingBrowserWindow } from './lib/hooks/use-prevent-closing-browser-window.hook';
 export { Textfield } from './lib/components/textfield';

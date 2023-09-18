@@ -1,11 +1,10 @@
-using System.ComponentModel.DataAnnotations;
+using OdataTestWebApp.Models.Daos.Setting;
 
-namespace OdataTestWebApp.Models.Daos;
+namespace OdataTestWebApp.Models.Dtos;
 
 public class Setting
 {
-    public int Id { get; set; }
     public bool IsProduction { get; set; } = false;
     public bool ShouldEnablePerformanceMode { get; set; } = false;
-
+    public SettingSubItem SubItem { get; set; }
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Textarea } from '@odata-playground/odata/common';
 import { useWatch } from 'react-hook-form';
-import { HttpMethod } from '@odata-playground/common';
-import { IndexRequestAndReponseFormData } from '@odata-playground/odata/index';
+import { HttpMethod } from '@odata-playground/common/enums';
+import { IndexRequestAndReponseFormData } from '../enums/index-request-and-reponse-form-data.enum';
 import { DataTestids } from '@odata-playground/odata-e2e/data-testids';
 
 export const RequestAndResponseArea: React.FC = () => {

@@ -9,14 +9,12 @@ import { ButtonColorVariant, NoData } from '@odata-playground/common';
 import { DevTool } from '@hookform/devtools';
 import { RequestAndResponseArea } from './request-and-response-area';
 
-import {
-  useRequestArea,
-  useOdataMetadataScheme,
-  useOdataScheme,
-  useReponseArea,
-  useRequestOdata,
-} from '@odata-playground/odata/index';
-import { useBaseUrl, HttpMethod } from '@odata-playground/common';
+import { useRequestArea } from '../hooks/react-form/use-request-area';
+import { useOdataMetadataScheme } from '../hooks/react-query/queries/use-odata-metadata-scheme.hook';
+import { useOdataScheme } from '../hooks/react-query/queries/use-odata-scheme.hook';
+import { useReponseArea } from '../hooks/react-form/use-reponse-area.hook';
+import { useRequestOdata } from '../hooks/react-query/mutations/use-request-odata.hook';
+import { useBaseUrl } from '@odata-playground/common';
 import { OdataEndpointSectionPlaceholderContainer } from './odata-endpoint-section-placeholder-container';
 import { OdataEndpointSections } from './odata-endpoint-sections';
 import {
@@ -33,6 +31,7 @@ import { Textfield } from '@odata-playground/odata/common';
 import { DataTestids } from '@odata-playground/odata-e2e/data-testids';
 import { IndexRequestAndReponseFormData } from '../enums/index-request-and-reponse-form-data.enum';
 import { OdataRequestForm } from '../types/odata-request-form.type';
+import { HttpMethod } from '@odata-playground/common/enums';
 
 export interface Props {
   textfieldAutocomplete: TextfieldFilters;
@@ -66,6 +65,7 @@ export const OdataPlayground: React.FC<Props> = ({ textfieldAutocomplete }) => {
     mutate,
   } = useRequestOdata();
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   useReponseArea<AxiosResponse<OdataScheme> | undefined, typeof methods>(
     methods,

@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 using OdataTestWebApp.Configurations;
+using OdataTestWebApp.Mappers;
 using OdataTestWebApp.Models.Daos;
+using OdataTestWebApp.Models.Daos.Setting;
+using OdataTestWebApp.Models.Dtos;
 
 namespace OdataTestWebApp.Controllers;
 
@@ -14,16 +17,26 @@ public class SettingController: ODataController
         _context = context;
     }
     
-    public ActionResult<IQueryable<SettingDao>> Get()
+    public ActionResult<IQueryable<Setting>> Get()
     {
-        return Ok(_context.Settings.FirstOrDefault());
+        return Ok(_context.Settings.SettingDaoToSettingDto().FirstOrDefault());
     }
     
-    public ActionResult Put([FromBody] SettingDao updatedSettingDao)
+    public ActionResult Put([FromBody] Setting updatedSettingDto)
     {
-        var setting = _context.Settings.FirstOrDefault()?.Id;
 
-        _context.Update(updatedSettingDao);
+        var settingId = _context.Settings.FirstOrDefault()?.Id;
+
+        if (settingId is null)
+        {
+            return NotFound();
+        }
+
+        var settingDao = updatedSettingDto.SettingDtoToSettingDao();
+
+        settingDao.Id = (int) settingId;
+
+        _context.Update(updatedSettingDto);
 
         return Ok();
     }

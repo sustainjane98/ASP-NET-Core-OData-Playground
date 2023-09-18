@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.OData;
 using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
-using OdataTestWebApp.Models.Daos;
+using OdataTestWebApp.Models.Daos.Setting;
 using OdataTestWebApp.Models.Dtos;
 
 namespace OdataTestWebApp.Extensions;
@@ -15,7 +15,7 @@ public static class MvcBuilderOdataExtension
         modelBuilder.EntitySet<Customer>(nameof(Customer));
         modelBuilder.EntityType<Customer>().Function("mostRecent")
             .Returns<string>();
-        modelBuilder.Singleton<SettingDao>(nameof(SettingDao));
+        modelBuilder.Singleton<Setting>(nameof(Setting));
         return modelBuilder.GetEdmModel();
     }
 
