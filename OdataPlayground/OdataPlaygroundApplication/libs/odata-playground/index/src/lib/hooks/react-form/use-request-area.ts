@@ -3,7 +3,6 @@ import { OdataRequestForm } from '../../types/odata-request-form.type';
 import { UseFormReturn, useWatch } from 'react-hook-form';
 import { useJSONFormat } from '@odata-playground/common';
 import {
-  EntityType,
   findEntityTypeInCollection,
   mapEntityTypeToJsonExample,
   mapSchemeToEntityTypes,
@@ -12,7 +11,7 @@ import { useCollectionName } from './use-collection-name.hook';
 import { OdataMetadataScheme } from '@odata-playground/odata/common';
 import { findModelnameForOdataCollectionname } from '@odata-playground/odata/common';
 import { HttpMethod } from '@odata-playground/common/enums';
-import { mapEntitySubtypes } from '../../../../../common/src/lib/utils/mapper';
+import { mapEntitySubtypes } from '@odata-playground/odata/common';
 
 export const useRequestArea = (
   methods: UseFormReturn<OdataRequestForm, any, undefined>,

@@ -14,6 +14,11 @@ export {
   mapSchemeToEntityTypes,
   mapOdataDebugSchemeToOdataDebugGroups,
   mapOdataDebugSchemeToTextfieldFilter,
+  mapEntitySubtypes,
+  checkIsCollection,
+  isExampleValue,
+  exampleValues,
+  exampleKeys,
 } from './lib/utils/mapper';
 export {
   findEntityTypeInCollection,
