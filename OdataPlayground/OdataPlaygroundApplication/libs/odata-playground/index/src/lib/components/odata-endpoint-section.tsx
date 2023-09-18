@@ -6,11 +6,11 @@ import {
   Tooltip,
   Button,
   ButtonColorVariant,
-  HttpMethod,
   CommonElementProps,
 } from '@odata-playground/common';
 import { useFormContext } from 'react-hook-form';
 import { DataTestids } from '@odata-playground/odata-e2e/data-testids';
+import { HttpMethod } from '@odata-playground/common/enums';
 
 export interface Props extends Omit<CommonElementProps, 'name'> {
   title: string;
@@ -36,6 +36,7 @@ export const OdataEndpointSection: React.FC<Props> = ({
 
   const buttonId = `${id}-odata-endpoint-section-link-icon-button`;
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   return (
     <div
@@ -68,13 +69,11 @@ export const OdataEndpointSection: React.FC<Props> = ({
             {...other}
             className="max-w-[200px] break-all"
             onClick={() => {
-              let urlValue: string;
-
               if (httpMethod) {
                 setValue('httpMethod', httpMethod);
               }
 
-              urlValue = getValues('baseUrl');
+              const urlValue = getValues('baseUrl');
 
               setValue('url', `${urlValue}${urlPart}`);
             }}
