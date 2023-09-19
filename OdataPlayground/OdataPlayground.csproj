@@ -7,6 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    </ItemGroup>
+    <ItemGroup>
       <Reference Include="Microsoft.AspNetCore">
         <HintPath>..\..\..\.dotnet\shared\Microsoft.AspNetCore.App\7.0.5\Microsoft.AspNetCore.dll</HintPath>
       </Reference>
@@ -18,6 +21,9 @@
       </Reference>
       <Reference Include="Microsoft.AspNetCore.Http.Features" />
       <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+      <Reference Include="Microsoft.Extensions.Http">
+        <HintPath>..\..\..\..\..\..\usr\local\share\dotnet\shared\Microsoft.AspNetCore.App\7.0.9\Microsoft.Extensions.Http.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
     <ItemGroup>
@@ -26,9 +32,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore.Connections.Abstractions" Version="7.0.8" />
-      <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
-      <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.2.0" />
+      <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.8" />
       <PackageReference Include="Microsoft.AspNetCore.OData" Version="8.2.0" />
       <PackageReference Include="MimeTypes" Version="2.4.1">
         <PrivateAssets>all</PrivateAssets>

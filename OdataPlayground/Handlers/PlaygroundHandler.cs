@@ -10,13 +10,13 @@ public static class PlaygroundProvider
     public static void UseOdataPlaygroundUi(this IApplicationBuilder wb, OdataPlaygroundConfigurationOptions options)
     {
         wb.UseMiddleware<PlaygroundMiddleware>(options);
-        wb.UseMiddleware<OdataMetadataJSONMiddleware>();
+        wb.UseMiddleware<OdataMetadataJsonMiddleware>();
     }
     
-    public static void UseOdataPlaygroundUiDev(this IApplicationBuilder wb, OdataPlaygroundConfigurationOptionsDev options)
+    public static void UseOdataPlaygroundUiDev(this IApplicationBuilder wb, OdataPlaygroundConfigurationOptions options)
     {
         wb.UseMiddleware<DevRedirectMiddleware>(options);
-        wb.UseMiddleware<OdataMetadataJSONMiddleware>();
+        wb.UseMiddleware<OdataMetadataJsonMiddleware>();
     }
     
 }

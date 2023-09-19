@@ -3,16 +3,18 @@ using System.Xml.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Newtonsoft.Json;
+using OdataPlayground.Configs;
 
 namespace OdataPlayground.Middlewares;
 
-public class OdataMetadataJSONMiddleware
+public class OdataMetadataJsonMiddleware
 {
     private RequestDelegate Next { get; }
-    private readonly HttpClient _client = new HttpClient();
+    private readonly Client _client;
 
-    public OdataMetadataJSONMiddleware(RequestDelegate next)
+    public OdataMetadataJsonMiddleware(Client client, RequestDelegate next)
     {
+        _client = client;
         Next = next;
     }
 
@@ -32,7 +34,7 @@ public class OdataMetadataJSONMiddleware
             {
                 var url = context.Request.GetEncodedUrl();
 
-                var response = await (await _client.GetAsync(url)).Content.ReadAsStringAsync();
+                var response = (await _client.GetAsync(url));
 
                 var xmlRoot = XDocument.Parse(response);
 

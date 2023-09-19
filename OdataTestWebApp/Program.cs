@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.OData;
+using OdataPlayground.Extensions;
 using OdataPlayground.Handlers;
 using OdataPlayground.Models;
 using OdataTestWebApp.Configurations;
@@ -9,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 var config = new HostConfiguration(builder.Configuration);
 
 builder.ConfigureCors();
+
+builder.Services.ConfigurePlaygroundHttpClient();
 
 builder.InjectDependencies();
 
@@ -31,13 +34,12 @@ if (builder.Environment.IsDevelopment())
     app.UseOdataPlaygroundUiDev(new OdataPlaygroundConfigurationOptionsDev()
     {
         UiPath = "/odata",
-        ServerBaseUrl = config.HttpUrl,
         RedirectUrl = "http://localhost:3000"
     });
 }
 else
 {
-    app.UseOdataPlaygroundUi(new OdataPlaygroundConfigurationOptions() {UiPath = "/odata", ServerBaseUrl = config.HttpUrl});
+    app.UseOdataPlaygroundUi(new OdataPlaygroundConfigurationOptions() {UiPath = "/odata"});
 }
 
 

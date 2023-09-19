@@ -1,5 +1,6 @@
 using System.Net;
 using Microsoft.AspNetCore.Http;
+using OdataPlayground.Configs;
 using OdataPlayground.Models;
 
 namespace OdataPlayground.Middlewares;
@@ -8,10 +9,11 @@ public class DevRedirectMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly OdataPlaygroundConfigurationOptionsDev _options;
-    private readonly HttpClient _client = new HttpClient();
+    private readonly Client _httpClient;
     
-    public DevRedirectMiddleware(RequestDelegate next, OdataPlaygroundConfigurationOptionsDev options)
+    public DevRedirectMiddleware(Client httpClient, RequestDelegate next, OdataPlaygroundConfigurationOptionsDev options)
     {
+        _httpClient = httpClient;
         _next = next;
         _options = options;
     }
@@ -33,7 +35,7 @@ public class DevRedirectMiddleware
 
             try
             {
-                var response = await (await _client.GetAsync(_options.RedirectUrl)).Content.ReadAsStringAsync();
+                var response = await _httpClient.GetAsync(_options.RedirectUrl);
                 await context.Response.WriteAsync(response);
                 return;
             }
@@ -48,7 +50,7 @@ public class DevRedirectMiddleware
 
         if (requestPath.StartsWith(_options.UiPath))
         {
-            var response = await (await _client.GetAsync($"{_options.RedirectUrl}{requestPath}")).Content.ReadAsStringAsync();
+            var response = await _httpClient.GetAsync($"{_options.RedirectUrl}{requestPath}");
             context.Response.StatusCode = (int)HttpStatusCode.OK;
             var mimeType = MimeTypes.GetMimeType(requestPath);
             context.Response.ContentType = mimeType;

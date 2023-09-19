@@ -1,4 +1,4 @@
-const baseUrlParam = '?odataPath=http://localhost:5000';
+const baseUrlParam = '?odataPath=http://localhost:8080';
 const port = 3000;
 const testingPort = 5050;
 const serverBaseUrl = `http://localhost:${port}`;
