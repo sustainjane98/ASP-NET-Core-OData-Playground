@@ -24,7 +24,7 @@
     "odata-playground-e2e:start-headed": "nx run odata-playground-e2e:e2e-headed",
     "odata-playground-e2e:show-report": "nx run odata-playground-e2e:show-report",
     "lint": "nx run-many -t lint",
-    "convert-icons": "nx run @odata-playground/common:convert-icons"
+    "convert-icons": "nx run-many -t convert-icons"
   },
   "private": true,
   "dependencies": {

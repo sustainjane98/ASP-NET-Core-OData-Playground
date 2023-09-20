@@ -1,7 +1,7 @@
 {
-  "name": "error",
+  "name": "@odata-playground/error",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "src",
+  "sourceRoot": "libs/odata-playground/error/src",
   "projectType": "library",
   "tags": [],
   "targets": {
@@ -10,6 +10,12 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["libs/error/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "convert-icons": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx @svgr/cli --filename-case kebab --typescript --title-prop --out-dir libs/odata-playground/error/src/lib/assets/icons/vectors/generated -- libs/odata-playground/error/src/lib/assets/icons/vectors"
       }
     }
   }

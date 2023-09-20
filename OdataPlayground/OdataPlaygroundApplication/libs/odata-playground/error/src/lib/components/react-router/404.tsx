@@ -5,7 +5,7 @@ import {
   Button,
   ButtonColorVariant,
 } from '@odata-playground/common';
-import { ReactComponent as AliensIllustration } from '../../assets/undraw_taken_re_yn20.svg';
+import { UndrawTakenReYn20 as AliensIllustration } from '../../assets/icons/vectors//generated';
 import {
   NamespacesEnum,
   TranslationKeysOdataCommonEnum,
