@@ -1,5 +1,5 @@
 {
-  "name": "common",
+  "name": "@odata-playground/common",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/common/main/src",
   "projectType": "library",

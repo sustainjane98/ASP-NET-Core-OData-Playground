@@ -19,11 +19,12 @@
     "odata-playground-storybook:start": "nx run odata-playground:storybook",
     "odata-playground-i18n:build": "nx run @odata-playground/i18n/vite:build",
     "odata-playground-application-config:build": "nx run @odata-playground/odata/application-config:build",
-    "postinstall": "npm run odata-playground-i18n:build && npm run odata-playground-application-config:build",
+    "postinstall": "npm run odata-playground-i18n:build && npm run odata-playground-application-config:build && npm run convert-icons",
     "odata-playground-e2e:start": "nx run odata-playground-e2e:e2e",
     "odata-playground-e2e:start-headed": "nx run odata-playground-e2e:e2e-headed",
     "odata-playground-e2e:show-report": "nx run odata-playground-e2e:show-report",
-    "lint": "nx run-many -t lint"
+    "lint": "nx run-many -t lint",
+    "convert-icons": "nx run @odata-playground/common:convert-icons"
   },
   "private": true,
   "dependencies": {
