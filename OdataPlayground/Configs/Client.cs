@@ -1,6 +1,6 @@
 namespace OdataPlayground.Configs;
 
-public class Client
+public class Client: HttpClient
 {
     private readonly HttpClient _httpClient;
 
@@ -9,7 +9,7 @@ public class Client
         _httpClient = httpClient;
     }
 
-    public async Task<string> GetAsync(string url)
+    public async Task<string> GetAsyncAsString(string url)
     {
         var requestMessage = new HttpRequestMessage()
         {
@@ -23,7 +23,8 @@ public class Client
         {
             throw new HttpRequestException();
         }
-                
-        return await httpResponse.Content.ReadAsStringAsync();
+
+        using var httpResponseStreamReader = new StreamReader(new BufferedStream(await httpResponse.Content.ReadAsStreamAsync()));
+        return await httpResponseStreamReader.ReadToEndAsync();
     }
 }

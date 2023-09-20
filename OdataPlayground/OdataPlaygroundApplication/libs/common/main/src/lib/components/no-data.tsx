@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReactComponent as NoDataIllustration } from '../assets/undraw_no_data_re_kwbl.svg';
+import { ReactComponent as NoDataIllustration } from '../assets/icons/vectors/undraw_no_data_illustration.svg';
 
 export const NoData = () => {
   return (

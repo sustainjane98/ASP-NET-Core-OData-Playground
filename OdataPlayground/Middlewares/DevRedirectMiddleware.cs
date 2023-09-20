@@ -1,4 +1,5 @@
 using System.Net;
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
 using OdataPlayground.Configs;
 using OdataPlayground.Models;
@@ -35,11 +36,11 @@ public class DevRedirectMiddleware
 
             try
             {
-                var response = await _httpClient.GetAsync(_options.RedirectUrl);
+                var response = await _httpClient.GetAsyncAsString(_options.RedirectUrl);
                 await context.Response.WriteAsync(response);
                 return;
             }
-            catch (HttpRequestException _)
+            catch (HttpRequestException)
             {
                 context.Response.StatusCode = (int)HttpStatusCode.OK;
                 await context.Response.WriteAsync($"Frontend Server on '{_options.RedirectUrl}' isn't active! Please check");
@@ -48,11 +49,19 @@ public class DevRedirectMiddleware
             
         }
 
-        if (requestPath.StartsWith(_options.UiPath))
+        if (requestPath.StartsWith(_options.UiPath) || Regex.IsMatch(requestPath, "(@(fs|vite|react-refresh)|\\.(tsx|ts|js|json|jsx|css))"))
         {
-            var response = await _httpClient.GetAsync($"{_options.RedirectUrl}{requestPath}");
+            var response = await _httpClient.GetAsyncAsString($"{_options.RedirectUrl}{requestPath}");
             context.Response.StatusCode = (int)HttpStatusCode.OK;
-            var mimeType = MimeTypes.GetMimeType(requestPath);
+
+            var filename = Regex.Match(requestPath, "\\/[a-z]+.\\w+$").Value.Replace("/", "");
+
+            if (!Regex.IsMatch(filename, "\\.w+$") || Regex.IsMatch(filename, "\\.(tsx|ts|jsx)$"))
+            {
+                filename += ".js";
+            }
+            
+            var mimeType = MimeTypes.GetMimeType(filename);
             context.Response.ContentType = mimeType;
             await context.Response.WriteAsync(response);
             return;

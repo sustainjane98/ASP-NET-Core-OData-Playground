@@ -34,7 +34,7 @@ public class OdataMetadataJsonMiddleware
             {
                 var url = context.Request.GetEncodedUrl();
 
-                var response = (await _client.GetAsync(url));
+                var response = (await _client.GetAsyncAsString(url));
 
                 var xmlRoot = XDocument.Parse(response);
 
