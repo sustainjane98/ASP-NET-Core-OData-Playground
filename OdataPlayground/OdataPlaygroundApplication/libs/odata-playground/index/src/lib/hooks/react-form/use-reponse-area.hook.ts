@@ -22,7 +22,7 @@ export const useReponseArea = <
     methods.setValue(
       'responseArea',
       prettifyJSON({
-        data: axiosResponseData?.data ?? '',
+        data: axiosResponseData?.data ?? error?.response?.data ?? '',
         status: {
           code: axiosResponseData?.status ?? errorStatusCode,
           message: axiosResponseData?.statusText ?? errorStatusMessage,

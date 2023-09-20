@@ -36,10 +36,23 @@ public class CustomerController : ODataController
     [HttpPost]
     public async Task<ActionResult> Post([FromBody] CreateCustomer c)
     {
-        var customerDao = c.CreateCustomerDtoToCustomerDao();
-        _context.Customers.Add(customerDao);
-        await _context.SaveChangesAsync();
-        return Created(customerDao.Id);
+        try
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.Values);
+            }
+
+            var customerDao = c.CreateCustomerDtoToCustomerDao();
+            _context.Customers.Add(customerDao);
+            await _context.SaveChangesAsync();
+            return Created(customerDao.Id);
+        }
+        catch (DbUpdateException dbUpdateException)
+        {
+            return Conflict(dbUpdateException.Message);
+        }
+        return NotFound();
     }
 
     [HttpPut]
