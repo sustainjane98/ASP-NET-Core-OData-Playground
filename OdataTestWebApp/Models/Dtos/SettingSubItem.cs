@@ -5,4 +5,6 @@ namespace OdataTestWebApp.Models.Daos.Setting;
 public class SettingSubItem
 {
     public string Name { get; set; }
+    
+    public string Description { get; set; }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { OdataPlayground } from '@odata-playground/odata/index';
+import { OdataPlayground } from '@odata-playground/odata/playground';
 import { usePreventClosingBrowserWindow } from '@odata-playground/common';
 import { BorderArea } from '@odata-playground/common';
 import {

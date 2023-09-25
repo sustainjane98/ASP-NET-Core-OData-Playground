@@ -2,10 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace OdataTestWebApp.Models.Dtos;
 
-public class CreateCustomer
+public class CreateCustomer: UpdateCustomer
 {
-    [Required]
-    public string Name { get; set; }
-    
-    public Order[]? Orders { get; set; }
+    public List<CreateOrder> Orders { get; set; } = new();
 }

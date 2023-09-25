@@ -1,5 +1,5 @@
 {
-  "name": "@odata-playground/error",
+  "name": "@odata-playground/odata/error",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/odata-playground/error/src",
   "projectType": "library",

@@ -3,6 +3,8 @@ import hash from 'object-hash';
 export const DataTestidsIndex = {
   SEND_BUTTON: '2c6e603e-9158-44ea-ae60-3e915864eae6',
   CANCEL_BUTTON: '41b10b70-a9ce-4925-81f6-e0326a2d10b5',
+  OPEN_ENTITY_EDIT_BUTTON: '56b4492e-bdd1-490e-bbec-90b6035661c1',
+
   DROPDOWN_HTTP_METHOD: (methodOrElement?: string) =>
     `f8b64ae5-6dda-4080-a399-229526f79192${
       methodOrElement ? `-${hash({ methodOrElement })}` : ''

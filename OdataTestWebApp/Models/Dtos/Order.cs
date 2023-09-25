@@ -1,6 +1,8 @@
 namespace OdataTestWebApp.Models.Dtos;
 
-public class Order
+public class Order: CreateOrder
 {
-    public decimal Amount { get; set; }
+    public int Id { get; set; }
+    
+    public int CustomerId { get; set; }
 }

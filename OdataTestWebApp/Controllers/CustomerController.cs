@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Deltas;
 using Microsoft.AspNetCore.OData.Formatter;
@@ -7,6 +6,7 @@ using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Microsoft.EntityFrameworkCore;
 using OdataTestWebApp.Configurations;
 using OdataTestWebApp.Mappers;
+using OdataTestWebApp.Models.Daos;
 using OdataTestWebApp.Models.Dtos;
 
 namespace OdataTestWebApp.Controllers;
@@ -24,13 +24,13 @@ public class CustomerController : ODataController
     [EnableQuery(PageSize = 6)]
     public ActionResult<IQueryable<Customer>> Get()
     {
-        return Ok(_context.Customers.AsSplitQuery().CustomerDaoToCustomerDto());
+        return Ok(_context.Customers.ToIQueryableCustomerDto());
     }
 
     [EnableQuery]
-    public async Task<ActionResult<IQueryable<Customer>>> Get([FromRoute] int key)
+    public ActionResult<IQueryable<Customer>> Get([FromRoute] int key)
     {
-        return Ok((await _context.Customers.AsSplitQuery().FirstOrDefaultAsync(c => c.Id == key))?.CustomerDaoToCustomerDto());
+        return Ok((_context.Customers.Where(c => c.Id == key)).ToIQueryableCustomerDto());
     }
 
     [HttpPost]
@@ -42,27 +42,68 @@ public class CustomerController : ODataController
             {
                 return BadRequest(ModelState.Values);
             }
+            
 
-            var customerDao = c.CreateCustomerDtoToCustomerDao();
+            var customerDao = c.CreateCustomerToCustomerDao();
             _context.Customers.Add(customerDao);
             await _context.SaveChangesAsync();
-            return Created(customerDao.Id);
+
+            var customerDto = customerDao.ToCustomerDto();
+            
+            if (c.Orders is {Count: > 0})
+            {
+                
+                foreach(Order order in c.Orders)
+                {
+                    
+                    var orderDao = new OrderDao()
+                    {
+                        CustomerId = customerDao.Id,
+                        Amount = order.Amount
+                    };
+                    
+                    _context.Orders.Add(orderDao);
+                    await _context.SaveChangesAsync();
+                    
+                    customerDto.Orders.Add(orderDao.ToOrder());
+                }
+
+                
+            }
+            
+            return Created(customerDao.ToCustomerDto());
         }
         catch (DbUpdateException dbUpdateException)
         {
             return Conflict(dbUpdateException.Message);
         }
-        return NotFound();
     }
 
     [HttpPut]
-    public async Task<ActionResult> Put([FromRoute] int key, [FromBody] Customer updatedCustomer)
+    public async Task<ActionResult> Put([FromRoute] int key, [FromBody] UpdateCustomer updatedCustomer)
     {
-        var updatedCustomerDao = updatedCustomer.CustomerDtoToCustomerDao();
-        updatedCustomerDao.Id = key;
-        _context.Customers.Update(updatedCustomerDao);
-        await _context.SaveChangesAsync();
-        return Updated(updatedCustomerDao.Id);
+        try
+        {
+            var foundCustomer = await _context.Customers.FirstOrDefaultAsync(e => e.Id.Equals(key));
+
+            if (foundCustomer is null)
+            {
+                return NotFound();
+            }
+            
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.Values);
+            }
+
+            foundCustomer.Name = updatedCustomer.Name;
+            await _context.SaveChangesAsync();
+            return Updated(foundCustomer.ToCustomerDto());
+        }
+        catch (DbUpdateException dbUpdateException)
+        {
+            return Conflict(dbUpdateException.Message);
+        }
     }
 
     
@@ -73,7 +114,7 @@ public class CustomerController : ODataController
         {
             return NotFound();
         }
-        delta.Patch(customer.CustomerDaoToCustomerDto());
+        delta.Patch(customer.ToCustomerDto());
         await _context.SaveChangesAsync();
         return Updated(customer.Id);
     }

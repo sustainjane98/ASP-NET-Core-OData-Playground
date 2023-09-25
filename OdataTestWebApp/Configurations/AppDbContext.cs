@@ -35,6 +35,8 @@ public class AppDbContext: DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<CustomerDao>().Property(e => e.Created).HasDefaultValueSql("NOW()");
+        modelBuilder.Entity<CustomerDao>().Property(e => e.Updated).HasDefaultValueSql("NOW()");
         modelBuilder.Entity<CustomerDao>().HasMany(e => e.Orders).WithOne(e => e.Customer).HasForeignKey(e => e.CustomerId);
         modelBuilder.Entity<SettingDao>().HasOne(e => e.SubItem).WithOne(e => e.Setting).HasForeignKey<SettingDao>(e => e.SubItemId).IsRequired();
         modelBuilder.Entity<SettingDao>().HasData(new SettingDao()
@@ -47,7 +49,8 @@ public class AppDbContext: DbContext
         modelBuilder.Entity<SettingSubItemDao>().HasData(new SettingSubItemDao()
         {
             Id = 1,
-            Name = "",
+            Name = "123456778989",
+            Description = "Lorem Ipsum",
             SettingId = 1
         });
     }

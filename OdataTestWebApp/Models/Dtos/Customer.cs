@@ -2,9 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace OdataTestWebApp.Models.Dtos;
 
-public class Customer
+public class Customer: CreateCustomer
 {
-    [Key]
-    public string Name { get; set; }
-    public List<Order>? Orders { get; set; }
+    public int Id { get; set; }
+    
+    public new List<Order> Orders { get; set; } = new();
 }

@@ -11,11 +11,12 @@ public class CustomerDao
     public int Id { get; set; }
     [Required]
     public string Name { get; set; }
-    public List<OrderDao>? Orders { get; }
+
+    public List<OrderDao> Orders { get; set; } = new();
     
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public DateTime Created { get; set; }
+    public DateTime? Created { get; set; }
     
     [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-    public DateTime Updated { get; set; }
+    public DateTime? Updated { get; set; }
 }

@@ -26,3 +26,11 @@ export { DialogWithTitleAndDescription } from './lib/components/dialog-with-titl
 export type { DialogWithTitleAndDescriptionProps } from './lib/components/dialog-with-title-and-description';
 export { DialogWrapper } from './lib/components/dialog-wrapper';
 export type { DialogWrapperProps } from './lib/components/dialog-wrapper';
+export { DialogWrapperTitle } from './lib/components/dialog-wrapper-title';
+export type { DialogWrapperTitleProps } from './lib/components/dialog-wrapper-title';
+export type {
+  TextfieldFilter,
+  TextfieldFiltersWithCommon,
+  TextfieldFilters,
+} from './lib/types/textfield-filter.type';
+export { mapOdataDebugSchemeToTextFieldFilter } from './lib/mappers/odata-odata-debug-scheme-to-textfield-filter.mapper';

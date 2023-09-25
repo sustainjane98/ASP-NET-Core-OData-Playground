@@ -1,9 +1,10 @@
 import { PropsWithChildren } from 'react';
 import { createPortal } from 'react-dom';
 import { twMerge } from 'tailwind-merge';
+import { DIALOG_SELECTOR } from '@odata-playground/odata/common';
 
 export interface DialogWrapperProps extends PropsWithChildren {
-  selector: string;
+  selector?: string;
   containerClassName?: string;
   dialogClassName?: string;
 }
@@ -30,6 +31,6 @@ export const DialogWrapper: React.FC<DialogWrapperProps> = ({
         {children}
       </div>
     </div>,
-    document.querySelector(selector) ?? document.body
+    document.querySelector(selector ?? DIALOG_SELECTOR) ?? document.body
   );
 };

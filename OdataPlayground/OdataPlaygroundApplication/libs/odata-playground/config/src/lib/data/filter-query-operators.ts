@@ -1,4 +1,4 @@
-import { TextfieldFilters } from '@odata-playground/odata/common';
+import { TextfieldFilters } from '@odata-playground/common';
 
 export const FilterQueryOperatorsBasic: Record<string, string> = {
   EQUALS: "Name eq 'Customer 2'",

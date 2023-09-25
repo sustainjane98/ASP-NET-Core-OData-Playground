@@ -6,23 +6,23 @@
   },
   "files": [
     "../../../node_modules/@nx/react/typings/cssmodule.d.ts",
-    "../../node_modules/@nx/react/typings/image.d.ts"
+    "../../../node_modules/@nx/react/typings/image.d.ts"
   ],
   "exclude": [
     "jest.config.ts",
-    "main/src/**/*.spec.ts",
-    "main/src/**/*.test.ts",
-    "main/src/**/*.spec.tsx",
-    "main/src/**/*.test.tsx",
-    "main/src/**/*.spec.js",
-    "main/src/**/*.test.js",
-    "main/src/**/*.spec.jsx",
-    "main/src/**/*.test.jsx"
+    "src/**/*.spec.ts",
+    "src/**/*.test.ts",
+    "src/**/*.spec.tsx",
+    "src/**/*.test.tsx",
+    "src/**/*.spec.js",
+    "src/**/*.test.js",
+    "src/**/*.spec.jsx",
+    "src/**/*.test.jsx"
   ],
   "include": [
-    "main/src/**/*.js",
-    "main/src/**/*.jsx",
-    "main/src/**/*.ts",
-    "main/src/**/*.tsx"
+    "src/**/*.js",
+    "src/**/*.jsx",
+    "src/**/*.ts",
+    "src/**/*.tsx"
   ]
 }

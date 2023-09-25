@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { useWatch } from 'react-hook-form';
 import { mergeRefs } from 'react-merge-refs';
 import { Button, ButtonColorVariant, ButtonProps } from './button';
+import { CommonElementProps } from '../types/common-elements-props.type';
 import {
   TextfieldFilter,
   TextfieldFiltersWithCommon,
-} from 'libs/odata-playground/common/src';
-import { CommonElementProps } from '../types/common-elements-props.type';
+} from '../types/textfield-filter.type';
 
 export interface TextfieldProps
   extends Omit<

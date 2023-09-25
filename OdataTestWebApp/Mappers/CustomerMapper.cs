@@ -9,15 +9,18 @@ public static partial class CustomerMapper
 {
     [MapperIgnoreSource(nameof(CustomerDao.Id))]
     [MapperIgnoreSource(nameof(CustomerDao.Orders))]
-    public static partial CreateCustomer CustomerDaoToCreateCustomerDto(this CustomerDao customerDao);
+    public static partial CreateCustomer ToCreateCustomerDto(this CustomerDao customerDao);
     
-    public static partial Customer CustomerDaoToCustomerDto(this CustomerDao customerDao);
+    public static partial Customer ToCustomerDto(this CustomerDao customerDao);
     
-    public static partial CustomerDao CustomerDtoToCustomerDao(this Customer customerDto);
+    public static partial IQueryable<Customer> ToIQueryableCustomerDto(this IQueryable<CustomerDao> customerDao);
+    
+    
+    public static partial CustomerDao CustomerToCustomerDao(this Customer customerDto);
     
     [MapperIgnoreTarget(nameof(CustomerDao.Id))]
     [MapperIgnoreTarget(nameof(CustomerDao.Orders))]
-    public static partial CustomerDao CreateCustomerDtoToCustomerDao(this CreateCustomer createCustomerDto);
+    public static partial CustomerDao CreateCustomerToCustomerDao(this CreateCustomer createCustomerDto);
     
-    public static partial IQueryable<Customer> CustomerDaoToCustomerDto(this IQueryable<CustomerDao> customerDaos);
+    public static partial IQueryable<Customer> ToCustomerDto(this IQueryable<CustomerDao> customerDaos);
 }

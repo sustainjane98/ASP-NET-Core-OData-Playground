@@ -8,9 +8,7 @@ import { NamespacesEnum } from '@odata-playground/odata/i18n/config';
 import { TranslationKeysOdataErrorEnum } from '@odata-playground/odata/i18n/config';
 import { useRouteError } from 'react-router-dom';
 import { DataTestids } from '@odata-playground/odata-e2e/data-testids';
-
-export const ERROR_DIALOG_ID = 'dialog';
-const errorDialogId = `#${ERROR_DIALOG_ID}`;
+import { DIALOG_SELECTOR } from '@odata-playground/odata/common';
 
 export interface ErrorDialogProps {
   onClose: DialogWithTitleAndDescriptionProps['onClose'];
@@ -25,7 +23,7 @@ export const ErrorDialog: React.FC<ErrorDialogProps> = ({ onClose }) => {
       onClose={onClose}
       title={t(TranslationKeysOdataErrorEnum.ERROR)}
       description={String(error)}
-      selector={errorDialogId}
+      selector={DIALOG_SELECTOR}
       buttons={[
         {
           key: 'close-button',
