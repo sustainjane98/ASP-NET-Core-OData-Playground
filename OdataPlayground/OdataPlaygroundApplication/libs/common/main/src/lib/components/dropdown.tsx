@@ -3,12 +3,14 @@ import { Button, ButtonColorVariant, ButtonProps } from './button';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
 import classNames from 'classnames';
 import { CommonElementPropsWithName } from '../types/common-elements-props.type';
+import { twMerge } from 'tailwind-merge';
 
 export interface Props extends PropsWithChildren, Omit<ButtonProps, 'name'> {
   values: ({ key: string; value: string } & CommonElementPropsWithName)[];
   handleChange?: (key: string, value: string) => void;
   placeholderValue?: string;
   selectedValue: string;
+  className?: string;
 }
 
 export const Dropdown: React.FC<Props> = ({
@@ -19,6 +21,7 @@ export const Dropdown: React.FC<Props> = ({
   selectedValue,
   id,
   dataTestId,
+  className,
   ...buttonProps
 }) => {
   const [open, setOpen] = useState<boolean>(false);
@@ -27,7 +30,7 @@ export const Dropdown: React.FC<Props> = ({
     <div
       id={id}
       data-test-id={dataTestId}
-      className="relative inline-block"
+      className={twMerge('relative inline-block', className)}
       onBlur={() => {
         window.setTimeout(() => setOpen(false), 200);
       }}

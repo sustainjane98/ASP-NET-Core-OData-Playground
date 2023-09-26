@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useWatch } from 'react-hook-form';
 import { mergeRefs } from 'react-merge-refs';
 import { Button, ButtonColorVariant, ButtonProps } from './button';
@@ -57,15 +57,15 @@ export const Textfield = React.forwardRef<HTMLInputElement, TextfieldProps>(
 
     const autoCompleteToDisplay =
       autoComplete?.filter?.(({ selector, httpMethod, ...other }) => {
-        return (
-          selector.test(currentValue) &&
-          (additionalAutocompleteFilters?.({
-            selector,
-            httpMethod,
-            ...other,
-          }) ??
-            true)
-        );
+        return typeof selector === 'function'
+          ? selector(currentValue)
+          : selector.test(currentValue) &&
+              (additionalAutocompleteFilters?.({
+                selector,
+                httpMethod,
+                ...other,
+              }) ??
+                true);
       }) ?? [];
 
     let timeoutId: number | undefined;
@@ -127,7 +127,7 @@ export const Textfield = React.forwardRef<HTMLInputElement, TextfieldProps>(
         {autoCompleteToDisplay &&
           autoCompleteToDisplay.length > 0 &&
           inputSelected && (
-            <ul className="absolute top-[calc(100%_-_2px)] p-2.5 flex flex-col gap-y-2.5 max-h-72 overflow-scroll w-full border-b border-l border-r border-gray-200 bg-gray-50 text-gray-900 text-sm rounded-b-lg">
+            <ul className="absolute top-[calc(100%_-_2px)] p-2.5 flex flex-col gap-y-2.5 max-h-72 overflow-scroll w-full border-b border-l border-r border-gray-200 bg-gray-50 text-gray-900 text-sm rounded-b-lg z-20">
               {autoCompleteToDisplay?.map(
                 ({ key, value, dataTestId, id, name }, i) => (
                   <li

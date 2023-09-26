@@ -1,4 +1,5 @@
 import { TextfieldFilters } from '@odata-playground/common';
+import { filterVariantsSelector } from '../helpers/filter-variants-selector.helper';
 
 export const FilterVariantBasic: Record<string, string> = {
   FILTER: 'filter',
@@ -10,15 +11,13 @@ export const FilterVariantBasic: Record<string, string> = {
   ORDER_BY: 'orderby',
 };
 
-const selector = /\?$/;
-
 export const FilterVariants = (() => {
   const keys = Object.keys(FilterVariantBasic);
   const FilterVariantInst: TextfieldFilters = [];
 
   for (const key of keys) {
     FilterVariantInst.push({
-      selector,
+      selector: filterVariantsSelector(FilterVariantBasic[key]),
       key: `${FilterVariantBasic[key]}=`,
       value: key.toLowerCase(),
     });

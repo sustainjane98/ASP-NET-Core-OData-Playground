@@ -11,6 +11,7 @@ import {
 import { useFormContext } from 'react-hook-form';
 import { DataTestids } from '@odata-playground/odata-e2e/data-testids';
 import { HttpMethod } from '@odata-playground/common/enums';
+import { OdataEndpointSectionSection } from './odata-endpoint-section-section';
 
 export interface Props extends Omit<CommonElementProps, 'name'> {
   title: string;
@@ -42,7 +43,7 @@ export const OdataEndpointSection: React.FC<Props> = ({
     <div
       id={id}
       data-test-id={dataTestId}
-      className="max-w-sm p-6 bg-gray-50 border border-gray-200 rounded-lg shadow block"
+      className="p-6 bg-gray-50 border border-gray-200 rounded-lg shadow block"
     >
       <div className="flex">
         <span className="flex-1 mb-2 text-2xl font-bold tracking-tight text-gray-900 ">
@@ -62,12 +63,15 @@ export const OdataEndpointSection: React.FC<Props> = ({
           <LinkIcon width={20} />
         </Button>
       </div>
-      <div className="flex gap-2 mt-2 flex-wrap">
+      <div className="flex gap-2 mt-2 flex-col">
         {subPaths.map(({ toolTip, httpMethod, urlPart, ...other }) => [
-          <Pill
+          <OdataEndpointSectionSection
             key={other.displayValue}
-            {...other}
-            className="max-w-[200px] break-all"
+            dataTestId={dataTestId}
+            id={id}
+            method={httpMethod}
+            urlPart={urlPart}
+            className="flex-1"
             onClick={() => {
               if (httpMethod) {
                 setValue('httpMethod', httpMethod);

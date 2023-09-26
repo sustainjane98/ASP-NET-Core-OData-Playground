@@ -1,7 +1,7 @@
 import { CommonElementPropsWithName } from './common-elements-props.type';
 
 export type TextfieldFilter = {
-  selector: RegExp;
+  selector: RegExp | ((currentValue: string) => boolean);
   key: string;
   value?: string;
   [x: string]: any;
